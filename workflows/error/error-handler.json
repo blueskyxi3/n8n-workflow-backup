@@ -1,0 +1,92 @@
+{
+  "active": false,
+  "connections": {
+    "Error Trigger": {
+      "main": [
+        [
+          {
+            "node": "Send email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-07-16T08:50:01.612Z",
+  "id": "ajZGT0qnfVQVsQSC",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "error-handler",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.errorTrigger",
+      "typeVersion": 1,
+      "position": [
+        288,
+        240
+      ],
+      "id": "5519056b-5f1d-4db3-8e8e-8e372f42f512",
+      "name": "Error Trigger"
+    },
+    {
+      "parameters": {
+        "content": "## 错误处理工作流\n- 发送邮件通知\n- 发送slack通知\n- 记录错误日志",
+        "height": 640,
+        "width": 960,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "627a3300-8f21-4880-abd6-be306ef19ca9",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "fromEmail": "n8n-lab@citictel.com",
+        "toEmail": "vincentzou@citictel.com",
+        "subject": "N8N Workflow Error",
+        "html": "=workflow: {{ $json.workflow.name }} <br>\nnode:  {{ $json.execution.lastNodeExecuted }} <br>\nerror:  {{ $json.execution.error.message }} <br>\nstack:  {{ $json.execution.error.stack }} <br>\ntimestamp:  {{ $now }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        496,
+        240
+      ],
+      "id": "6bdb17ac-2748-460d-8b2a-affffdd3318d",
+      "name": "Send email",
+      "webhookId": "d6bc767a-c479-4915-a3d7-3695f4b0760b",
+      "credentials": {
+        "smtp": {
+          "id": "MRieOEP8aSj6h8gG",
+          "name": "SMTP account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-07-16T08:49:51.917Z",
+      "updatedAt": "2025-07-16T08:49:51.917Z",
+      "id": "T1O10rfbvcFAVqMw",
+      "name": "error"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-07-16T09:01:38.167Z",
+  "versionId": "8aaa7fc1-8036-4aa1-8139-7b0d8673d16d"
+}
