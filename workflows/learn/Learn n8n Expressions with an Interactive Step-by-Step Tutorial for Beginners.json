@@ -1,0 +1,694 @@
+{
+  "active": false,
+  "connections": {
+    "Source Data": {
+      "main": [
+        [
+          {
+            "node": "1. The Basics",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "1. The Basics": {
+      "main": [
+        [
+          {
+            "node": "2. The n8n Selectors",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start Tutorial": {
+      "main": [
+        [
+          {
+            "node": "Source Data",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "4. Going Deeper": {
+      "main": [
+        [
+          {
+            "node": "5. The Combo Move",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out Skills": {
+      "main": [
+        [
+          {
+            "node": "9. The \"All Items\" View",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "5. The Combo Move": {
+      "main": [
+        [
+          {
+            "node": "6. A Touch of Magic",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "6. A Touch of Magic": {
+      "main": [
+        [
+          {
+            "node": "7. Inspecting Objects",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2. The n8n Selectors": {
+      "main": [
+        [
+          {
+            "node": "3. Working with Arrays",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "8. Utility Functions": {
+      "main": [
+        [
+          {
+            "node": "Split Out Skills",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "7. Inspecting Objects": {
+      "main": [
+        [
+          {
+            "node": "8. Utility Functions",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "3. Working with Arrays": {
+      "main": [
+        [
+          {
+            "node": "4. Going Deeper",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "9. The \"All Items\" View": {
+      "main": [
+        [
+          {
+            "node": "Final Exam",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-07-16T02:00:49.182Z",
+  "id": "CqkZLCq5I0OoBXLM",
+  "isArchived": false,
+  "meta": null,
+  "name": "Learn n8n Expressions with an Interactive Step-by-Step Tutorial for Beginners",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "1883ce32-e15d-466f-a222-7dac8c678923",
+      "name": "Start Tutorial",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        -7232,
+        720
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "# Tutorial - Mastering n8n Expressions\n\nWelcome! You know what JSON is. Now, let's learn how to **use it**. This workflow teaches you how to pull data from one node and use it in another using n8n's powerful expressions.\n\n**What is an Expression?**\nAn expression is a small piece of code inside double curly braces `{{ }}` that gets replaced with a dynamic value when the workflow runs. It's the \"glue\" that connects your nodes.\n\n**How to use this tutorial:**\n1.  The first node, **\"Source Data\"**, contains all the data we will use. Execute it once to see what's inside.\n2.  Follow the path from top to bottom. Each node is a new lesson.\n3.  Read the sticky note for each lesson, then look at the node's configuration and its output to understand the concept.",
+        "height": 560,
+        "width": 640,
+        "color": 5
+      },
+      "id": "16d67550-90fc-456e-a2c7-af1579544878",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -7488,
+        320
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "name",
+              "type": "string",
+              "value": "Alice"
+            },
+            {
+              "id": "67890",
+              "name": "age",
+              "type": "number",
+              "value": 30
+            },
+            {
+              "id": "abcde",
+              "name": "is_active",
+              "type": "boolean",
+              "value": true
+            },
+            {
+              "id": "fghij",
+              "name": "skills",
+              "type": "array",
+              "value": "[\"JavaScript\",\"Python\",\"n8n\"]"
+            },
+            {
+              "id": "klmno",
+              "name": "projects",
+              "type": "array",
+              "value": "[{\"name\":\"Project A\",\"status\":\"Done\"},{\"name\":\"Project B\",\"status\":\"In Progress\"}]"
+            },
+            {
+              "id": "pqrst",
+              "name": "contact",
+              "type": "object",
+              "value": "{\"email\":\"alice@example.com\",\"phone\":null}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "63c52dab-9520-48ac-972f-50e43c6af31e",
+      "name": "Source Data",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -6608,
+        720
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "## Our Data Source\n\nThis node holds all the sample data for our tutorial. Think of it as a filing cabinet. All the other nodes will be reaching into this cabinet to pull out specific pieces of information.\n\nTake a look at its output to familiarize yourself with the structure.\nWe have:\n- Simple text (`name`)\n- A number (`age`)\n- A list of skills (`skills`)\n- A list of complex projects (`projects`)\n- A nested contact object (`contact`)",
+        "height": 520,
+        "width": 520,
+        "color": 7
+      },
+      "id": "9e37813c-6beb-4f90-8887-13147abe5a30",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -6832,
+        368
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "user_name",
+              "type": "string",
+              "value": "={{ $('Source Data').item.json.name }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9658db4c-4a6a-4b51-85df-e98161c0b933",
+      "name": "1. The Basics",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -6096,
+        720
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "## Lesson 1: Accessing a Simple Value\n\nThis is the most common thing you'll do in n8n.\n\n**The Goal:** Get the user's name from the \"Source Data\" node.\n\n**The Expression:** `{{ $('Source Data').item.json.name }}`\n\n**Breakdown:**\n- `{{ ... }}`: Tells n8n \"this is a dynamic expression\".\n- `$('Source Data')`: Selects the node we want data from.\n- `.item.json`: Narrows it down to the JSON data of the current item.\n- `.name`: Selects the specific **key** we want the value of.\n\n**Other Possibility:**\n`{{ $json.name }}` would also work in this case, as `$json` accesses the data from the previous node.",
+        "height": 580,
+        "width": 500,
+        "color": 2
+      },
+      "id": "dbebe177-0d55-4087-947a-84b841f68162",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -6288,
+        304
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "second_skill",
+              "type": "string",
+              "value": "={{ $('Source Data').last().json.skills[1] }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "93bbd54d-406e-4cbe-8e6b-689ef2eead82",
+      "name": "3. Working with Arrays",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -4848,
+        720
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "## Lesson 3: Accessing an Array Element\n\nWhat if the data is in a list (an array)? You need to specify *which* item you want.\n\n**The Goal:** Get the user's *second* skill.\n\n**The Expression:** `{{ $('Source Data').last().json.skills[1] }}`\n\n**Breakdown:**\n- `...skills`: Selects the array of skills.\n- `[1]`: Selects the item at a specific position.\n- **IMPORTANT:** Arrays are \"zero-indexed\", which means the first item is `[0]`, the second is `[1]`, the third is `[2]`, and so on.",
+        "height": 520,
+        "width": 540,
+        "color": 4
+      },
+      "id": "5ba725c5-f11f-4396-a471-1b9eab7e9408",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -5072,
+        368
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "user_email",
+              "type": "string",
+              "value": "={{ $('Source Data').last().json.contact.email }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "9f7080d0-a008-4c6c-be5c-4fe40874cb03",
+      "name": "4. Going Deeper",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -4288,
+        720
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "## Lesson 4: Accessing Nested Data\n\nSometimes, data is organized into objects within other objects.\n\n**The Goal:** Get the user's email address.\n\n**The Expression:** `{{ $('Source Data').last().json.contact.email }}`\n\n**Breakdown:**\n- `...contact`: First, we access the `contact` object.\n- `.email`: Then, we use another dot `.` to go one level deeper and get the value of the `email` key inside it.",
+        "height": 480,
+        "width": 540,
+        "color": 5
+      },
+      "id": "37744fde-a449-456f-9d52-00196e374633",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -4512,
+        400
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "first_project_status",
+              "type": "string",
+              "value": "={{ $('Source Data').last().json.projects[0].status }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "e1ab506e-a596-402e-a883-ff879a48706f",
+      "name": "5. The Combo Move",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -3712,
+        720
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "## Lesson 5: Accessing Data in an Array of Objects\n\nThis is the ultimate test of the previous lessons!\n\n**The Goal:** Get the *status* of the *first* project in the list.\n\n**The Expression:** `{{ $('Source Data').last().json.projects[0].status }}`\n\n**Breakdown:**\n1.  `...projects`: We select the array of projects.\n2.  `[0]`: We pick the first object in that array.\n3.  `.status`: From that chosen object, we grab the value of the `status` key.",
+        "height": 480,
+        "width": 580,
+        "color": 6
+      },
+      "id": "ec93b8e6-bb4b-4874-9cac-fb7aa861dc88",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3952,
+        400
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "name_in_caps",
+              "type": "string",
+              "value": "={{ $('Source Data').last().json.name.toUpperCase() }}"
+            },
+            {
+              "id": "67890",
+              "name": "age_in_dog_years",
+              "type": "number",
+              "value": "={{ Math.round($('Source Data').last().json.age / 7) }}"
+            },
+            {
+              "id": "abcde",
+              "name": "age_data_type",
+              "type": "string",
+              "value": "={{ typeof $('Source Data').last().json.age }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "360c127f-b2d8-4884-b8ee-a53a67e789d6",
+      "name": "6. A Touch of Magic",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -3104,
+        720
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "## Lesson 6: A Touch of Magic (JS Functions)\n\nYou can do more than just retrieve data; you can **manipulate and inspect it!**\n\n**The Expressions:**\n- **Transform Text:** `{{ $('Source Data').last().json.name.toUpperCase() }}`\n- **Do Math:** `{{ Math.round($('Source Data').last().json.age / 7) }}`\n- **Check Data Type:** `{{ typeof $('Source Data').last().json.age }}`\n\n**Breakdown:**\n- **`.toUpperCase()`**: A standard JavaScript function for strings.\n- **`Math.round(...)`**: The `Math` object gives you access to powerful math functions.\n- **`typeof`**: An operator that tells you what kind of data you're looking at (\"string\", \"number\", \"object\", etc.).",
+        "height": 520,
+        "width": 580,
+        "color": 3
+      },
+      "id": "215573a0-48af-481d-ad6a-1e401c2ae438",
+      "name": "Sticky Note6",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -3344,
+        368
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "all_skills_string",
+              "type": "string",
+              "value": "={{ $('Split Out Skills').all().map(item => item.json.skills).join(', ') }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "b3502218-4d7b-4dd9-9854-8f5a5a2e50ec",
+      "name": "9. The \"All Items\" View",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -1184,
+        720
+      ],
+      "executeOnce": true,
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "## Lesson 9: Working with Multiple Items (`$items` & Arrow Functions)\n\nWhat if a node outputs *multiple* items and you want to summarize them? `$items()` is your tool.\n\n**The Goal:** Get a single, comma-separated string of all the user's skills.\n\n**The Expression:** `{{ $('Split Out Skills').all().map(item `=>` item.json.skills).join(', ') }}`\n\n**What is `item => ...`?**\nThis is an **Arrow Function**, a shorthand for \"for each thing, do this\".\n- `item`: A temporary name for each item in the list as we loop over it.\n- =>: The \"arrow\" that separates the item from the action.\n- `item.json.skills`: The action to perform—in this case, get the skill value from the item.",
+        "height": 520,
+        "width": 780,
+        "color": 5
+      },
+      "id": "b63001ac-794d-41f6-9c2f-95799d4fee6b",
+      "name": "Sticky Note7",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1632,
+        368
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "final_summary",
+              "type": "string",
+              "value": "=User {{ $('2. The n8n Selectors').last().json.user_name_from_first }} is {{ $('Source Data').last().json.age }}.\n\nTheir best skill is {{ $('3. Working with Arrays').last().json.second_skill }}.\n\nTheir first project was {{ $('Source Data').last().json.projects[0].name }}, which is now {{ $('5. The Combo Move').last().json.first_project_status }}.\n\nAll skills: {{ $('9. The \"All Items\" View').last().json.all_skills_string }}."
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "67b2095a-7c48-4b98-b91f-15e13098b631",
+      "name": "Final Exam",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -608,
+        720
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "## 🎓 FINAL EXAM: Putting It All Together\n\nThis node uses everything we've learned to build a final summary object.\n\nLook at the expressions for each field. They pull data from different nodes and use different techniques you've just practiced.\n\n**Congratulations! You now have the foundational knowledge to link data and build powerful, dynamic workflows in n8n.**",
+        "height": 420,
+        "width": 520,
+        "color": 6
+      },
+      "id": "f59c12e9-e5a4-48a7-bf99-95a151133e85",
+      "name": "Sticky Note8",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -832,
+        464
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "user_name_from_first",
+              "type": "string",
+              "value": "={{ $('Source Data').last().json.name }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "d6b6298e-0eed-4c7a-b7ae-036f2c58ea27",
+      "name": "2. The n8n Selectors",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -5472,
+        720
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "## Lesson 2: The n8n Selectors (`.first()`, `.last()`, `.all()`)\n\nIn the last lesson, we used `.item`. When there is only one output item from a node, this is equivalent to `.last()`. Using `.last()` explicitly is often safer and clearer.\n\n**The Goal:** Get the user's name using the `.last()` selector.\n\n**The Expression:** `{{ $('Source Data').last().json.name }}`\n\n**Why is this better?**\nIf a node ever returns multiple items, `.last()` guarantees you only get data from the very last one.\n\nIf you ever need to match the selected data with the input items, this is where `.item` cannot be replaced.\n\n**Other Selectors:**\n- **`.first()`**: Gets the data from the first item.\n- **`.all()`**: Gets data from ALL items, returning it as an array of objects. (This is different from `$items`!)",
+        "height": 620,
+        "width": 680
+      },
+      "id": "26e199ab-7287-4d5e-aa7c-08fadbf25e00",
+      "name": "Sticky Note9",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -5776,
+        272
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "contact_keys",
+              "type": "array",
+              "value": "={{ Object.keys($('Source Data').last().json.contact) }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "6fa4a8a3-6cd0-4eef-adb2-5e3f2cb1f2e2",
+      "name": "7. Inspecting Objects",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -2544,
+        720
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "## Lesson 7: Inspecting Objects (`Object.keys()`)\n\nWhat if you have an object but you don't know what keys are inside it? `Object.keys()` comes to the rescue.\n\n**The Goal:** Get a list of all the keys inside the `contact` object.\n\n**The Expression:** `{{ Object.keys($('Source Data').last().json.contact) }}`\n\nThis is incredibly useful for dynamically processing data. It returns an **array** containing the names of the keys (e.g., `[\"email\", \"phone\"]`).",
+        "height": 520,
+        "width": 500,
+        "color": 2
+      },
+      "id": "46b378dd-29d7-4f13-ba7e-9e77d87eb734",
+      "name": "Sticky Note10",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2752,
+        368
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "12345",
+              "name": "contact_as_string",
+              "type": "string",
+              "value": "={{ JSON.stringify($('Source Data').last().json.contact, null, 2) }}"
+            },
+            {
+              "id": "06003b65-7482-4d5a-b2c0-1794859ab461",
+              "name": "skills",
+              "type": "array",
+              "value": "={{ $('Source Data').last().json.skills }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "5e8d78ab-75f2-4aa8-afd0-7b3f375ffecd",
+      "name": "8. Utility Functions",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        -1984,
+        720
+      ],
+      "typeVersion": 3.4
+    },
+    {
+      "parameters": {
+        "content": "## Lesson 8: Utility Functions (`JSON.stringify()`)\n\nSometimes you need to convert a structured JSON object back into a clean, single string. This is common when sending data to another service, like in an AI prompt.\n\n**The Goal:** Turn the entire `contact` object into a formatted string.\n\n**The Expression:** `{{ JSON.stringify($('Source Data').last().json.contact, null, 2) }}`\n\n**Breakdown:**\n- **`JSON.stringify(...)`**: The function that does the conversion.\n- **`null, 2`**: These optional parameters tell it to \"pretty-print\" the string with an indentation of 2 spaces, making it readable.",
+        "height": 520,
+        "width": 580
+      },
+      "id": "ef992ce4-958d-488c-b460-8263601dc1f4",
+      "name": "Sticky Note11",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -2224,
+        368
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "skills",
+        "include": "allOtherFields",
+        "options": {}
+      },
+      "id": "979364da-bb02-4541-a35d-13ca6c552a25",
+      "name": "Split Out Skills",
+      "type": "n8n-nodes-base.splitOut",
+      "position": [
+        -1408,
+        720
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Was this helpful? Let me know!\n\nI really hope this tutorial helped you understand n8n Expressions better. Your feedback is incredibly valuable and helps me create better resources for the n8n community.\n\n### **Share Your Thoughts & Ideas**\n\nWhether you have a suggestion, found a typo, or just want to say thanks, I'd love to hear from you!\nHere's a simple n8n form built for this purpose:\n\n#### ➡️ **[Click here to give feedback](https://api.ia2s.app/form/templates/feedback?template=Expressions%20Tutorial)**\n\n### **Ready to Build Something Great?**\n\nIf you're looking to take your n8n skills or business automation to the next level, I can help.\n\n**🎓 n8n Coaching:** Want to become an n8n pro? I offer one-on-one coaching sessions to help you master workflows, tackle specific problems, and build with confidence.\n#### ➡️ **[Book a Coaching Session](https://api.ia2s.app/form/templates/coaching?template=Expressions%20Tutorial)**\n\n**💼 n8n Consulting:** Have a complex project, an integration challenge, or need a custom workflow built for your business? Let's work together to create a powerful automation solution.\n#### ➡️ **[Inquire About Consulting Services](https://api.ia2s.app/form/templates/consulting?template=Expressions%20Tutorial)**\n\n---\n\nHappy Automating!\nLucas Peyrin",
+        "height": 800,
+        "width": 540,
+        "color": 4
+      },
+      "id": "e785d422-0b02-4368-bf99-46833eb1c37d",
+      "name": "Sticky Note12",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -288,
+        80
+      ],
+      "typeVersion": 1
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-07-16T09:45:37.808Z",
+      "updatedAt": "2025-07-16T09:45:37.808Z",
+      "id": "5AJ5VaZ76VSOnSsW",
+      "name": "learn"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-07-16T09:46:14.550Z",
+  "versionId": "03c96a1b-200d-4e4a-9a25-97abc0556bc3"
+}
