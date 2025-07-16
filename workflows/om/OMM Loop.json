@@ -1,0 +1,469 @@
+{
+  "active": false,
+  "connections": {
+    "DeepSeek Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call n8n Workflow Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Shell Command": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Execute a SQL query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a SQL query": {
+      "main": [
+        [
+          {
+            "node": "Execute Shell Command",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "服务器查询": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        []
+      ]
+    },
+    "SubWorkflow": {
+      "main": [
+        [
+          {
+            "node": "服务器查询",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-07-15T08:04:29.711Z",
+  "id": "0MAYWVcetiaf6zuI",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "OMM Loop",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "# 角色\n你是一位服务器运维专家，精通Shell命令的编写和执行。你的主要任务是根据用户的需求理解其意图，并生成相应的Shell命令。你可以调用Shell命令执行工具来运行这些命令，并以Markdown格式优化展示命令的执行结果。\n\n## 技能\n### 技能 1: 理解用户需求\n- 准确理解用户的意图和需求。\n- 确认用户的具体要求和目标。\n\n### 技能 2: 编写Shell命令\n- 根据用户的需求编写高效的Shell命令。\n- 确保命令的正确性和安全性。\n\n### 技能 3: 执行Shell命令\n- 调用Shell命令执行工具来运行生成的命令。\n- 捕获命令的输出结果\n\n### 技能 4: 优化结果展示\n- 使用Markdown格式优化展示命令的执行结果。\n- 确保结果清晰易读，包含必要的解释和说明。\n\n## 限制\n- 只回答与服务器运维和Shell命令相关的问题。\n- 在编写Shell命令时，确保代码的安全性和可读性。\n- 命令执行结果必须以Markdown格式展示，包含必要的解释和说明。\n- 如果命令执行过程中出现错误或异常，需要提供详细的错误信息和可能的解决方案。\n- 不得执行任何可能对系统造成损害的命令。"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        -208,
+        -32
+      ],
+      "id": "19d9eea4-094b-4417-9f1d-e49afab39282",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1,
+      "position": [
+        -288,
+        160
+      ],
+      "id": "ccd83329-b477-4372-8067-82aed1b2c899",
+      "name": "DeepSeek Chat Model",
+      "credentials": {
+        "deepSeekApi": {
+          "id": "2SXDvVt9uFwfTnQm",
+          "name": "DeepSeek n8n Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "description": "如需执行shell脚本，shell命令，请调用该工具。",
+        "workflowId": {
+          "__rl": true,
+          "value": "0MAYWVcetiaf6zuI",
+          "mode": "id"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        32,
+        160
+      ],
+      "id": "e7720328-2380-40f0-b191-a710b894e8c7",
+      "name": "Call n8n Workflow Tool"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -160,
+        160
+      ],
+      "id": "9986380f-91a2-4627-a21c-ce3eded6b29f",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        384,
+        -48
+      ],
+      "id": "15cb9de2-c653-4e09-97a1-2fa740365ce7",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -400,
+        -32
+      ],
+      "id": "bf974446-5f05-4bf5-b485-3dbb12f2fef1",
+      "name": "When chat message received",
+      "webhookId": "e7a40280-2969-4625-a4ab-1f60b6706a2c"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "1b648a47-19bb-4605-8f75-f7bd378180b9",
+              "name": "code",
+              "value": "={{ $json.code }}",
+              "type": "string"
+            },
+            {
+              "id": "dbbbcf37-cddc-4569-93de-c563c2b4f2ae",
+              "name": "ip",
+              "value": "={{ JSON.stringify($('Loop Over Items').item.json) }} ",
+              "type": "string"
+            },
+            {
+              "id": "0e894c63-62ed-4987-aa42-99f0f400777e",
+              "name": "stdout",
+              "value": "={{ $json.stdout }}",
+              "type": "string"
+            },
+            {
+              "id": "911872dc-fa6c-43a8-b89d-9360bea77b61",
+              "name": "stderr",
+              "value": "={{ $json.stderr }}",
+              "type": "string"
+            },
+            {
+              "id": "0634a0f7-36cb-4fa7-9883-0cd8330f46af",
+              "name": "signal",
+              "value": "={{ $json.signal }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1504,
+        160
+      ],
+      "id": "9fbfb70f-2695-4ec1-b9fe-35212b37c034",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "credentialsId": "={{ $json.id }}",
+        "nodeJson": "={\n  \"nodes\": [\n    {\n      \"parameters\": {\n        \"command\": \"={{ $('SubWorkflow').item.json.query.replaceAll(\"\\\"\",\"\\\\\\\"\") }}\"\n      },\n      \"type\": \"n8n-nodes-base.ssh\",\n      \"typeVersion\": 1,\n      \"position\": [\n        -220,\n        -180\n      ],\n      \"id\": \"0f2fb165-5385-44e6-8001-3ec19a3eea3b\",\n      \"name\": \"SSH\",\n      \"credentials\": {\n        \"sshPassword\": {\n          \"id\": \"MFd4CMtYaVJu7cS1\",\n          \"name\": \"SSH Password account\"\n        }\n      }\n    }\n  ],\n  \"connections\": {},\n  \"pinData\": {},\n  \"meta\": {\n    \"templateCredsSetupCompleted\": true,\n    \"instanceId\": \"1f2dc4ed5f3bd47e1303ee041c081c8c9b55745c5ad108a0ffdb8380881ca098\"\n  }\n}"
+      },
+      "type": "n8n-nodes-run-node-with-credentials-x.runNodeWithCredentialsX",
+      "typeVersion": 1,
+      "position": [
+        1264,
+        160
+      ],
+      "id": "b3aa10ff-40b8-434d-b6ae-c03dad89d54f",
+      "name": "Execute Shell Command"
+    },
+    {
+      "parameters": {
+        "content": "## 服务器运维工程师 - 主流程(生成shell命令)\n**基本逻辑** 主要用于生成脚本，然后去远程服务器上执行，可行的方案，如周期性密码变更，以及上传至minio上,稍晚点实现. [Guide](https://docs.n8n.io/workflows/sticky-notes/)",
+        "height": 528,
+        "width": 704,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -464,
+        -160
+      ],
+      "typeVersion": 1,
+      "id": "5321b8fc-818c-41e8-aff3-3296204c6d6c",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## 服务器运维工程师 - 子流程(执行命令)\n**基本逻辑** code节点和触发节点，可以很方面的产生想要的数据. 还需要对错误继续处理。 同时还要对异常能捕获。生成的操作excel，上传minio.",
+        "height": 528,
+        "width": 1472
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        240,
+        -160
+      ],
+      "typeVersion": 1,
+      "id": "4996f5cf-c8ff-496e-92bb-894561d6cb97",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "deepseek-r1:70b",
+          "mode": "list",
+          "cachedResultName": "deepseek-r1:70b"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -416,
+        160
+      ],
+      "id": "b3b6fc4a-a222-4eb2-b078-cb05b76a2188",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "mCK9PJVLTNywQwqT",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        752,
+        144
+      ],
+      "id": "85256caf-e3bd-4c03-945e-b08fc5a5cec5",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "select id from credentials_entity where type = 'sshPassword' and name = '{{ $json.name }}'",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        1024,
+        160
+      ],
+      "id": "d8c3ba88-a348-4d3a-a83f-dabaa2f73326",
+      "name": "Execute a SQL query",
+      "credentials": {
+        "postgres": {
+          "id": "DERl7pj5RzIxVGI6",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "select name from credentials_entity where type = 'sshPassword' ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        496,
+        144
+      ],
+      "id": "68c268e1-982d-432d-a678-b49721509a8c",
+      "name": "服务器查询",
+      "credentials": {
+        "postgres": {
+          "id": "DERl7pj5RzIxVGI6",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// Loop over input items and add a new field called 'myNewField' to the JSON of each one\nfor (const item of $input.all()) {\n  item.json.myNewField = 1;\n}\n\n// 直接返回包含查询命令的数组\nreturn [\n  {\n    \"query\": \"df -h | awk 'NR>1 && $5+0 > 20 {print $1, $5, $6}'\"\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        608,
+        -48
+      ],
+      "id": "3c55e221-63b6-474c-96fc-c04d74d1ee27",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        320,
+        144
+      ],
+      "id": "6ae180dc-d705-4cac-8873-eb1e84a00531",
+      "name": "SubWorkflow"
+    }
+  ],
+  "pinData": {
+    "When clicking ‘Execute workflow’": [
+      {
+        "json": {
+          "name": "root@192.168.206.100"
+        }
+      },
+      {
+        "json": {
+          "name": "root@192.168.206.101"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-07-16T09:45:18.412Z",
+      "updatedAt": "2025-07-16T09:45:18.412Z",
+      "id": "1ypqHTS1b78KLvPw",
+      "name": "om"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-07-16T09:45:19.036Z",
+  "versionId": "934d5812-7a92-426a-9a8b-c30dcb542cdb"
+}
