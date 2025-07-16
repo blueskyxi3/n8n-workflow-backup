@@ -1,0 +1,136 @@
+{
+  "active": false,
+  "connections": {
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Tesseract",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Tesseract": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-07-16T06:53:54.025Z",
+  "id": "qeA7QXSHHqJb5iTs",
+  "isArchived": false,
+  "meta": null,
+  "name": "Tesseract Community Node OCR",
+  "nodes": [
+    {
+      "parameters": {
+        "formTitle": "上传图片",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "images",
+              "fieldType": "file",
+              "acceptFileTypes": ".jpg,.png"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -544,
+        -48
+      ],
+      "id": "e8b494e2-6fa5-4fc0-87b7-cad35429a42f",
+      "name": "On form submission",
+      "webhookId": "c7800755-152f-48f7-bfa4-d8bc40c3f813"
+    },
+    {
+      "parameters": {
+        "jsCode": "let results = [];\n// 在 Code 节点中运行一次性所有 itemslet results =[];\nfor(const item of $input.all()){\n  for(const key of Object.keys(item.binary)){\n    results.push({\n              json: item.json,\n              binary:{ data: item.binary[key] },\n    });\n  }\n}\n    \nreturn results;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -336,
+        -48
+      ],
+      "id": "bccbf37f-6b17-487b-8e28-a274a6888120",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -128,
+        -48
+      ],
+      "id": "f13a9895-06da-407e-b85f-20c5ef217029",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-tesseractjs.tesseractNode",
+      "typeVersion": 1,
+      "position": [
+        160,
+        -32
+      ],
+      "id": "c08e9d58-dba7-4de9-bfde-8cb12af44992",
+      "name": "Tesseract"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-07-16T09:45:37.808Z",
+      "updatedAt": "2025-07-16T09:45:37.808Z",
+      "id": "5AJ5VaZ76VSOnSsW",
+      "name": "learn"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-07-16T09:45:39.112Z",
+  "versionId": "26aa2f07-4142-4b19-8809-a00dedb38520"
+}
