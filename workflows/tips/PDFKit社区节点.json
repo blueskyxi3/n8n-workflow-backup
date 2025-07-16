@@ -1,0 +1,79 @@
+{
+  "active": false,
+  "connections": {},
+  "createdAt": "2025-07-16T08:48:25.836Z",
+  "id": "OAp00rMLqJX2XrdN",
+  "isArchived": false,
+  "meta": null,
+  "name": "PDFKit社区节点",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-pdfkit.pdfKit",
+      "typeVersion": 1,
+      "position": [
+        368,
+        112
+      ],
+      "id": "57732ad9-7ad5-471b-9885-07db12936212",
+      "name": "PDFKit"
+    },
+    {
+      "parameters": {
+        "formTitle": "上传图片",
+        "formDescription": "上传图片生成PDF",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "images",
+              "fieldType": "file",
+              "acceptFileTypes": ".jpg,.png"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        144,
+        112
+      ],
+      "id": "ea5f2552-48f4-43dc-a7ba-576d528e9354",
+      "name": "On form submission",
+      "webhookId": "18920140-1ca3-420c-982c-4a1ba9b928b0"
+    },
+    {
+      "parameters": {
+        "content": "## PDFKit 社区节点\n\n上传图片，生成PDF",
+        "height": 300,
+        "width": 660,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "7030c84f-4803-4fb2-8c4b-3acf129d45ae",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-07-16T08:49:08.063Z",
+      "updatedAt": "2025-07-16T08:49:08.063Z",
+      "id": "fFsQo0HXVOOz1dKe",
+      "name": "tips"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-07-16T08:49:27.084Z",
+  "versionId": "6cdf8018-8d46-4e92-ab30-f46ffc9818a8"
+}
