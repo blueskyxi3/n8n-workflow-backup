@@ -1,0 +1,273 @@
+{
+  "active": false,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "一级审核",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AMAP MCP Client": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent with MCP",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Fetch MCP Client": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent with MCP",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeepSeek Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent with MCP",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "一级审核": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "AI Agent with MCP",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "结束，审核不通过",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-07-15T06:37:19.802Z",
+  "id": "SDuValBGgMmBLr9t",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Amap Fetch MCP",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -688,
+        0
+      ],
+      "id": "c4d13e00-c925-420a-8a23-6460c3f477a6",
+      "name": "When chat message received",
+      "webhookId": "0635133a-7ec2-4c4c-b770-604c7547f1df"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('When chat message received').item.json.chatInput }}",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        0,
+        0
+      ],
+      "id": "97d1a800-b5d0-4d63-845a-e17485086841",
+      "name": "AI Agent with MCP"
+    },
+    {
+      "parameters": {
+        "sseEndpoint": "http://192.168.206.102:8000/sse"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1,
+      "position": [
+        288,
+        240
+      ],
+      "id": "6de8b879-2728-452c-a17c-d846197d12d5",
+      "name": "AMAP MCP Client"
+    },
+    {
+      "parameters": {
+        "sseEndpoint": "http://192.168.206.102:9090/sse"
+      },
+      "type": "@n8n/n8n-nodes-langchain.mcpClientTool",
+      "typeVersion": 1,
+      "position": [
+        480,
+        240
+      ],
+      "id": "c57a8182-ec3b-4ff8-97b1-55276c2a8b0c",
+      "name": "Fetch MCP Client"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1,
+      "position": [
+        -64,
+        272
+      ],
+      "id": "d3b7dabf-9bac-4156-84c5-37b152d980fd",
+      "name": "DeepSeek Chat Model",
+      "credentials": {
+        "deepSeekApi": {
+          "id": "2SXDvVt9uFwfTnQm",
+          "name": "DeepSeek n8n Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-chat-v3-0324:free",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -784,
+        208
+      ],
+      "id": "7972a6c9-684f-4832-b90f-5e09c1a20102",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "mOE7vbZHlbc3A2y8",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "fromEmail": "n8n-lab@citictel.com",
+        "toEmail": "vincentzou@citictel.com",
+        "subject": "一级审核",
+        "message": "=请审核 {{ $json.chatInput }}",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double"
+          }
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        -432,
+        0
+      ],
+      "id": "c3ac434d-6b03-4ac1-8286-d24fd9f0f53f",
+      "name": "一级审核",
+      "webhookId": "43e372a6-5f14-48f1-9b49-b210166557ab",
+      "credentials": {
+        "smtp": {
+          "id": "MRieOEP8aSj6h8gG",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "1551876c-9993-42ca-ad0a-c096a0cc168b",
+              "leftValue": "={{ $json.data.approved }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -240,
+        0
+      ],
+      "id": "45ac15be-f476-4660-9e72-954b006ec0b1",
+      "name": "If"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        -368,
+        240
+      ],
+      "id": "67823a14-bd78-4383-aa39-4a42519a6464",
+      "name": "结束，审核不通过"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-07-16T09:44:50.994Z",
+      "updatedAt": "2025-07-16T09:44:50.994Z",
+      "id": "7427ztjDOxNEUThd",
+      "name": "business"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-07-16T09:44:53.328Z",
+  "versionId": "cc9ed6fd-cc77-4491-8bc4-428822c674a7"
+}
