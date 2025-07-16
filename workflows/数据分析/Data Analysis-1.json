@@ -1,0 +1,360 @@
+{
+  "active": false,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeepSeek Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "NocoDB": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Window Buffer Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call n8n Workflow Tool": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeepSeek Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-07-16T03:40:35.246Z",
+  "id": "JZGAX6r7L8pCaIYc",
+  "isArchived": false,
+  "meta": null,
+  "name": "Data Analysis-1",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "4ce5c2b7-4406-4cd6-950a-9387e10e95b1",
+      "name": "When chat message received",
+      "webhookId": "94e54646-8923-4436-abdb-46539b063dfa"
+    },
+    {
+      "parameters": {
+        "url": "https://app.nocodb.com/api/v2/meta/tables/ml6nc16x71go25a",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "nocoDbApiToken",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        160,
+        0
+      ],
+      "id": "53919098-9627-4eb6-934e-a3e4ab1ae09f",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a98a614b-6003-44ea-80ec-6b986a8e2fe4",
+              "name": "sessionId",
+              "value": "={{ $('When chat message received').item.json.sessionId }}",
+              "type": "string"
+            },
+            {
+              "id": "9faa4cb0-939b-430d-b624-3c523cb732bb",
+              "name": "chatInput",
+              "value": "={{ $('When chat message received').item.json.chatInput }}",
+              "type": "string"
+            },
+            {
+              "id": "61be9d0e-1fa1-4363-970d-64aea06f71dc",
+              "name": "columns",
+              "value": "={{ $json.columns.map(item => item.title) }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        352,
+        0
+      ],
+      "id": "f4a94c5a-767f-4c37-b88d-a2865ffc642e",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('When chat message received').item.json.chatInput }}",
+        "options": {
+          "systemMessage": "=你是一个专业的数据分析专家，精通使用 NocoDB 数据库工具。你的任务是帮助用户理解他们提供的表格数据，并根据需要生成图表。\n上下文信息:以下是用户提供的表格列信息:\n{{ $json.columns }}\n\n任务要求:\n按照指令，查询 NocoDB 中的数据。\n分析并解释数据，提供清晰、简明的分析结论。\n如需生成图表，请将数据转换为符合Quickchart或chart.js的 JSON 格式。请确保生成的 JSON 结构为标准Chart.js 配置对象，不能额外嵌套在其他属性内，以便可直接用于 QuickChart 的 URL 请求。\n返回图表时，请使用 Markdown 格式内联嵌入图像，例如:![图表](图表URL) "
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        512,
+        0
+      ],
+      "id": "cda6d202-dd2d-410d-91db-d7c5885440b3",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1,
+      "position": [
+        352,
+        208
+      ],
+      "id": "a38a50c3-6737-4582-a405-ce9cf9812113",
+      "name": "DeepSeek Chat Model"
+    },
+    {
+      "parameters": {
+        "authentication": "nocoDbApiToken",
+        "operation": "getAll",
+        "workspaceId": "wbfofeuu",
+        "projectId": "py0t5qsk2mnkphj",
+        "table": "ml6nc16x71go25a",
+        "returnAll": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Return_All', ``, 'boolean') }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.nocoDbTool",
+      "typeVersion": 3,
+      "position": [
+        752,
+        208
+      ],
+      "id": "28d794f7-352a-428d-b3f7-4ac5e832a889",
+      "name": "NocoDB"
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        512,
+        208
+      ],
+      "id": "2b587fd0-0903-4d5e-9965-f4a231de13ac",
+      "name": "Window Buffer Memory"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        944,
+        0
+      ],
+      "id": "82ff034b-a9cb-4b14-bb37-1943f83aefb4",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=input data: {{ $json.query }}",
+        "options": {
+          "systemMessage": "### 角色设定\n\n你是一位 chart.js 可视化专家。你的主要任务是根据用户的请求，生成**有效、结构清晰、标签明确**的Chart.js 配置对象。这些配置应当可以直接用于 Chart.js 的构造函数`new Chart()`中。\n\n---\n###输入要求\n你将接收到用户关于图表的描述，请根据以下要素解析和响应:\n\n#### 1. 图表类型\n\n用户可能会指定图表类型，如:`bar`(柱状图)、`line`(折线图)、`pie`(饼图)、`scatter`(散点图)、`radar`、`bubble`等。\n\n#### 2. 数据\n\n用户提供的数据可能为 CSV、JSON、列表或自然语言形式。\n\n* 对格式不清晰的数据，要主动提问澄清。\n* 如有需要，可提取和转换数据结构。\n\n#### 3. 标签信息\n用户应提供用于坐标轴、数据点等元素的标签，特别是:\n\n* **轴标题**(如:\"月份\"\"销售额(USD)\")\n* **单位**(如:\"(kg)\"，\"(USD)\")\n* **数据类型**(分类、数值型、时间序列)有\n  如信息缺失，请主动向用户确认。\n\n#### 4. 样式自定义(Styling)\n\n支持颜色、字体、网格线、标题、图例、工具提示、坐标轴刻度等样式调整。\n\n* 若用户未提供具体样式，使用 Chart.js 默认值。\n\n#### 5. Chart.js特定功能\n\n根据用户请求，支持使用高级功能，如:对数坐标、动画、插件等。\n\n#### 6. 自然语言输入解析\n\n支持将不结构化的描述，准确转换为有效的 Chart.js配置。\n\n---\n\n### 输出要求\n\n输出一个**有效、格式规范、可读性强**的 Chart.js JSON 配置对象，必须包括:\n\n* 数据部分(`data`)\n* 配置项(`options`)\n* 清晰的 x轴和y轴标签(`options.scales`中)\n* 必要时添加单位、标题、数据格式(如货币、日期等)\n\n---\n\n### 示例输入(优化版)\n\n> 创建一个柱状图，展示 2024 年第一季度每月销售额:1月为10,000美元、2月为12,000 美元，3 月为15,800 美元。柱子颜色为蓝色。图表标题为\"Q1 2024 销售额\"。x 轴为“月份\"，y 轴为\"销售额(USD)\"\n\n### 示例输出\n\n请生成符合最新 Chart.js 版本标准的 JSON 配置，输出类似: \n注：只返回JSON对象，其它无关文件不要输出\n```json\n{\n  \"type\": \"bar\",\n  \"data\": {\n    \"labels\": [\"1月\", \"2月\", \"3月\"],\n    \"datasets\": [\n      {\n        \"label\": \"销售额(USD)\",\n        \"data\": [10000, 12000, 15800],\n        \"backgroundColor\": \"rgba(54, 162, 235, 0.7)\",\n        \"borderColor\": \"rgba(54, 162, 235, 1)\",\n        \"borderWidth\": 1\n      }\n    ]\n  },\n  \"options\": {\n    \"responsive\": true,\n    \"plugins\": {\n      \"legend\": {\n        \"position\": \"top\"\n      },\n      \"title\": {\n        \"display\": true,\n        \"text\": \"Q1 2024 销售额\",\n        \"font\": {\n          \"size\": 16\n        }\n      }\n    },\n    \"scales\": {\n      \"x\": {\n        \"title\": {\n          \"display\": true,\n          \"text\": \"月份\",\n          \"font\": {\n            \"weight\": \"bold\"\n          }\n        }\n      },\n      \"y\": {\n        \"title\": {\n          \"display\": true,\n          \"text\": \"销售额(USD)\",\n          \"font\": {\n            \"weight\": \"bold\"\n          }\n        },\n        \"beginAtZero\": true,\n        \"ticks\": {\n          \"callback\": \"function(value) { return '$' + value.toLocaleString(); }\"\n        }\n      }\n    }\n  }\n}\n```\n"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        1168,
+        0
+      ],
+      "id": "617b4b5a-bb65-4575-9907-da20490691eb",
+      "name": "AI Agent1"
+    },
+    {
+      "parameters": {
+        "description": "如需生成图表，请调用相应工具。务必正确转义所有字符串，尤其是多行内容。输出图表时，使用 Markdown 格式嵌入图像链\n接，以实现图表的内联展示。\n格式示例:![图表](图表URL)",
+        "workflowId": {
+          "__rl": true,
+          "value": "4ZDBSSJtvUY6KxcY",
+          "mode": "id"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {},
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "query",
+              "displayName": "query",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "object",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        624,
+        208
+      ],
+      "id": "78bf91e2-5429-4ba8-b003-32938cb872b5",
+      "name": "Call n8n Workflow Tool"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1,
+      "position": [
+        1120,
+        208
+      ],
+      "id": "a8729a14-8f33-4d75-8ad6-e9b3814a0385",
+      "name": "DeepSeek Chat Model1"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"name\": \"chart_configuration\",\n  \"description\": \"Configuration schema for Chart.js charts\",\n  \"strict\": true,\n  \"schema\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"type\": {\n        \"type\": \"string\",\n        \"enum\": [\"bar\", \"line\", \"radar\", \"pie\", \"doughnut\", \"polarArea\", \"bubble\", \"scatter\", \"area\"]\n      },\n      \"data\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"labels\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"type\": \"string\"\n            }\n          },\n          \"datasets\": {\n            \"type\": \"array\",\n            \"items\": {\n              \"type\": \"object\",\n              \"properties\": {\n                \"label\": {\n                  \"type\": [\"string\",\"null\"]\n                },\n                \"data\": {\n                  \"type\": \"array\",\n                  \"items\": { \"type\": \"number\" }   \n                },\n                \"backgroundColor\": {\n                  \"type\": [\"string\",\"null\", \"array\"],\n                  \"items\": {\n                    \"type\": \"string\"\n                  }\n                },\n                \"borderColor\": {\n                  \"type\": [\"string\",\"null\", \"array\"],\n                  \"items\": {\n                    \"type\": \"string\"\n                  }\n                },\n                \"borderWidth\": {\n                  \"type\": \"number\"\n                },\n                \"pointBackgroundColor\": {\n                  \"type\": [\"string\",\"null\"]\n                },\n                \"pointBorderColor\": {\n                  \"type\": [\"string\",\"null\"]\n                },\n                \"pointRadius\": {\n                  \"type\": \"number\"\n                },\n                \"fill\": {\n                  \"type\": [\"boolean\", \"string\"]\n                },\n                \"tension\": {\n                  \"type\": \"number\",\n                  \"minimum\": 0,\n                  \"maximum\": 1\n                },\n                \"type\": {\n                  \"type\": \"string\",\n                  \"enum\": [\"bar\", \"line\", \"radar\", \"pie\", \"doughnut\", \"polarArea\", \"bubble\", \"scatter\", \"area\"]\n                }\n              },\n              \"required\": [\"data\"],\n              \"additionalProperties\": true\n            }\n          }\n        },\n        \"required\": [\"datasets\"],\n        \"additionalProperties\": true\n      },\n      \"options\": {\n        \"type\": \"object\",\n        \"properties\": {\n          \"responsive\": {\n            \"type\": \"boolean\"\n          },\n          \"plugins\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"legend\": {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"display\": {\n                    \"type\": \"boolean\"\n                  },\n                  \"position\": {\n                    \"type\": \"string\",\n                    \"enum\": [\"top\", \"left\", \"bottom\", \"right\"]\n                  },\n                  \"labels\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                      \"color\": {\n                        \"type\": \"string\"\n                      }\n                    }\n                  }\n                }\n              },\n              \"title\": {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"display\": {\n                    \"type\": \"boolean\"\n                  },\n                  \"text\": {\n                    \"type\": \"string\"\n                  },\n                  \"font\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                      \"size\": {\n                        \"type\": \"number\"\n                      }\n                    }\n                  }\n                }\n              },\n              \"tooltip\": {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"enabled\": {\n                    \"type\": \"boolean\"\n                  },\n                  \"mode\": {\n                    \"type\": \"string\",\n                    \"enum\": [\"point\", \"nearest\", \"index\", \"dataset\", \"x\", \"y\"]\n                  }\n                }\n              }\n            }\n          },\n          \"scales\": {\n            \"type\": \"object\",\n            \"properties\": {\n              \"x\": {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"display\": {\n                    \"type\": \"boolean\"\n                  },\n                  \"title\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                      \"display\": {\n                        \"type\": \"boolean\"\n                      },\n                      \"text\": {\n                        \"type\": \"string\"\n                      }\n                    }\n                  }\n                }\n              },\n              \"y\": {\n                \"type\": \"object\",\n                \"properties\": {\n                  \"display\": {\n                    \"type\": \"boolean\"\n                  },\n                  \"title\": {\n                    \"type\": \"object\",\n                    \"properties\": {\n                      \"display\": {\n                        \"type\": \"boolean\"\n                      },\n                      \"text\": {\n                        \"type\": \"string\"\n                      }\n                    }\n                  },\n                  \"beginAtZero\": {\n                    \"type\": \"boolean\"\n                  }\n                }\n              }\n            }\n          }\n        },\n        \"additionalProperties\": true\n      }\n    },\n    \"required\": [\"type\", \"data\"],\n    \"additionalProperties\": false\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        1408,
+        208
+      ],
+      "id": "4e9424aa-1f28-4f29-848f-2ca80f263be9",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"chartUrl\": \"https://quickchart.io/chart?width=800&height=400&c=\" + encodeURIComponent(JSON.stringify({{ $json.output }}))\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1520,
+        0
+      ],
+      "id": "bcc3e6b6-6c0f-4a2b-b23e-1a3d3ef73488",
+      "name": "Edit Fields1"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-07-15T15:29:33.464Z",
+      "updatedAt": "2025-07-15T15:29:33.464Z",
+      "id": "XWMxRnGL6dC2NoR9",
+      "name": "数据分析"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-07-16T09:45:09.292Z",
+  "versionId": "ce190b09-b974-4126-a05f-7b36ec723373"
+}
