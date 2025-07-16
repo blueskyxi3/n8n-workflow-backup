@@ -1,0 +1,136 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "ConvertAPI HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ConvertAPI HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-07-16T01:45:30.675Z",
+  "id": "zW6Sjb1qJFvMFD67",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Convert WEB to PDF using ConvertAPI",
+  "nodes": [
+    {
+      "parameters": {
+        "curlImport": "",
+        "httpVariantWarning": "",
+        "method": "POST",
+        "url": "https://v2.convertapi.com/convert/web/to/pdf",
+        "": "",
+        "authentication": "predefinedCredentialType",
+        "nodeCredentialType": "convertApi",
+        "provideSslCertificates": false,
+        "sendQuery": true,
+        "specifyQuery": "keypair",
+        "queryParameters": {
+          "parameters": [
+            {
+              "name": "Url",
+              "value": "https://docs.n8n.io/integrations/builtin/core-nodes/n8n-nodes-base.crypto/"
+            },
+            {
+              "name": "StoreFile",
+              "value": "true"
+            }
+          ]
+        },
+        "sendHeaders": false,
+        "sendBody": false,
+        "options": {},
+        "infoMessage": ""
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -464,
+        -80
+      ],
+      "id": "6d3d671e-6bb4-4272-be9b-b2be49aa542b",
+      "name": "ConvertAPI HTTP Request",
+      "extendsCredential": "convertApi",
+      "credentials": {
+        "convertApi": {
+          "id": "azS7Zza0P4q21xu5",
+          "name": "ConvertAPI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## I'm a note \n**Double click** https://www.convertapi.com/.",
+        "width": 448
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1216,
+        -208
+      ],
+      "typeVersion": 1,
+      "id": "b9f10e2f-f88c-4d3e-b35a-87115d050645",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -688,
+        -80
+      ],
+      "id": "d92a3c06-d51c-44d2-90c8-953777a0ba98",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "url": "={{ $json.Files[0].Url }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -240,
+        -80
+      ],
+      "id": "d6327071-c43d-4f80-86f5-2728420ad822",
+      "name": "HTTP Request"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-07-16T09:45:37.808Z",
+      "updatedAt": "2025-07-16T09:45:37.808Z",
+      "id": "5AJ5VaZ76VSOnSsW",
+      "name": "learn"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-07-16T09:45:45.617Z",
+  "versionId": "6d3d9a9b-3e3b-47cb-b492-ed4b6bf2d036"
+}
