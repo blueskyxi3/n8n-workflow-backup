@@ -1,0 +1,203 @@
+{
+  "active": false,
+  "connections": {
+    "Orders from 2003 and 2004": {
+      "main": [
+        [
+          {
+            "node": "Compare Datasets",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Orders from 2004 and 2005": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking \"Execute Workflow\"": {
+      "main": [
+        [
+          {
+            "node": "Orders from 2003 and 2004",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Orders from 2004 and 2005",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Change Total": {
+      "main": [
+        []
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Compare Datasets",
+            "type": "main",
+            "index": 1
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-07-16T07:23:15.398Z",
+  "id": "fU3d0raoD2LN6QdG",
+  "isArchived": false,
+  "meta": {
+    "templateId": "1944"
+  },
+  "name": "Compare SQL datasets",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "df04c503-d4af-4e8f-bcc3-f1fd02d3a332",
+      "name": "When clicking \"Execute Workflow\"",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        368,
+        240
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "mergeByFields": {
+          "values": [
+            {
+              "field1": "name",
+              "field2": "name"
+            }
+          ]
+        },
+        "options": {
+          "multipleMatches": "all"
+        }
+      },
+      "id": "6fe78ae6-7325-4062-ab58-457dc1d985c4",
+      "name": "Compare Datasets",
+      "type": "n8n-nodes-base.compareDatasets",
+      "position": [
+        1152,
+        224
+      ],
+      "typeVersion": 2.3
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": " select nickname name, count(1) total from document d , user u where d.created_by = u.id group by nickname\n;",
+        "options": {}
+      },
+      "id": "0dae008c-242d-4757-a5a4-a075bde54cb6",
+      "name": "Orders from 2003 and 2004",
+      "type": "n8n-nodes-base.mySql",
+      "position": [
+        672,
+        128
+      ],
+      "typeVersion": 2.1,
+      "credentials": {
+        "mySql": {
+          "id": "nmohxuTz7sUN5IDx",
+          "name": "root@192.168.206.101-ragflow"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": " select nickname name, count(1) total from document d , user u where d.created_by = u.id group by nickname",
+        "options": {}
+      },
+      "id": "c162e9b5-6e26-4a81-b90d-a5709e73019c",
+      "name": "Orders from 2004 and 2005",
+      "type": "n8n-nodes-base.mySql",
+      "position": [
+        672,
+        352
+      ],
+      "typeVersion": 2.1,
+      "credentials": {
+        "mySql": {
+          "id": "nmohxuTz7sUN5IDx",
+          "name": "root@192.168.206.101-ragflow"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "be7b68f5-2bc7-4d8c-b6e8-e0740add29d4",
+              "name": "total",
+              "value": "=1",
+              "type": "number"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        880,
+        368
+      ],
+      "id": "6377dac7-1f79-4931-b99e-df1092c51afc",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "values": {
+          "number": [
+            {
+              "name": "total",
+              "value": 1
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "05547a67-2c53-43df-8abd-ee356f12742b",
+      "name": "Change Total",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1024,
+        80
+      ],
+      "typeVersion": 2
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-07-16T09:45:37.808Z",
+      "updatedAt": "2025-07-16T09:45:37.808Z",
+      "id": "5AJ5VaZ76VSOnSsW",
+      "name": "learn"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-07-16T09:46:00.289Z",
+  "versionId": "09b6be3a-949c-4236-b13c-98a59d7dc923"
+}
