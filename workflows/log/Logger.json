@@ -1,0 +1,75 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Logger",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-07-16T08:42:25.376Z",
+  "id": "FAqzrnfUr7A8XKhv",
+  "isArchived": false,
+  "meta": null,
+  "name": "Logger",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -432,
+        -16
+      ],
+      "id": "c7a2d5fc-2e7f-4bba-aede-13f0ba24b463",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-logger.logger",
+      "typeVersion": 1,
+      "position": [
+        -224,
+        -16
+      ],
+      "id": "46c903d4-8de2-4b7b-ab4e-cfe78f38eb26",
+      "name": "Logger"
+    },
+    {
+      "parameters": {
+        "content": "## I'm a note \n**Double click** to edit me. https://www.bilibili.com/video/BV1UEN4zXEyF/?spm_id_from=333.1391.0.0&vd_source=1ce7db17027c79f364b4ec16bbee782b",
+        "width": 640
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        352,
+        96
+      ],
+      "typeVersion": 1,
+      "id": "e7838898-d488-4f52-980c-d2bcd7432e98",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-07-16T09:44:21.471Z",
+      "updatedAt": "2025-07-16T09:44:21.471Z",
+      "id": "wOUx9OZyNbuj8xwI",
+      "name": "log"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-07-16T09:44:22.910Z",
+  "versionId": "aa494735-db29-496b-9a4f-02f38dee6e9c"
+}
