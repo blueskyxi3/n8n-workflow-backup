@@ -80,13 +80,7 @@
     },
     "DeepSeek Chat Model": {
       "ai_languageModel": [
-        [
-          {
-            "node": "AI Agent",
-            "type": "ai_languageModel",
-            "index": 0
-          }
-        ]
+        []
       ]
     },
     "AI Agent": {
@@ -145,7 +139,13 @@
     },
     "OpenAI Chat Model1": {
       "ai_languageModel": [
-        []
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
       ]
     }
   },
@@ -314,8 +314,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
       "typeVersion": 1,
       "position": [
-        448,
-        704
+        400,
+        688
       ],
       "id": "bc7c38b7-d19a-43e3-a00c-bf60427ed52d",
       "name": "DeepSeek Chat Model",
@@ -449,8 +449,8 @@
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        640,
-        704
+        592,
+        736
       ],
       "id": "368a54c9-9c00-47d0-9710-4dc2c4ca7202",
       "name": "OpenAI Chat Model1",
@@ -476,6 +476,6 @@
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2025-07-15T08:31:03.368Z",
-  "versionId": "cbb88d5b-2b60-428c-8910-62931db241af"
+  "updatedAt": "2025-07-17T10:07:51.215Z",
+  "versionId": "ec7e59c3-db03-4478-a940-228992b41a29"
 }
