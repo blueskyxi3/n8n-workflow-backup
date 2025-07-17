@@ -1,0 +1,303 @@
+{
+  "active": false,
+  "connections": {
+    "Send email": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SerpAPI": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeepSeek Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "No Operation, do nothing",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On form submission": {
+      "main": [
+        [
+          {
+            "node": "Send email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send Search Result",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-07-16T08:42:25.376Z",
+  "id": "FAqzrnfUr7A8XKhv",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Security Audit Search",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## I'm a note \n**Double click** to edit me. ",
+        "height": 480,
+        "width": 1648
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -432,
+        -192
+      ],
+      "typeVersion": 1,
+      "id": "e7838898-d488-4f52-980c-d2bcd7432e98",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "operation": "sendAndWait",
+        "fromEmail": "n8n-lab@citictel.com",
+        "toEmail": "vincentzou@citictel.com",
+        "subject": "外网访问请求审核",
+        "message": "=    <div >\n        <h1>外网搜索申请审核</h1>\n        \n        <div >\n            <div >\n                <div\">申请人</div>\n                <div >{{ $json.申请人 }}</div>\n            </div>\n            </div>\n\n            <div >\n                <div>搜索问题</div>\n                <div>\n                    {{ $json.query }}\n                </div>\n            </div>\n        </div>\n    </div>",
+        "approvalOptions": {
+          "values": {
+            "approvalType": "double"
+          }
+        },
+        "options": {
+          "appendAttribution": false
+        }
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        -112,
+        -112
+      ],
+      "id": "412a7423-eaba-4944-840c-a088508451a6",
+      "name": "Send email",
+      "webhookId": "9c3d90c4-3ab3-4dde-a13e-417ba565e74e",
+      "credentials": {
+        "smtp": {
+          "id": "MRieOEP8aSj6h8gG",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('On form submission').item.json.query }}",
+        "options": {
+          "systemMessage": "# 角色\n你是一位文档总结专家，擅长从各种来源获取有价值的内容，并进行高效、准确的总结。\n\n## 技能\n### 技能1：内容搜索与获取\n- 使用网页搜索工具（如搜索引擎）来查找和获取相关文档或信息。\n- 识别并筛选出最有价值和相关性的内容。\n\n### 技能2：文档总结\n- 对获取到的文档或信息进行精炼和总结，提炼出关键点和核心内容。\n- 确保总结内容逻辑清晰、结构合理，便于用户快速理解和掌握。\n\n### 技能3：多源信息整合\n- 能够从多个来源（如不同的网站、文章、报告等）收集信息，并将其整合成一份全面且一致的总结。\n- 处理不同来源的信息时，注意保持客观性和准确性，避免信息偏差。\n\n### 技能4：关键词提取与应用\n- 提取文档中的关键词，以便用户更好地理解和检索信息。\n- 在总结中合理使用关键词，提高文档的可读性和实用性。\n\n## 限制\n- 所有总结内容必须基于实际获取的文档或信息，不得编造或虚构。\n- 总结应保持客观性，避免主观臆断或偏见。\n- 在使用搜索工具时，确保遵守相关的版权和数据使用规定，尊重原作者的知识产权。\n- 总结内容需简洁明了，避免冗长和不必要的细节，重点突出核心信息。"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.1,
+      "position": [
+        368,
+        -128
+      ],
+      "id": "b39b4a09-7841-45c4-a9aa-c96551478122",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+      "typeVersion": 1,
+      "position": [
+        640,
+        128
+      ],
+      "id": "8b32b790-f47d-42cb-8df5-b3d6af9bc7d5",
+      "name": "SerpAPI",
+      "credentials": {
+        "serpApi": {
+          "id": "icN38xd1NUTud4W7",
+          "name": "SerpAPI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1,
+      "position": [
+        288,
+        112
+      ],
+      "id": "b917fa16-bdf8-44c6-b79d-80270e0aef45",
+      "name": "DeepSeek Chat Model",
+      "credentials": {
+        "deepSeekApi": {
+          "id": "2SXDvVt9uFwfTnQm",
+          "name": "DeepSeek n8n Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "loose",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "48607174-a56a-4ed9-9f2b-246ee9b35437",
+              "leftValue": "={{ $json.data.approved }}",
+              "rightValue": "true",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "looseTypeValidation": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        96,
+        -112
+      ],
+      "id": "728cacc9-2624-4816-8727-e2e30a4ad457",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "formTitle": "安全搜索",
+        "formFields": {
+          "values": [
+            {
+              "fieldLabel": "query",
+              "placeholder": "请输入你要搜索的问题"
+            },
+            {
+              "fieldLabel": "申请人",
+              "placeholder": "please input your name"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.formTrigger",
+      "typeVersion": 2.2,
+      "position": [
+        -336,
+        -112
+      ],
+      "id": "61c411a8-a8a2-41c2-aa86-0437705aa9f4",
+      "name": "On form submission",
+      "webhookId": "f94b94f6-8686-47c8-81cb-cb2581c61445"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.noOp",
+      "typeVersion": 1,
+      "position": [
+        80,
+        112
+      ],
+      "id": "69ae21fb-a9ba-4e79-95d8-20bed208fe5b",
+      "name": "No Operation, do nothing"
+    },
+    {
+      "parameters": {
+        "fromEmail": "n8n-lab@citictel.com",
+        "toEmail": "vincentzou@citictel.com",
+        "subject": "= {{ $('On form submission').item.json.query }}",
+        "emailFormat": "text",
+        "text": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        720,
+        -128
+      ],
+      "id": "37987a5c-f331-4cff-8c15-c5bad8ca4af0",
+      "name": "Send Search Result",
+      "webhookId": "846ce1bb-d238-4569-b0ea-2670490f3886",
+      "credentials": {
+        "smtp": {
+          "id": "MRieOEP8aSj6h8gG",
+          "name": "SMTP account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [
+    {
+      "createdAt": "2025-07-16T09:44:21.471Z",
+      "updatedAt": "2025-07-16T09:44:21.471Z",
+      "id": "wOUx9OZyNbuj8xwI",
+      "name": "log"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-07-17T08:37:20.771Z",
+  "versionId": "09632624-d944-493d-bc08-e168b21b7fd7"
+}
