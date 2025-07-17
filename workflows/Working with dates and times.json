@@ -1,0 +1,231 @@
+{
+  "active": false,
+  "connections": {
+    "Set times": {
+      "main": [
+        [
+          {
+            "node": "Edit times",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "12 Hours from now": {
+      "main": [
+        [
+          {
+            "node": "Format - MMMM DD YY",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "On clicking 'execute'": {
+      "main": [
+        [
+          {
+            "node": "Set times",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "12 Hours from now",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-07-17T04:16:18.440Z",
+  "id": "zFlUQ5ICJ2Hj2RIL",
+  "isArchived": false,
+  "meta": {
+    "templateId": "1744"
+  },
+  "name": "Working with dates and times",
+  "nodes": [
+    {
+      "parameters": {},
+      "name": "On clicking 'execute'",
+      "type": "n8n-nodes-base.manualTrigger",
+      "position": [
+        848,
+        240
+      ],
+      "typeVersion": 1,
+      "id": "c0aba27d-3b46-4b42-b989-b29285d29046"
+    },
+    {
+      "parameters": {
+        "content": "## 2. Advanced way: Using Expressions\nIn this `Set` node, we set dates using [Luxon expressions](https://docs.n8n.io/code-examples/expressions/luxon/) for the following formats:\n\nNow - `{{$now}}`\nCurrent time with seconds - `{{$now.toLocaleString(DateTime.TIME_WITH_SECONDS)}}`\nToday - `{{$today}}`\nTomorrow - `{{$today.plus({days: 1})}}`\nOne hour ago - `{{$now.minus({hours: 1})}}`\nWeekday name - `{{$today.weekdayLong}}`\n\n",
+        "height": 400,
+        "width": 560
+      },
+      "name": "Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1200,
+        224
+      ],
+      "typeVersion": 1,
+      "id": "7664f334-5a3e-4749-9d04-d20072e90958"
+    },
+    {
+      "parameters": {
+        "content": "### Click the `Execute Workflow` button and double click on the nodes to see the input and output items.",
+        "height": 100,
+        "width": 420
+      },
+      "name": "Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        368,
+        240
+      ],
+      "typeVersion": 1,
+      "id": "5f79c8d1-1463-419a-b2ce-03b8025a680c"
+    },
+    {
+      "parameters": {
+        "action": "calculate",
+        "value": "={{$now}}",
+        "duration": 12,
+        "timeUnit": "hours",
+        "options": {}
+      },
+      "name": "12 Hours from now",
+      "type": "n8n-nodes-base.dateTime",
+      "position": [
+        1232,
+        48
+      ],
+      "typeVersion": 1,
+      "id": "426f055a-5cf2-44cf-9fcf-19f876abe0d1"
+    },
+    {
+      "parameters": {
+        "content": "## 1. Simple Way: Using the Date & Time node\nThere are two actions available within the `Date & Time` node:\n1. Calculating a date - adding/substracting minutes,hours, days, etc.\n2. Formatting a date\n\n",
+        "height": 340,
+        "width": 560
+      },
+      "name": "Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1200,
+        -144
+      ],
+      "typeVersion": 1,
+      "id": "3d7c54e4-05bb-4bd0-824c-face30755f57"
+    },
+    {
+      "parameters": {
+        "content": "### 2.1 Working with an existing time string\nAs items pass between nodes, n8n saves dates as ISO strings. This means that in order to work with the data as a date again, we need to convert it back using `DateTime.fromISO('yyyy-mm-dd')`\n. Once doing that, we are able to apply date and time function again such as : `{{DateTime.fromISO($json[\"Now\"]).toFormat('yyyy LLL dd')}}`",
+        "height": 320,
+        "width": 480
+      },
+      "name": "Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        1696,
+        320
+      ],
+      "typeVersion": 1,
+      "id": "b811cd79-1990-469c-98cd-d1922f841b72"
+    },
+    {
+      "parameters": {
+        "values": {
+          "string": [
+            {
+              "name": "Now",
+              "value": "={{$now}}"
+            },
+            {
+              "name": "Current time with seconds",
+              "value": "={{$now.toLocaleString(DateTime.TIME_WITH_SECONDS)}}"
+            },
+            {
+              "name": "Today",
+              "value": "={{$today}}"
+            },
+            {
+              "name": "Tomorrow",
+              "value": "={{$today.plus({days: 1})}}"
+            },
+            {
+              "name": "One hour from now",
+              "value": "={{$now.minus({hours: 1})}}"
+            },
+            {
+              "name": "Weekday",
+              "value": "={{$today.weekdayLong}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Set times",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1232,
+        480
+      ],
+      "typeVersion": 1,
+      "id": "b6b4c00c-a405-4cca-8afd-e8d4b0b6c05c"
+    },
+    {
+      "parameters": {
+        "keepOnlySet": true,
+        "values": {
+          "string": [
+            {
+              "name": "Current time",
+              "value": "={{DateTime.fromISO($json[\"Now\"])}}"
+            },
+            {
+              "name": "Current time formatted",
+              "value": "={{DateTime.fromISO($json[\"Now\"]).toFormat('yyyy LLL dd')}}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "name": "Edit times",
+      "type": "n8n-nodes-base.set",
+      "position": [
+        1792,
+        480
+      ],
+      "typeVersion": 1,
+      "id": "c77526c4-1ed7-48e8-b05c-77c7e00edd25"
+    },
+    {
+      "parameters": {
+        "value": "={{$now}}",
+        "toFormat": "MMMM DD YYYY",
+        "options": {}
+      },
+      "name": "Format - MMMM DD YY",
+      "type": "n8n-nodes-base.dateTime",
+      "position": [
+        1472,
+        48
+      ],
+      "typeVersion": 1,
+      "id": "75ace5aa-c7ca-4b2d-800d-0dda2ae2cbe7"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-07-17T04:16:18.440Z",
+  "versionId": "3f0d34f1-b6d0-4617-ae51-a75ce153e4c3"
+}
