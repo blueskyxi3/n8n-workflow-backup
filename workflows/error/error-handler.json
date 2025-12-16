@@ -11,6 +11,11 @@
           }
         ]
       ]
+    },
+    "Send email": {
+      "main": [
+        []
+      ]
     }
   },
   "createdAt": "2025-07-16T08:50:01.612Z",
@@ -77,16 +82,25 @@
   "settings": {
     "executionOrder": "v1"
   },
+  "shared": [
+    {
+      "updatedAt": "2025-07-16T08:50:01.612Z",
+      "createdAt": "2025-07-16T08:50:01.612Z",
+      "role": "workflow:owner",
+      "workflowId": "ajZGT0qnfVQVsQSC",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
   "staticData": null,
   "tags": [
     {
-      "createdAt": "2025-07-16T08:49:51.917Z",
       "updatedAt": "2025-07-16T08:49:51.917Z",
+      "createdAt": "2025-07-16T08:49:51.917Z",
       "id": "T1O10rfbvcFAVqMw",
       "name": "error"
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2025-07-16T09:01:38.167Z",
-  "versionId": "8aaa7fc1-8036-4aa1-8139-7b0d8673d16d"
+  "updatedAt": "2025-09-02T06:49:34.731Z",
+  "versionId": "17a63b0d-bae5-411d-9280-4372812d0eef"
 }
