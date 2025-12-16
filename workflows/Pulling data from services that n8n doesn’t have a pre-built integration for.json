@@ -302,7 +302,7 @@
       "type": "n8n-nodes-base.set",
       "position": [
         2096,
-        852
+        864
       ],
       "executeOnce": true,
       "typeVersion": 1
@@ -390,9 +390,18 @@
   "settings": {
     "executionOrder": "v1"
   },
+  "shared": [
+    {
+      "updatedAt": "2025-07-17T04:18:00.961Z",
+      "createdAt": "2025-07-17T04:18:00.961Z",
+      "role": "workflow:owner",
+      "workflowId": "JezVtSahf7UanJZc",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
   "staticData": null,
   "tags": [],
   "triggerCount": 0,
-  "updatedAt": "2025-07-17T04:18:00.961Z",
-  "versionId": "ecec1305-f838-43a5-9166-343de1a49ef4"
+  "updatedAt": "2025-07-18T06:22:13.869Z",
+  "versionId": "99c40105-9115-477a-b146-a168054c3b1c"
 }
