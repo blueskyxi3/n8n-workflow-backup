@@ -1,0 +1,107 @@
+{
+  "active": false,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-20T02:41:26.382Z",
+  "id": "25Io8ZZcz5FLiGOL",
+  "isArchived": true,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "test",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        -368,
+        -64
+      ],
+      "id": "bb271516-8d08-4a19-96e9-057304adaa98",
+      "name": "When chat message received",
+      "webhookId": "ac7dadf1-8a49-45b3-aa9c-ff5b159d2484"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -176,
+        -64
+      ],
+      "id": "b821ecb9-bfb8-484c-984a-b3e54bbf1078",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -288,
+        112
+      ],
+      "id": "7aa95060-e378-4fb0-a1f5-171acb0bd98b",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "mOE7vbZHlbc3A2y8",
+          "name": "OpenRouter account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-10-20T02:41:26.382Z",
+      "createdAt": "2025-10-20T02:41:26.382Z",
+      "role": "workflow:owner",
+      "workflowId": "25Io8ZZcz5FLiGOL",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2025-07-16T09:45:37.808Z",
+      "createdAt": "2025-07-16T09:45:37.808Z",
+      "id": "5AJ5VaZ76VSOnSsW",
+      "name": "learn"
+    }
+  ],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-20T04:11:18.116Z",
+  "versionId": "ce8bedcc-26b4-4343-bd6e-cc8cb47e342a"
+}
