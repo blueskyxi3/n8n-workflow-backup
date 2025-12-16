@@ -1,0 +1,107 @@
+{
+  "active": false,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-21T08:12:09.743Z",
+  "id": "sp4GWKyeKlSkeCJE",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "my first workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -416,
+        -192
+      ],
+      "id": "48c80220-cd67-4a08-82fc-1a037aa2883a",
+      "name": "When chat message received",
+      "webhookId": "641fc079-b477-40db-85f3-f78d5aa0c967"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -96,
+        -192
+      ],
+      "id": "7313dc14-6bb2-4381-8f5c-4367b4007a85",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "Qwen3-235B-A22B",
+          "mode": "list",
+          "cachedResultName": "Qwen3-235B-A22B"
+        },
+        "responsesApiEnabled": false,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        -128,
+        0
+      ],
+      "id": "da8ff04a-4fad-4edb-9446-c0d309df6f81",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "Z72HeWvzq1bPmQgr",
+          "name": "my company account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-21T08:12:09.743Z",
+      "createdAt": "2025-11-21T08:12:09.743Z",
+      "role": "workflow:owner",
+      "workflowId": "sp4GWKyeKlSkeCJE",
+      "projectId": "JM9F1TFVpLsM5MlB"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-21T08:15:28.194Z",
+  "versionId": "3ddf20d0-762a-46cb-b760-6ea54fb0ef1f"
+}
