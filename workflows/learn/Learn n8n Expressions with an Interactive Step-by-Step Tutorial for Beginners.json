@@ -679,16 +679,25 @@
   "settings": {
     "executionOrder": "v1"
   },
+  "shared": [
+    {
+      "updatedAt": "2025-07-16T02:00:49.182Z",
+      "createdAt": "2025-07-16T02:00:49.182Z",
+      "role": "workflow:owner",
+      "workflowId": "CqkZLCq5I0OoBXLM",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
   "staticData": null,
   "tags": [
     {
-      "createdAt": "2025-07-16T09:45:37.808Z",
       "updatedAt": "2025-07-16T09:45:37.808Z",
+      "createdAt": "2025-07-16T09:45:37.808Z",
       "id": "5AJ5VaZ76VSOnSsW",
       "name": "learn"
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2025-07-16T09:46:14.550Z",
-  "versionId": "03c96a1b-200d-4e4a-9a25-97abc0556bc3"
+  "updatedAt": "2025-08-31T05:41:27.446Z",
+  "versionId": "19518e4e-661b-4ef0-9e9b-8d40002e3c47"
 }
