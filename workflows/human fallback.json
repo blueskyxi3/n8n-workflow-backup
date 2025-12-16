@@ -1,0 +1,412 @@
+{
+  "active": false,
+  "connections": {
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Not sure?": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute Workflow Trigger": {
+      "main": [
+        [
+          {
+            "node": "Check if user has provided email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Chat Trigger": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Check if user has provided email": {
+      "main": [
+        [
+          {
+            "node": "Send email",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Prompt the user to provide an email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeepSeek Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Send email": {
+      "main": [
+        [
+          {
+            "node": "Confirm that we've messaged a human",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-08-26T04:10:35.231Z",
+  "id": "BNbNTwwngGbujN1d",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "human fallback",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "471a34e5-fb82-4fdb-9681-393ae0f431e0",
+      "name": "Simple Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.1,
+      "position": [
+        688,
+        16
+      ]
+    },
+    {
+      "parameters": {
+        "name": "dont_know_tool",
+        "description": "Use this tool if you don't know the answer to the user's question, or if you're not very confident about your answer.",
+        "workflowId": "={{ $workflow.id}}",
+        "fields": {
+          "values": [
+            {
+              "name": "chatInput",
+              "stringValue": "={{ $('Chat Trigger').item.json.chatInput }}"
+            }
+          ]
+        }
+      },
+      "id": "8b96cb96-47ab-41cf-a77a-862b6ab9de5a",
+      "name": "Not sure?",
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 1,
+      "position": [
+        912,
+        16
+      ]
+    },
+    {
+      "parameters": {},
+      "id": "aafa5bd5-1ec3-4725-97af-6e01bfa9da97",
+      "name": "Execute Workflow Trigger",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1,
+      "position": [
+        336,
+        624
+      ]
+    },
+    {
+      "parameters": {
+        "content": "### Sub-workflow: Custom tool\nThe agent above can call this workflow. It checks if the user has supplied an email address. If they haven't it prompts them to provide one. If they have, it messages a customer support channel for help.",
+        "height": 775.3931210698682,
+        "width": 1118.3459011229047,
+        "color": 7
+      },
+      "id": "53c3ea6b-13a5-4053-855f-b4e3e55173de",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        288,
+        272
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "### Main workflow: AI agent using custom tool",
+        "height": 486.5625,
+        "width": 927.5,
+        "color": 7
+      },
+      "id": "bf5f2de1-451d-4860-9734-66d972f87dae",
+      "name": "Sticky Note2",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        288,
+        -288
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "**This tool calls the sub-workflow below**",
+        "height": 179.21380662202682,
+        "width": 197.45572294791873,
+        "color": 5
+      },
+      "id": "9f33177a-9c2b-479a-a1a0-7314ea1ac816",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        848,
+        -48
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "**Set your credentials**",
+        "height": 213.44323866265472,
+        "width": 150,
+        "color": 2
+      },
+      "id": "8a1d8792-7584-4226-9f54-760a39f35dfe",
+      "name": "Sticky Note5",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        496,
+        -64
+      ]
+    },
+    {
+      "parameters": {
+        "content": "**Set your credentials and Slack details**",
+        "height": 250.57252651663197,
+        "width": 178.0499248677781,
+        "color": 2
+      },
+      "id": "4f92b896-28d8-4ae1-9ea4-e41a71e8b708",
+      "name": "Sticky Note4",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        816,
+        432
+      ]
+    },
+    {
+      "parameters": {
+        "content": "## Try it out\n\nSelect **Chat** at the bottom and enter:\n\n_Hi! Please respond to this as if you don't know the answer to my query._",
+        "height": 214.8397420554627,
+        "width": 185.9375,
+        "color": 4
+      },
+      "id": "3a8f03cf-38d7-4bf8-b21e-977d16dd702f",
+      "name": "Sticky Note3",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        128,
+        -224
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "## Next steps\n\nLearn more about [Advanced AI in n8n](https://docs.n8n.io/advanced-ai/)",
+        "height": 144.50520156238127
+      },
+      "id": "a08030f6-c59f-4d09-ae1b-3e127aa1c40c",
+      "name": "Sticky Note6",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1376,
+        864
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "cf0462da-beff-4f22-bba7-ac139392f712",
+      "name": "Chat Trigger",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1,
+      "position": [
+        400,
+        -224
+      ],
+      "webhookId": "785e0c0c-12e5-4249-9abe-47bb131975cb"
+    },
+    {
+      "parameters": {
+        "jsCode": "response = {\"response\":\"I'm sorry I don't know the answer. Please repeat your question and include your email address so I can request help.\"};\nreturn response;"
+      },
+      "id": "0e30e013-e1cd-4ae8-847c-be2149009a2e",
+      "name": "Prompt the user to provide an email",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1056,
+        784
+      ]
+    },
+    {
+      "parameters": {
+        "jsCode": "response = {\"response\": \"Thank you for getting in touch. I've messaged a human to help.\"}\nreturn response;"
+      },
+      "id": "b48b1804-4fab-4d51-b748-d4f4a99c06ad",
+      "name": "Confirm that we've messaged a human",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1296,
+        512
+      ]
+    },
+    {
+      "parameters": {
+        "options": {
+          "systemMessage": "Try to answer the user's question. When you can't answer, or you're not confident of the answer, use the appropriate tool. When you use the dont_know_tool, respond with the message from the tool."
+        }
+      },
+      "id": "b3c1ac7c-5ee5-477c-85ef-795201c98622",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.2,
+      "position": [
+        608,
+        -224
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "5e21e7c5-db60-4111-bb17-c289ae0fc159",
+              "leftValue": "={{ $('Execute Workflow Trigger').item.json.chatInput }}",
+              "rightValue": "/([a-zA-Z0-9._-]+@[a-zA-Z0-9._-]+\\.[a-zA-Z0-9_-]+)/gi",
+              "operator": {
+                "type": "string",
+                "operation": "regex"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "9ee7e7ea-1e7b-468c-ab84-8175ced8b364",
+      "name": "Check if user has provided email",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        560,
+        624
+      ]
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1,
+      "position": [
+        528,
+        16
+      ],
+      "id": "08cd3e8b-d5de-44ce-99a2-5271f82b7ed0",
+      "name": "DeepSeek Chat Model",
+      "credentials": {
+        "deepSeekApi": {
+          "id": "2SXDvVt9uFwfTnQm",
+          "name": "DeepSeek n8n Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "n8n@citictel.com",
+        "toEmail": "vincentzou@citictel.com",
+        "subject": "客户疑问",
+        "emailFormat": "text",
+        "text": "=以下是客户的邮箱及问题，请帮忙回复，谢谢！ {{ $('Execute Workflow Trigger').item.json.chatInput }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        848,
+        528
+      ],
+      "id": "3b0ede06-9de4-422c-ba7d-ac17f83861c7",
+      "name": "Send email",
+      "webhookId": "a64c495a-f376-4151-be90-79f5c7d5f80f",
+      "credentials": {
+        "smtp": {
+          "id": "MRieOEP8aSj6h8gG",
+          "name": "SMTP account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "Execute Workflow Trigger": [
+      {
+        "json": {
+          "query": "很抱歉，我无法直接处理CRM客户数据查询请求。您的邮箱地址vincentzou@citictel.com已记录，建议您联系公司内部CRM系统管理员或通过官方支持渠道获取协助。",
+          "chatInput": "好的，这是我的邮件地址vincentzou@citictel.com"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-08-26T04:10:35.231Z",
+      "createdAt": "2025-08-26T04:10:35.231Z",
+      "role": "workflow:owner",
+      "workflowId": "BNbNTwwngGbujN1d",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-08-29T01:34:33.041Z",
+  "versionId": "6d1779f9-97cd-45dd-8645-590c04026950"
+}
