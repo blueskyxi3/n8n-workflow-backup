@@ -1,0 +1,101 @@
+{
+  "active": false,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-04T06:07:33.768Z",
+  "id": "oReyOr6RDIbfJ8tw",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "My workflow 3",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        48,
+        -96
+      ],
+      "id": "7d9e7704-3134-4ddf-8af4-245e5b95b690",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -192,
+        -96
+      ],
+      "id": "29ebcd4f-d3bb-422c-a9ba-3ab0a78994dd",
+      "name": "When chat message received",
+      "webhookId": "3d8ede76-6766-4032-98d1-e7edd6f5d406"
+    },
+    {
+      "parameters": {
+        "model": "qwen/qwen3-max",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -96,
+        9.5
+      ],
+      "id": "76cddf50-08fb-4052-bb9c-6cbdd63c0388",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "mOE7vbZHlbc3A2y8",
+          "name": "OpenRouter account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-04T06:07:33.768Z",
+      "createdAt": "2025-12-04T06:07:33.768Z",
+      "role": "workflow:owner",
+      "workflowId": "oReyOr6RDIbfJ8tw",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-12-06T03:09:49.898Z",
+  "versionId": "b44d028e-c08c-4c3e-9096-6f27c64cc779"
+}
