@@ -1,0 +1,151 @@
+{
+  "active": false,
+  "connections": {
+    "Test IF": {
+      "main": [
+        [
+          {
+            "node": "Test Node (1)",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Test Node (2)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Test Node": {
+      "main": [
+        [
+          {
+            "node": "Test IF",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Start": {
+      "main": [
+        [
+          {
+            "node": "Test Node",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-18T02:24:37.626Z",
+  "id": "LMZ4l72N9AAE4z64",
+  "isArchived": false,
+  "meta": null,
+  "name": "My Sub-workflow",
+  "nodes": [
+    {
+      "parameters": {},
+      "id": "d1e8e1da-42cc-4bad-a8f2-10f898646283",
+      "name": "Test Node (2)",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        2192,
+        2416
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "version": 2,
+            "leftValue": "",
+            "caseSensitive": true,
+            "typeValidation": "strict"
+          },
+          "combinator": "and",
+          "conditions": [
+            {
+              "id": "3e271a03-2dc7-42e8-a16d-ea604d3e25a1",
+              "operator": {
+                "name": "filter.operator.equals",
+                "type": "string",
+                "operation": "equals"
+              },
+              "leftValue": "",
+              "rightValue": ""
+            }
+          ]
+        },
+        "looseTypeValidation": false,
+        "options": {}
+      },
+      "id": "0e06efaf-217e-45b2-bc30-b6bc8c8f4c58",
+      "name": "Test IF",
+      "type": "n8n-nodes-base.if",
+      "position": [
+        1968,
+        2320
+      ],
+      "typeVersion": 2.2
+    },
+    {
+      "parameters": {},
+      "id": "ab6d5524-5eea-4e63-b4ea-9d0c3de9fda3",
+      "name": "Test Node",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        1744,
+        2320
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {},
+      "id": "c9191a5a-af84-47cc-a191-f251f2f88093",
+      "name": "Test Node (1)",
+      "type": "n8n-nodes-base.noOp",
+      "position": [
+        2192,
+        2224
+      ],
+      "typeVersion": 1
+    },
+    {
+      "id": "a28397cf-4208-4dba-ab11-595fec388ab2",
+      "typeVersion": 1.1,
+      "name": "Start",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "position": [
+        1536,
+        2320
+      ],
+      "parameters": {
+        "inputSource": "passthrough"
+      }
+    }
+  ],
+  "pinData": null,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-18T02:24:37.626Z",
+      "createdAt": "2025-11-18T02:24:37.626Z",
+      "role": "workflow:owner",
+      "workflowId": "LMZ4l72N9AAE4z64",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-18T02:24:37.626Z",
+  "versionId": "b77263f3-acff-41bc-8a0e-ea0114d28abd"
+}
