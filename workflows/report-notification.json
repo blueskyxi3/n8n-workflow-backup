@@ -1,0 +1,499 @@
+{
+  "active": false,
+  "connections": {
+    "Get row(s)": {
+      "main": [
+        [
+          {
+            "node": "Code in JavaScript",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code in JavaScript": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "upload markdown",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File1": {
+      "main": [
+        [
+          {
+            "node": "Send email1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)2": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Convert to File1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "download pdf": {
+      "main": [
+        [
+          {
+            "node": "Send email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "upload markdown": {
+      "main": [
+        [
+          {
+            "node": "transform md to pdf",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "transform md to pdf": {
+      "main": [
+        [
+          {
+            "node": "download pdf",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-22T13:36:28.883Z",
+  "id": "vQRal3vmKmgbRkCw",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "report-notification",
+  "nodes": [
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "ymPwtOA3zVcR6xXd",
+          "mode": "list",
+          "cachedResultName": "article",
+          "cachedResultUrl": "/projects/AjKOXkiVfZaaIF4c/datatables/ymPwtOA3zVcR6xXd"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "createdAt",
+              "condition": "gt",
+              "keyValue": "={{ $today }}"
+            },
+            {
+              "keyName": "keyword",
+              "keyValue": "={{ $json.keyword }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -288,
+        -208
+      ],
+      "id": "02459c55-b6d4-4a19-a013-a9e9d4483e63",
+      "name": "Get row(s)"
+    },
+    {
+      "parameters": {
+        "fromEmail": "n8n@citictel.com",
+        "toEmail": "vincentzou@citictel.com,jennygong@citictel.com,timtian@citictel.com",
+        "subject": "={{ $('Get row(s)').first().json.keyword }} inform collection {{ $now.format('yyyy-MM-dd') }}",
+        "emailFormat": "text",
+        "text": "=please refer to attachment.",
+        "options": {
+          "attachments": "data"
+        }
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        784,
+        -208
+      ],
+      "id": "1b556bf6-95cc-4ebb-8c9d-a96586710a2f",
+      "name": "Send email",
+      "webhookId": "8a942f77-d815-4227-bdf0-c81a8facddc3",
+      "credentials": {
+        "smtp": {
+          "id": "MRieOEP8aSj6h8gG",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst keyword = $input.first().json.keyword\n// 统一使用 item.json 来访问数据\nconst market1 = items.find(item => \n  item.json.chapter === \"市场资讯\" && item.json.section === \"国外\"\n);\nconst market2 = items.find(item => \n  item.json.chapter === \"市场资讯\" && item.json.section === \"国内\"\n);\nconst market3 = items.find(item => \n  item.json.chapter === \"市场资讯\" && item.json.section === \"港澳\"\n);\n\nconst gene1 = items.find(item => \n  item.json.chapter === \"宏观资讯\" && item.json.section === \"国外\"\n);\nconst gene2 = items.find(item => \n  item.json.chapter === \"宏观资讯\" && item.json.section === \"国内\"\n);\nconst gene3 = items.find(item => \n  item.json.chapter === \"宏观资讯\" && item.json.section === \"港澳\"\n);\n\nconst ict1 = items.find(item => \n  item.json.chapter === \"通信ICT行业资讯\" && item.json.section === \"国外\"\n);\nconst ict2 = items.find(item => \n  item.json.chapter === \"通信ICT行业资讯\" && item.json.section === \"国内\"\n);\nconst ict3 = items.find(item => \n  item.json.chapter === \"通信ICT行业资讯\" && item.json.section === \"港澳\"\n);\n\nconst busi1 = items.find(item => \n  item.json.chapter === \"商业观察\" && item.json.section === \"商业动态\"\n);\nconst busi2 = items.find(item => \n  item.json.chapter === \"商业观察\" && item.json.section === \"投融资\"\n);\nconst busi3 = items.find(item => \n  item.json.chapter === \"商业观察\" && item.json.section === \"生态合作\"\n);\n\n\nfunction formatSection(data, title) {\n  if (!data || data.length === 0) {\n    return `## ${title}\\n暂无内容\\n\\n`;\n  }\n  return `## ${title}\\n${Array.isArray(data) ? data.join('\\n') : data}\\n\\n`;\n}\n// 获取当前时间并调整为东8区\nconst now = new Date();\nconst beijingTime = new Date(now.getTime() + (8 * 60 - now.getTimezoneOffset()) * 60 * 1000);\nconst today = beijingTime.toISOString().split('T')[0];\nconsole.log(today); // 输出：2025-10-23\n\nconst article = `\n---\ntitle: \"${keyword} 日报\"\nversion: V0.1\nauthor: \"\"\ndate: \"${today}\"\ncompany: citictel.com\nfile-code: CITICTEL-IVT-000001\nlogo: true\nlogo-url: ./img/Markdown-mark.png\nlot: false\nlof: false\nhistory:\n  - version: V0.1\n    author: jennygong,vincentzou\n    date: ${today}\n    desc: 创建日报\n---\n\n<span style=\"font-size:32px\">${keyword}日报</span>  \n\n<span style=\"font-size:24px\">${today}</span>  \n\n# 市场资讯\n\n${formatSection(!market1?[]:market1.json.reference, \"国外\")}\n${formatSection(!market2?[]:market2.json.reference, \"国内\")}\n${formatSection(!market3?[]:market3.json.reference, \"港澳\")}\n\n# 宏观资讯\n\n${formatSection(!gene1?[]:gene1.json.reference, \"国外\")}\n${formatSection(!gene2?[]:gene2.json.reference, \"国内\")}\n${formatSection(!gene3?[]:gene3.json.reference, \"港澳\")}\n\n# 通信ICT行业资讯\n\n${formatSection(!ict1?[]:ict1.json.reference, \"国外\")}\n${formatSection(!ict2?[]:ict2.json.reference, \"国内\")}\n${formatSection(!ict3?[]:ict3.json.reference, \"港澳\")}\n\n# 商业观察\n\n${formatSection(!busi1?[]:busi1.json.reference, \"商业动态\")}\n${formatSection(!busi2?[]:busi2.json.reference, \"投融资\")}\n${formatSection(!busi3?[]:busi3.json.reference, \"生态合作\")}\n`.trim();\n\nreturn [{ json: { formattedArticle: article } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -112,
+        -208
+      ],
+      "id": "bd31d0db-26d6-44f1-955a-c750a3f2d950",
+      "name": "Code in JavaScript"
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "formattedArticle",
+        "options": {
+          "fileName": "=daily-{{ $now.format('yyyyMMdd')}}.md"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        80,
+        -208
+      ],
+      "id": "d88d1cbd-d7bf-4629-bc90-ae26457483bf",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "fromEmail": "n8n@citictel.com",
+        "toEmail": "vincentzou@citictel.com,jennygong@citictel.com",
+        "subject": "=ai inform collection {{ $now.format('yyyy-MM-dd') }}",
+        "emailFormat": "text",
+        "text": "=please refer to attachment.",
+        "options": {
+          "attachments": "data"
+        }
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        992,
+        96
+      ],
+      "id": "d8cd67ae-bf6e-4517-9ffa-66af9d2cf54f",
+      "name": "Send email1",
+      "webhookId": "8a942f77-d815-4227-bdf0-c81a8facddc3",
+      "credentials": {
+        "smtp": {
+          "id": "MRieOEP8aSj6h8gG",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "xlsx",
+        "options": {
+          "fileName": "=dailynews-{{ $now.format('yyyyMMdd')}}.xlsx"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        96
+      ],
+      "id": "d5451916-faf3-439f-9064-17b4d0ef2d00",
+      "name": "Convert to File1"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "yAtPEE5aVP9J8pNl",
+          "mode": "list",
+          "cachedResultName": "news",
+          "cachedResultUrl": "/projects/AjKOXkiVfZaaIF4c/datatables/yAtPEE5aVP9J8pNl"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "createdAt",
+              "condition": "gt",
+              "keyValue": "={{ $today }}"
+            },
+            {
+              "keyName": "keyword",
+              "keyValue": "={{ $json.keyword }}"
+            }
+          ]
+        },
+        "limit": 500
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        224,
+        96
+      ],
+      "id": "7d2f45c1-a0d8-48fd-8a57-0f1dea0b4643",
+      "name": "Get row(s)2"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -480,
+        -208
+      ],
+      "id": "15549d48-c825-424a-bcac-450a2ac681c1",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "26def23a-b82c-4a0a-a957-6c083791238b",
+              "name": "id",
+              "value": "={{ $json.id }}",
+              "type": "number"
+            },
+            {
+              "id": "808cc808-1d98-460c-9520-43bedb8a7058",
+              "name": "createdAt",
+              "value": "={{ $json.createdAt }}",
+              "type": "string"
+            },
+            {
+              "id": "ef6bb77a-eb39-4b10-9c39-030da66a18a2",
+              "name": "date",
+              "value": "={{ $json.date }}",
+              "type": "string"
+            },
+            {
+              "id": "054f9797-6cc0-4563-88fd-a9f749e4b3fa",
+              "name": "category",
+              "value": "={{ $json.category }}",
+              "type": "string"
+            },
+            {
+              "id": "75686e93-e452-4d7a-ae90-5039b9d7e85d",
+              "name": "sub_category",
+              "value": "={{ $json.sub_category }}",
+              "type": "string"
+            },
+            {
+              "id": "5fab047f-5dc1-4741-8663-2cbaf71e0b4f",
+              "name": "link",
+              "value": "={{ $json.link }}",
+              "type": "string"
+            },
+            {
+              "id": "4e5521d3-e6e4-4406-adb8-a162216cc989",
+              "name": "title",
+              "value": "={{ $json.title }}",
+              "type": "string"
+            },
+            {
+              "id": "6569d1af-656d-488d-bd3c-8425518bee04",
+              "name": "source",
+              "value": "={{ $json.source }}",
+              "type": "string"
+            },
+            {
+              "id": "2e4dd9c1-eda0-4aab-908c-49d0007ce875",
+              "name": "reasoning",
+              "value": "={{ $json.reasoning }}",
+              "type": "string"
+            },
+            {
+              "id": "fa901701-99bc-4863-8868-fb55d463e5a5",
+              "name": "rating",
+              "value": "={{ $json.rating }}",
+              "type": "string"
+            },
+            {
+              "id": "c4b0a0a6-44f0-4676-9980-1faabe25da4e",
+              "name": "keyword",
+              "value": "={{ $json.keyword }}",
+              "type": "string"
+            },
+            {
+              "id": "2088301b-425d-4326-b918-bf76fd67c50a",
+              "name": "origin_url",
+              "value": "={{ $json.origin_url }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        400,
+        96
+      ],
+      "id": "69e13056-1e3c-41ed-b86c-7c90f0787a2a",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "protocol": "sftp",
+        "path": "=/data/pdf/daily-{{ $now.format('yyyyMMdd')}}.pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.ftp",
+      "typeVersion": 1,
+      "position": [
+        576,
+        -208
+      ],
+      "id": "191c7526-ec33-4a61-96bc-9874aecd69b4",
+      "name": "download pdf",
+      "credentials": {
+        "sftp": {
+          "id": "xG3tXAbNGwgoaU9B",
+          "name": "192.168.206.101"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "protocol": "sftp",
+        "operation": "upload",
+        "path": "=/data/pdf/daily-{{ $now.format('yyyyMMdd')}}.md",
+        "binaryData": "={{ true }}"
+      },
+      "type": "n8n-nodes-base.ftp",
+      "typeVersion": 1,
+      "position": [
+        240,
+        -208
+      ],
+      "id": "8da0d58b-3bc1-488a-b2f0-b84757f96794",
+      "name": "upload markdown",
+      "credentials": {
+        "sftp": {
+          "id": "xG3tXAbNGwgoaU9B",
+          "name": "192.168.206.101"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "=docker run --rm -v $(pwd)/:/mppl mppl -o daily-{{ $now.format('yyyyMMdd')}}.pdf daily-{{ $now.format('yyyyMMdd')}}.md",
+        "cwd": "/data/pdf"
+      },
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        416,
+        -208
+      ],
+      "id": "7d8adf12-23a9-48fb-a123-ea3efa999bf5",
+      "name": "transform md to pdf",
+      "credentials": {
+        "sshPassword": {
+          "id": "m9ec4bA26yDoHGBf",
+          "name": "root@192.168.206.101"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## 邮件通知\n转markdown 为 pdf，然后邮件发送",
+        "height": 416,
+        "width": 1824,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -704,
+        -368
+      ],
+      "typeVersion": 1,
+      "id": "5dbbe367-9c56-4e2b-8cb8-706e68166c26",
+      "name": "Sticky Note"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "Q632AbzYePckD0iv"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-10-22T13:36:28.883Z",
+      "createdAt": "2025-10-22T13:36:28.883Z",
+      "role": "workflow:owner",
+      "workflowId": "vQRal3vmKmgbRkCw",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-12-02T06:19:33.379Z",
+  "versionId": "799abf1d-86aa-416b-91ed-9a712a4dbc2e"
+}
