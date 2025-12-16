@@ -1,0 +1,814 @@
+{
+  "active": true,
+  "connections": {
+    "Loop Over Items": {
+      "main": [
+        [],
+        [
+          {
+            "node": "日期处理",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert rows in a table": {
+      "main": [
+        [
+          {
+            "node": "Delete row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get news row(s)": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete row": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a SQL query": {
+      "main": [
+        [
+          {
+            "node": "是否存在行数据",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger": {
+      "main": [
+        [
+          {
+            "node": "Get news row(s)",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get news row(s)1",
+            "type": "main",
+            "index": 0
+          },
+          {
+            "node": "Get news row(s)2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items1": {
+      "main": [
+        [],
+        [
+          {
+            "node": "日期处理1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Insert rows in a table1": {
+      "main": [
+        [
+          {
+            "node": "Delete row1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get news row(s)1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a SQL query1": {
+      "main": [
+        [
+          {
+            "node": "是否存在行数据1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete row1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "是否存在行数据": {
+      "main": [
+        [
+          {
+            "node": "Insert rows in a table",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Delete row",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "是否存在行数据1": {
+      "main": [
+        [
+          {
+            "node": "Insert rows in a table1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Delete row1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "日期处理": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "日期处理1": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items2": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Delete row2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get news row(s)2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Delete row2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-22T09:58:58.503Z",
+  "id": "r5AR4rxur2yNAkqn",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "8pm-backup data to mysql",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -896,
+        1424
+      ],
+      "id": "f1b62884-7fe0-4843-9c30-856849c6d2d5",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "table": {
+          "__rl": true,
+          "value": "news",
+          "mode": "list",
+          "cachedResultName": "news"
+        },
+        "dataMode": "defineBelow",
+        "valuesToSend": {
+          "values": [
+            {
+              "column": "date",
+              "value": "={{ $('日期处理').item.json.date }}"
+            },
+            {
+              "column": "keyword",
+              "value": "={{ $('日期处理').item.json.keyword }}"
+            },
+            {
+              "column": "category",
+              "value": "={{ $('日期处理').item.json.category }}"
+            },
+            {
+              "column": "title",
+              "value": "={{ $('日期处理').item.json.title }}"
+            },
+            {
+              "column": "reasoning",
+              "value": "={{ $('日期处理').item.json.reasoning }}"
+            },
+            {
+              "column": "rating",
+              "value": "={{ $('日期处理').item.json.rating }}"
+            },
+            {
+              "column": "link",
+              "value": "={{ $('日期处理').item.json.link }}"
+            },
+            {
+              "column": "sub_category",
+              "value": "={{ $('日期处理').item.json.sub_category }}"
+            },
+            {
+              "column": "source",
+              "value": "={{ $('日期处理').item.json.source }}"
+            },
+            {
+              "column": "content",
+              "value": "={{ $('日期处理').item.json.content }}"
+            },
+            {
+              "column": "status",
+              "value": "={{ $('日期处理').item.json.status }}"
+            },
+            {
+              "column": "createdAt",
+              "value": "={{ $('日期处理').item.json.createdAt }}"
+            },
+            {
+              "column": "updatedAt",
+              "value": "={{ $('日期处理').item.json.updatedAt }}"
+            },
+            {
+              "column": "keyword",
+              "value": "={{ $('日期处理').item.json.keyword }}"
+            },
+            {
+              "column": "origin_url",
+              "value": "={{ $('日期处理').item.json.origin_url }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        48,
+        1328
+      ],
+      "id": "29fee6b5-13a9-48a0-ad8e-3ab21382ddbb",
+      "name": "Insert rows in a table",
+      "credentials": {
+        "mySql": {
+          "id": "DZwqqWcjkr5nbJU0",
+          "name": "192.168.206.101-n8n_busi"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "yAtPEE5aVP9J8pNl",
+          "mode": "list",
+          "cachedResultName": "news",
+          "cachedResultUrl": "/projects/AjKOXkiVfZaaIF4c/datatables/yAtPEE5aVP9J8pNl"
+        },
+        "limit": 500
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -1088,
+        1424
+      ],
+      "id": "70ce4808-2b91-4c5b-a0be-1b699e60116c",
+      "name": "Get news row(s)"
+    },
+    {
+      "parameters": {
+        "operation": "deleteRows",
+        "dataTableId": {
+          "__rl": true,
+          "value": "yAtPEE5aVP9J8pNl",
+          "mode": "list",
+          "cachedResultName": "news",
+          "cachedResultUrl": "/projects/AjKOXkiVfZaaIF4c/datatables/yAtPEE5aVP9J8pNl"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "={{ $('Loop Over Items').item.json.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        320,
+        1456
+      ],
+      "id": "38be5ca3-cab6-4dd8-9727-ba5bbf72fa71",
+      "name": "Delete row"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "select count(1) total from news where link = \"{{ $json.link }}\" and keyword=\"{{ $json.keyword }}\" and createdAt >= \"{{ $today.minus(7,'days').format('yyyy-MM-dd') }}\"",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        -384,
+        1440
+      ],
+      "id": "b5bab331-094b-4da3-8d6e-b8316d755675",
+      "name": "Execute a SQL query",
+      "credentials": {
+        "mySql": {
+          "id": "DZwqqWcjkr5nbJU0",
+          "name": "192.168.206.101-n8n_busi"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 20
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1264,
+        1424
+      ],
+      "id": "21fcf280-d5ac-4783-84e1-5ab67593fb2e",
+      "name": "Schedule Trigger"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -896,
+        1808
+      ],
+      "id": "93949603-2cdd-42be-ab5d-fa9e759e169c",
+      "name": "Loop Over Items1"
+    },
+    {
+      "parameters": {
+        "table": {
+          "__rl": true,
+          "value": "article",
+          "mode": "list",
+          "cachedResultName": "article"
+        },
+        "dataMode": "defineBelow",
+        "valuesToSend": {
+          "values": [
+            {
+              "column": "chapter",
+              "value": "={{ $('日期处理1').item.json.chapter }}"
+            },
+            {
+              "column": "content",
+              "value": "={{ $('日期处理1').item.json.content }}"
+            },
+            {
+              "column": "section",
+              "value": "={{ $('日期处理1').item.json.section }}"
+            },
+            {
+              "column": "createdAt",
+              "value": "={{ $('日期处理1').item.json.createdAt }}"
+            },
+            {
+              "column": "updatedAt",
+              "value": "={{ $('日期处理1').item.json.updatedAt }}"
+            },
+            {
+              "column": "keyword",
+              "value": "={{ $('日期处理1').item.json.keyword }}"
+            },
+            {
+              "column": "reference",
+              "value": "={{ $('日期处理1').item.json.reference }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        48,
+        1712
+      ],
+      "id": "cad0dd98-d4e2-4f4a-b7bf-b4d1f3355805",
+      "name": "Insert rows in a table1",
+      "credentials": {
+        "mySql": {
+          "id": "DZwqqWcjkr5nbJU0",
+          "name": "192.168.206.101-n8n_busi"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "ymPwtOA3zVcR6xXd",
+          "mode": "list",
+          "cachedResultName": "article",
+          "cachedResultUrl": "/projects/AjKOXkiVfZaaIF4c/datatables/ymPwtOA3zVcR6xXd"
+        },
+        "limit": 500
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -1088,
+        1808
+      ],
+      "id": "6ce4d9a6-d710-4c4a-885c-d9ff9301582c",
+      "name": "Get news row(s)1"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "select count(1) total from article where keyword=\"{{ $json.keyword }}\" and createdAt >= \"{{ $today.minus(7,'days').format('yyyy-MM-dd') }}\"",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        -400,
+        1824
+      ],
+      "id": "14f52650-b470-4838-a30b-4b07bf7e4c75",
+      "name": "Execute a SQL query1",
+      "credentials": {
+        "mySql": {
+          "id": "DZwqqWcjkr5nbJU0",
+          "name": "192.168.206.101-n8n_busi"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "deleteRows",
+        "dataTableId": {
+          "__rl": true,
+          "value": "ymPwtOA3zVcR6xXd",
+          "mode": "list",
+          "cachedResultName": "article",
+          "cachedResultUrl": "/projects/AjKOXkiVfZaaIF4c/datatables/ymPwtOA3zVcR6xXd"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "={{ $('Loop Over Items1').item.json.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        320,
+        1840
+      ],
+      "id": "970ec9d2-d090-4588-be3b-0740efc13650",
+      "name": "Delete row1"
+    },
+    {
+      "parameters": {
+        "content": "## news表备份到Mysql",
+        "height": 400,
+        "width": 1888,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1312,
+        1296
+      ],
+      "typeVersion": 1,
+      "id": "6ba3f7ce-52ed-4c27-af33-98806dbcd18e",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## article表备份到Mysql",
+        "height": 384,
+        "width": 1888,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1312,
+        1696
+      ],
+      "typeVersion": 1,
+      "id": "0bfd162a-7999-4399-a830-5627985475a9",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5cf9e10b-9221-4eab-92ac-f7e82fff3d90",
+              "leftValue": "={{ $json.total }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -176,
+        1440
+      ],
+      "id": "1d410324-d5e0-4699-bee1-6018a7e8039c",
+      "name": "是否存在行数据"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "5cf9e10b-9221-4eab-92ac-f7e82fff3d90",
+              "leftValue": "={{ $json.total }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -176,
+        1824
+      ],
+      "id": "0bcbcf6f-015b-4511-a753-f87d730fcff3",
+      "name": "是否存在行数据1"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 获取输入数据\nconst items = $input.all();\n\n// 时间格式化函数\nfunction formatToBeijingTime(utcTimeString) {\n  if (!utcTimeString) return null;\n  \n  const utcDate = new Date(utcTimeString);\n  const beijingTime = new Date(utcDate.getTime() + (8 * 60 * 60 * 1000));\n  \n  return beijingTime.toISOString()\n    .replace('T', ' ')\n    .replace(/\\.\\d{3}Z/, '');\n}\n\n// 处理每个item\nfor (const item of items) {\n  item.json.createdAt = formatToBeijingTime(item.json.createdAt);\n  item.json.updatedAt = formatToBeijingTime(item.json.updatedAt);\n}\n\n// 返回处理后的数据\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -592,
+        1440
+      ],
+      "id": "245abef0-4017-449b-835f-30acea7c46ab",
+      "name": "日期处理"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 获取输入数据\nconst items = $input.all();\n\n// 时间格式化函数\nfunction formatToBeijingTime(utcTimeString) {\n  if (!utcTimeString) return null;\n  \n  const utcDate = new Date(utcTimeString);\n  const beijingTime = new Date(utcDate.getTime() + (8 * 60 * 60 * 1000));\n  \n  return beijingTime.toISOString()\n    .replace('T', ' ')\n    .replace(/\\.\\d{3}Z/, '');\n}\n\n// 处理每个item\nfor (const item of items) {\n  item.json.createdAt = formatToBeijingTime(item.json.createdAt);\n  item.json.updatedAt = formatToBeijingTime(item.json.updatedAt);\n}\n\n// 返回处理后的数据\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -624,
+        1824
+      ],
+      "id": "5971b49b-4342-4475-90d2-6e8760f57a57",
+      "name": "日期处理1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -896,
+        2208
+      ],
+      "id": "8a511694-704e-4b8d-bf54-15368617a552",
+      "name": "Loop Over Items2"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "XyZW7ZkajleyFF8O",
+          "mode": "list",
+          "cachedResultName": "trigger",
+          "cachedResultUrl": "/projects/AjKOXkiVfZaaIF4c/datatables/XyZW7ZkajleyFF8O"
+        },
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "name",
+              "keyValue": "content_sort"
+            },
+            {
+              "keyName": "name",
+              "keyValue": "rating_sort"
+            },
+            {
+              "keyName": "name",
+              "keyValue": "generate_article"
+            }
+          ]
+        },
+        "limit": 500
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -1088,
+        2208
+      ],
+      "id": "09e57abc-05ba-4953-981b-71ec7edca53c",
+      "name": "Get news row(s)2"
+    },
+    {
+      "parameters": {
+        "operation": "deleteRows",
+        "dataTableId": {
+          "__rl": true,
+          "value": "XyZW7ZkajleyFF8O",
+          "mode": "list",
+          "cachedResultName": "trigger",
+          "cachedResultUrl": "/projects/AjKOXkiVfZaaIF4c/datatables/XyZW7ZkajleyFF8O"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyValue": "={{ $('Loop Over Items2').item.json.id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -528,
+        2224
+      ],
+      "id": "61bc4179-8b17-496c-abba-cc9ef3d45540",
+      "name": "Delete row2"
+    },
+    {
+      "parameters": {
+        "content": "## 清空Trigger表",
+        "height": 368,
+        "width": 1888
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1312,
+        2080
+      ],
+      "typeVersion": 1,
+      "id": "2db3c3d6-ddc0-4510-b6c6-26f1ff35abb0",
+      "name": "Sticky Note2"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-10-22T09:58:58.503Z",
+      "createdAt": "2025-10-22T09:58:58.503Z",
+      "role": "workflow:owner",
+      "workflowId": "r5AR4rxur2yNAkqn",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-11-03T03:13:06.767Z",
+  "versionId": "4b93baf8-779f-4fc4-ba8f-3baccb9f4e0a"
+}
