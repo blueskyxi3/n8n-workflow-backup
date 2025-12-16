@@ -1,0 +1,685 @@
+{
+  "active": true,
+  "connections": {
+    "knowledge base from internet": {
+      "main": [
+        [
+          {
+            "node": "数据存在判断",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)1": {
+      "main": [
+        [
+          {
+            "node": "knowledge base from internet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'generate chapter&section'1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger2": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)3": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items3": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "章节列表",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Call 'generate chapter&section'1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "update generate_article status",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "update generate_article status": {
+      "main": [
+        [
+          {
+            "node": "Call 'report-notification'",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "数据存在判断": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Upsert row(s)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "章节列表": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-20T02:56:19.102Z",
+  "id": "HVMTM7vnYdvzNbcD",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "5am-generate chapter&section",
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "const keyword = $('When Executed by Another Workflow').first().json.keyword\n\nif (items.length === 1 && Object.keys(items[0].json).length === 0) {\n  return [{json: {\n    code: 400,\n    keyword:keyword  }\n}];\n}\n\nfunction arrayToMarkdownLinks(data) {\n   \n      \n  return data.map(item => {\n    // 提取第三个\"/\"之前的字符串\n      let domain = item.json.origin_url;\n    return `- [${item.json.title}](${item.json.link}) [${domain}]`}\n                 ).join('\\n');\n}\n\nconst markdown = arrayToMarkdownLinks(items);\n// console.log(markdown);\n\n// 假設輸入的 items 是那 5 篇文章\nconst sources = items.map(item => {\n  return {\n    content: item.json.content,\n    link: item.json.link\n  };\n});\nconst chapter = items[0].json.category;\nconst section = items[0].json.sub_category;\n\n// 構建一個給 AI 看的清晰格式的上下文字符串\nconst contextString = sources.map((source, index) => {\n  return `[文章 ${index + 1}]:\n标题：${source.title}\n內容: ${source.content}\n链接: ${source.link}\n---`;\n}).join('\\n');\n\n// 將構建好的上下文字符串傳遞給下一個節點\nreturn [{\n  json: {\n    code: 200 ,\n    chapter: chapter,\n    section: section,\n    reference: markdown,\n    keyword:keyword\n    // context_for_ai: contextString,\n    // 也可以把原始的 sources 數組傳下去，以備不時之需\n   // original_sources: sources\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -784,
+        912
+      ],
+      "id": "acdf3766-7d98-42d3-bfa1-8bce5a2ae875",
+      "name": "knowledge base from internet"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -1152,
+        912
+      ],
+      "id": "84500ae3-3293-4091-a53b-6a30dbe6cd57",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "yAtPEE5aVP9J8pNl",
+          "mode": "list",
+          "cachedResultName": "news",
+          "cachedResultUrl": "/projects/AjKOXkiVfZaaIF4c/datatables/yAtPEE5aVP9J8pNl"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "category",
+              "keyValue": "={{ $json.chapter }}"
+            },
+            {
+              "keyName": "createdAt",
+              "condition": "gte",
+              "keyValue": "={{ $today.minus({ days: 1 }) }}"
+            },
+            {
+              "keyName": "sub_category",
+              "keyValue": "={{ $json.section }}"
+            },
+            {
+              "keyName": "rating",
+              "condition": "gte",
+              "keyValue": "3"
+            },
+            {
+              "keyName": "keyword",
+              "keyValue": "={{ $json.keyword }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -960,
+        912
+      ],
+      "id": "8085713a-7559-422e-8a1f-032f59839e93",
+      "name": "Get row(s)1",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "dataTableId": {
+          "__rl": true,
+          "value": "ymPwtOA3zVcR6xXd",
+          "mode": "list",
+          "cachedResultName": "article",
+          "cachedResultUrl": "/projects/AjKOXkiVfZaaIF4c/datatables/ymPwtOA3zVcR6xXd"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "createdAt",
+              "condition": "gte",
+              "keyValue": "={{ $today }}"
+            },
+            {
+              "keyName": "chapter",
+              "keyValue": "={{ $('knowledge base from internet').item.json.chapter }}"
+            },
+            {
+              "keyName": "section",
+              "keyValue": "={{ $('knowledge base from internet').item.json.section }}"
+            },
+            {
+              "keyName": "keyword",
+              "keyValue": "={{ $json.keyword }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "chapter": "={{ $('knowledge base from internet').item.json.chapter }}",
+            "section": "={{ $('knowledge base from internet').item.json.section }}",
+            "content": "=",
+            "reference": "={{ $json.reference }}",
+            "keyword": "={{ $json.keyword }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "chapter",
+              "displayName": "chapter",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "section",
+              "displayName": "section",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "content",
+              "displayName": "content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "reference",
+              "displayName": "reference",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "keyword",
+              "displayName": "keyword",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        928
+      ],
+      "id": "f8b3988b-6e37-46ad-8980-d23957fbc6ac",
+      "name": "Upsert row(s)1"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "HVMTM7vnYdvzNbcD",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/HVMTM7vnYdvzNbcD",
+          "cachedResultName": "5am-generate chapter&section"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {}
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        -224,
+        576
+      ],
+      "id": "c8655c8d-9fd2-4c32-9a90-8d21cf51c6cf",
+      "name": "Call 'generate chapter&section'1"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 5
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1312,
+        544
+      ],
+      "id": "2dbdc3d7-a71a-46f5-92e4-6c7c2704dd65",
+      "name": "Schedule Trigger2"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "XyZW7ZkajleyFF8O",
+          "mode": "list",
+          "cachedResultName": "trigger",
+          "cachedResultUrl": "/projects/AjKOXkiVfZaaIF4c/datatables/XyZW7ZkajleyFF8O"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "name",
+              "keyValue": "generate_article"
+            },
+            {
+              "keyName": "status",
+              "keyValue": "0"
+            },
+            {
+              "keyName": "createdAt",
+              "condition": "gte",
+              "keyValue": "={{ $today.minus(5,'days') }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -1072,
+        544
+      ],
+      "id": "e60cf0f9-3eab-4277-b038-ff1656da0ae5",
+      "name": "Get row(s)3",
+      "alwaysOutputData": false
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -816,
+        544
+      ],
+      "id": "585f89dd-0c4e-4074-9f9e-eeece43e150b",
+      "name": "Loop Over Items3"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -416,
+        560
+      ],
+      "id": "67c08654-e6d6-4c3a-86f6-67601399d7ba",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "vQRal3vmKmgbRkCw",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/vQRal3vmKmgbRkCw",
+          "cachedResultName": "report-notification"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {}
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        -240,
+        416
+      ],
+      "id": "41bef430-759a-4171-b3b3-996fb7cea040",
+      "name": "Call 'report-notification'"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "39eb0533-9134-47a1-9547-97461d05b8dc",
+              "name": "keyword",
+              "value": "={{ $json.keyword }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -592,
+        416
+      ],
+      "id": "84645aba-ee0e-4f11-bc69-d9a29f578fcc",
+      "name": "Edit Fields",
+      "executeOnce": true
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "XyZW7ZkajleyFF8O",
+          "mode": "list",
+          "cachedResultName": "trigger",
+          "cachedResultUrl": "/projects/AjKOXkiVfZaaIF4c/datatables/XyZW7ZkajleyFF8O"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "createdAt",
+              "condition": "gte",
+              "keyValue": "={{ $today.minus(5,'days') }}"
+            },
+            {
+              "keyName": "keyword",
+              "keyValue": "={{ $json.keyword }}"
+            },
+            {
+              "keyName": "name",
+              "keyValue": "generate_article"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "status": 1
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "keyword",
+              "displayName": "keyword",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -416,
+        416
+      ],
+      "id": "008d64dd-c264-493d-bcfd-fbfc5ba126cf",
+      "name": "update generate_article status"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "78271a44-3e2b-4169-a21d-8516f6ed9446",
+              "leftValue": 400,
+              "rightValue": "={{ $json.code }}",
+              "operator": {
+                "type": "number",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -592,
+        912
+      ],
+      "id": "fc230d0c-0f73-4053-a710-c77a3947c23a",
+      "name": "数据存在判断"
+    },
+    {
+      "parameters": {
+        "content": "## 子流程-合并章节",
+        "height": 288,
+        "width": 1360,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1360,
+        816
+      ],
+      "typeVersion": 1,
+      "id": "acfecf33-e81d-40ef-92ce-0b3343fd71dc",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "content": "## 主流程",
+        "height": 464,
+        "width": 1360,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1360,
+        352
+      ],
+      "typeVersion": 1,
+      "id": "3cc0c4ed-8471-410f-9eba-8f132b4a9f1a",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = [\n  {\n    \"chapter\": \"宏观资讯\",\n    \"section\": \"国内\"\n  },\n  {\n    \"chapter\": \"宏观资讯\",\n    \"section\": \"国外\"\n  },\n  {\n    \"chapter\": \"宏观资讯\",\n    \"section\": \"港澳\"\n  },\n  {\n    \"chapter\": \"市场资讯\",\n    \"section\": \"国内\"\n  },\n  {\n    \"chapter\": \"市场资讯\",\n    \"section\": \"国外\"\n  },\n  {\n    \"chapter\": \"市场资讯\",\n    \"section\": \"港澳\"\n  },\n  {\n    \"chapter\": \"通信ICT行业资讯\",\n    \"section\": \"国内\"\n  },\n  {\n    \"chapter\": \"通信ICT行业资讯\",\n    \"section\": \"国外\"\n  },\n  {\n    \"chapter\": \"通信ICT行业资讯\",\n    \"section\": \"港澳\"\n  },\n  {\n    \"chapter\": \"商业观察\",\n    \"section\": \"商业动态\"\n  },\n  {\n    \"chapter\": \"商业观察\",\n    \"section\": \"投融资\"\n  },\n  {\n    \"chapter\": \"商业观察\",\n    \"section\": \"生态合作\"\n  }\n];\nconst items = [];\ndata.forEach(item => {\n  item.keyword = $input.first().json.keyword;\n  items.push({json: item});\n});\n\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -592,
+        560
+      ],
+      "id": "5a13450e-5ee7-4fcd-a746-0895486098b1",
+      "name": "章节列表"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "Q632AbzYePckD0iv"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-10-20T02:56:19.102Z",
+      "createdAt": "2025-10-20T02:56:19.102Z",
+      "role": "workflow:owner",
+      "workflowId": "HVMTM7vnYdvzNbcD",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    },
+    "node:Schedule Trigger2": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-12-01T03:12:25.261Z",
+  "versionId": "69e2c56d-43fb-4586-bffc-32c68b092997"
+}
