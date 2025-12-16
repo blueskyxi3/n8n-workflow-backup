@@ -1,0 +1,62 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        []
+      ]
+    }
+  },
+  "createdAt": "2025-12-01T09:34:15.770Z",
+  "id": "PUtCjmLN68XVx8xn",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "test",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -304,
+        -32
+      ],
+      "id": "4d730f77-9bc4-41ec-8e05-f82dbe205718",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "fileUrl": "http://192.168.209.111:8004/api/download/13049-1.pdf",
+        "serverUrl": "http://192.168.146.102:8000"
+      },
+      "type": "n8n-nodes-mineru.mineruCustom",
+      "typeVersion": 1,
+      "position": [
+        0,
+        -32
+      ],
+      "id": "accf3b26-69cb-4f54-aeeb-2f14d8c7e61c",
+      "name": "Mineru Custom Service"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-01T09:34:15.770Z",
+      "createdAt": "2025-12-01T09:34:15.770Z",
+      "role": "workflow:owner",
+      "workflowId": "PUtCjmLN68XVx8xn",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-12-11T06:20:40.850Z",
+  "versionId": "e5d1b3be-ec48-4ac4-9eb9-3f0a24965959"
+}
