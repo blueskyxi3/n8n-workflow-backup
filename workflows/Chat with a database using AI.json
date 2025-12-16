@@ -1,0 +1,190 @@
+{
+  "active": false,
+  "connections": {
+    "Postgres": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeepSeek Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    },
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-08-26T08:28:17.896Z",
+  "id": "S7CBqlMfja1wBGEX",
+  "isArchived": false,
+  "meta": {
+    "templateId": "2090",
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Chat with a database using AI",
+  "nodes": [
+    {
+      "parameters": {
+        "content": "## Try me out\nClick the 'chat' button at the bottom of the canvas and paste in:\n\n_Which tables are available?_"
+      },
+      "id": "d08a2559-17fd-4bdb-a976-795c3823a88a",
+      "name": "Sticky Note",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        368,
+        240
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "content": "This workflow uses a Postgres DB, but you could swap it for a MySQL or SQLite one",
+        "height": 505,
+        "width": 677,
+        "color": 7
+      },
+      "id": "3019b559-6100-4ead-8e1a-a7dece2a6982",
+      "name": "Sticky Note1",
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        512,
+        -64
+      ],
+      "typeVersion": 1
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "{{ $fromAI('sql_statement') }}",
+        "options": {}
+      },
+      "id": "e65a1558-e0c0-4c4a-a306-90dc6dcb618a",
+      "name": "Postgres",
+      "type": "n8n-nodes-base.postgresTool",
+      "position": [
+        1040,
+        272
+      ],
+      "typeVersion": 2.5,
+      "credentials": {
+        "postgres": {
+          "id": "DERl7pj5RzIxVGI6",
+          "name": "Postgres account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "9df537e7-3ca2-4e72-bc85-ae0d944fbdd1",
+      "name": "Simple Memory",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "position": [
+        896,
+        272
+      ],
+      "typeVersion": 1.3
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "id": "57b2b959-9f25-475f-b6bb-842139725411",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "position": [
+        800,
+        48
+      ],
+      "typeVersion": 1.8
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1,
+      "position": [
+        672,
+        256
+      ],
+      "id": "b8ed8017-c3c3-4b56-b9bd-bba21b3119d0",
+      "name": "DeepSeek Chat Model",
+      "credentials": {
+        "deepSeekApi": {
+          "id": "2SXDvVt9uFwfTnQm",
+          "name": "DeepSeek n8n Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "public": true,
+        "options": {
+          "responseMode": "lastNode"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        528,
+        48
+      ],
+      "id": "83a75e0b-7025-4fcc-8b6f-782b68735ee1",
+      "name": "When chat message received",
+      "webhookId": "074a3090-db43-46d2-9cce-975239f0a224"
+    }
+  ],
+  "pinData": {},
+  "settings": {},
+  "shared": [
+    {
+      "updatedAt": "2025-08-26T08:28:17.896Z",
+      "createdAt": "2025-08-26T08:28:17.896Z",
+      "role": "workflow:owner",
+      "workflowId": "S7CBqlMfja1wBGEX",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-08-26T09:51:33.132Z",
+  "versionId": "c414533a-9d42-407b-84b5-3cb4d1fa84c9"
+}
