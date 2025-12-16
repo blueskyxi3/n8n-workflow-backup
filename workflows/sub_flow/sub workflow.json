@@ -170,11 +170,20 @@
   "settings": {
     "executionOrder": "v1"
   },
+  "shared": [
+    {
+      "updatedAt": "2025-07-16T09:35:40.104Z",
+      "createdAt": "2025-07-16T09:35:40.104Z",
+      "role": "workflow:owner",
+      "workflowId": "WKb45j2215ym5p7S",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
   "staticData": null,
   "tags": [
     {
-      "createdAt": "2025-07-16T09:33:42.315Z",
       "updatedAt": "2025-07-16T09:33:42.315Z",
+      "createdAt": "2025-07-16T09:33:42.315Z",
       "id": "A1Y8unbtj7WzZrQb",
       "name": "sub_flow"
     }
