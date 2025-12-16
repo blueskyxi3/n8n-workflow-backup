@@ -1,0 +1,513 @@
+{
+  "active": true,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "MySQL",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "MySQL": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Read/Write Files from Disk1": {
+      "main": [
+        [
+          {
+            "node": "Extract from File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract from File": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeepSeek Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "查询SQL执行": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Read/Write Files from Disk1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "查询SQL执行",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Respond to Webhook1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-09-08T09:17:25.254Z",
+  "id": "Z4xkKJsVSxo9mEqv",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "ragflowDB",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        80,
+        128
+      ],
+      "id": "060d0226-f32f-4cec-b16a-bfac2c755af7",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "SELECT \n    t.TABLE_NAME AS `tablename`,\n    t.TABLE_COMMENT AS `tablecomment`,\n    c.COLUMN_NAME AS `columnname`,\n    c.COLUMN_COMMENT AS `columncomment`,\n    c.COLUMN_TYPE AS `columntype`\nFROM \n    information_schema.TABLES t\nJOIN \n    information_schema.COLUMNS c \n    ON t.TABLE_SCHEMA = c.TABLE_SCHEMA AND t.TABLE_NAME = c.TABLE_NAME\nWHERE \n    t.TABLE_SCHEMA = DATABASE()\nORDER BY \n    t.TABLE_NAME, c.ORDINAL_POSITION; -- 按表和字段顺序排序",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        304,
+        128
+      ],
+      "id": "0b2cdcb0-2e51-424c-9f76-a1e95ca57c35",
+      "name": "MySQL",
+      "credentials": {
+        "mySql": {
+          "id": "nmohxuTz7sUN5IDx",
+          "name": "root@192.168.206.101-ragflow"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const result = {};\nitems.forEach(item => {\n  const tableName = item.json.tablename;\n\n  // 如果该表名还没添加到 result，则初始化\n  if (!result[tableName]) {\n    result[tableName] = {\n      tablename: tableName,\n      tablecomment: item.json.tablecomment || \"\",\n      fields: [] // 用于存储该表的所有字段\n    };\n  }\n\n  // 添加字段信息\n  result[tableName].fields.push({\n    columnname: item.json.columnname,\n    columncomment: item.json.columncomment || \"\",\n    columntype: item.json.columntype || \"\"\n  });\n});\n\n// 转换为数组返回\nconst tempRes= Object.values(result).map(table => ({ json: table }));\nreturn [\n  {\n    json: {\n      fileContent: tempRes.map(item => {\n        let tableName = `# ${item.json.tablecomment} ${item.json.tablename}`;\n        let fields = item.json.fields.map(field => `- ${field.columnname} ${field.columntype} ${field.columncomment}`).join(\"\\n\");\n        return `${tableName}\\n${fields}\\n`;\n      }).join(\"\\n\")\n    }\n  }\n];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        528,
+        128
+      ],
+      "id": "100e95a5-ec5d-45f1-83a4-d62f62de4a7b",
+      "name": "Code"
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "fileContent",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        752,
+        128
+      ],
+      "id": "2f6360c1-f00d-4e8b-9922-b7aa05a95957",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "operation": "write",
+        "fileName": "/home/node/ragflow_schema.txt",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        960,
+        128
+      ],
+      "id": "1fa179fb-7715-46b1-aa4c-f00fe10700ab",
+      "name": "Read/Write Files from Disk"
+    },
+    {
+      "parameters": {
+        "content": "## 生成数据结构文件\n**请在数据库结构变化发生变化的时侯执行这个工作流**",
+        "height": 340,
+        "width": 1240,
+        "color": 5
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        0,
+        0
+      ],
+      "typeVersion": 1,
+      "id": "3c83633c-a3fd-4e9f-99dd-93969a32e337",
+      "name": "Sticky Note2"
+    },
+    {
+      "parameters": {
+        "fileSelector": "/home/node/ragflow_schema.txt",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        240,
+        400
+      ],
+      "id": "c93d9fa2-e701-45ed-ac30-c1e478fd9d68",
+      "name": "Read/Write Files from Disk1"
+    },
+    {
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        432,
+        400
+      ],
+      "id": "56ca0b04-c96a-46da-99d8-978ee6daac81",
+      "name": "Extract from File"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $('Webhook').item.json.body.query }}",
+        "hasOutputParser": true,
+        "options": {
+          "systemMessage": "=你是一位资深MySQL DBA专家。根据用户需求直接生成可执行的SQL语句，无需任何解释说明。输出格式必须严格遵循JSON规范：{\"sql\":\"SQL语句\",\"isPass\":\"yes/null\"}。\n\n规则说明：\n1. 仅当用户明确输入\"同意\",\"确认\",\"执行\",或\"yes\"时，isPass设置为\"yes\"\n2. 其他所有情况isPass均设置为\"null\"\n3. 直接输出JSON格式结果，不包含任何额外文本\n4. SQL语句必须完整可执行，符合MySQL语法规范\n\n示例：\n- 用户输入：查询所有用户信息 → {\"sql\":\"SELECT * FROM users\",\"isPass\":\"null\"}\n- 用户输入：同意删除id为1的用户 → {\"sql\":\"DELETE FROM users WHERE id = 1\",\"isPass\":\"yes\"}\n\n数据结构：{{ $json.data }}\n其中created_by是user表中的id\n\n## 对话示例\n用户：查询职工总人数\n回答：select count(*) as totalworkers from zm_workers where history is null and state=1;"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2,
+      "position": [
+        656,
+        400
+      ],
+      "id": "e67c7bc1-b052-4012-adba-8c3b15d7a295",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1,
+      "position": [
+        528,
+        640
+      ],
+      "id": "a6188e8e-3d63-4a31-b3c8-819f7069e795",
+      "name": "DeepSeek Chat Model",
+      "credentials": {
+        "deepSeekApi": {
+          "id": "2SXDvVt9uFwfTnQm",
+          "name": "DeepSeek n8n Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "{{ $('AI Agent').item.json.output.sql }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.4,
+      "position": [
+        1200,
+        384
+      ],
+      "id": "ae7f68ce-8542-4faf-95a4-9eea66cde0a7",
+      "name": "查询SQL执行",
+      "retryOnFail": false,
+      "alwaysOutputData": true,
+      "credentials": {
+        "mySql": {
+          "id": "nmohxuTz7sUN5IDx",
+          "name": "root@192.168.206.101-ragflow"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "content": "## Text 2 DB\n请在对话框中输入你的问题",
+        "height": 576,
+        "width": 2172
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -256,
+        352
+      ],
+      "typeVersion": 1,
+      "id": "8170e0bd-4fbd-4f54-9911-0b405ed278c5",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('Webhook').item.json.body.sessionId }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        688,
+        624
+      ],
+      "id": "9fcd75b6-ead1-419a-8f6b-198bc7761dcd",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "n8n-ragflow-db",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        16,
+        400
+      ],
+      "id": "d41b9319-161f-46b6-8afd-d62dbb67ed01",
+      "name": "Webhook",
+      "webhookId": "54d646f7-cf91-45b5-9ee7-2fe56265d5c7"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"sql\": \"{{ $('AI Agent').item.json.output.sql }}\",\n   \"data\": [{{ $('查询SQL执行').all().map(item=>JSON.stringify(item.json)) }}]\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1440,
+        384
+      ],
+      "id": "93b7155f-b148-4ad1-8611-b94c5fd40ffa",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "6acc6268-bb6a-4571-996d-5e2547139147",
+              "leftValue": "={{\n   ! ['insert', 'update', 'delete', 'alter', 'truncate'].some(keyword => \n        $json.output.sql.trim().toLowerCase().startsWith(keyword.toLowerCase())\n    )\n}}",
+              "rightValue": "true",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "f812a7aa-056e-4569-af56-5217db522222",
+              "leftValue": "={{ $json.output.isPass }}",
+              "rightValue": "yes",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        960,
+        400
+      ],
+      "id": "9f5825df-7047-4f7f-90c8-4d1f7d8a6a99",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n\t\"sql\": \"select * from users\",\n\t\"isPass\": \"null\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        864,
+        640
+      ],
+      "id": "13e8142e-3562-4fce-8552-22468f9494b2",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\n  \"sql\": \"{{ $json.output.sql }}\",\n   \"content\": \"请确认是否执行\"\n}  ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1216,
+        624
+      ],
+      "id": "294267ba-6c56-4712-ae56-7ef1f29a5f9e",
+      "name": "Respond to Webhook1"
+    }
+  ],
+  "pinData": {
+    "AI Agent": [
+      {
+        "json": {
+          "output": {
+            "sql": "SELECT '我是一个MySQL DBA专家，可以帮助您执行数据库操作' AS introduction",
+            "isPass": "null"
+          }
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-09-08T09:17:25.254Z",
+      "createdAt": "2025-09-08T09:17:25.254Z",
+      "role": "workflow:owner",
+      "workflowId": "Z4xkKJsVSxo9mEqv",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
+  "staticData": null,
+  "tags": [
+    {
+      "updatedAt": "2025-07-15T06:27:42.965Z",
+      "createdAt": "2025-07-15T06:27:42.965Z",
+      "id": "z9qJ9W7JRnxZstj7",
+      "name": "Text2SQL"
+    }
+  ],
+  "triggerCount": 1,
+  "updatedAt": "2025-11-20T02:00:56.380Z",
+  "versionId": "c078704c-5a54-4fda-b7e5-6ef7c1d1589f"
+}
