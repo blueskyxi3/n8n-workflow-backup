@@ -1,0 +1,172 @@
+{
+  "active": true,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a SQL query": {
+      "main": [
+        [
+          {
+            "node": "Add IP Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Add IP Fields": {
+      "main": [
+        [
+          {
+            "node": "Code",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Code": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-08-31T03:39:04.326Z",
+  "id": "5X6GN7LGPZnAJ7U8",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "Server Query",
+  "nodes": [
+    {
+      "parameters": {
+        "path": "manager-server",
+        "responseMode": "responseNode",
+        "options": {
+          "allowedOrigins": "*"
+        }
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -416,
+        -32
+      ],
+      "id": "d2767551-e670-4611-b8a9-e4a479fe7052",
+      "name": "Webhook",
+      "webhookId": "c5344c9e-bd1e-4102-b51e-ab850ebd722b"
+    },
+    {
+      "parameters": {
+        "respondWith": "allIncomingItems",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        528,
+        -32
+      ],
+      "id": "dc93c23f-4041-49cc-ae88-95af036d52ed",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "select name from credentials_entity where type = 'sshPassword' and name like '%{{ $json.query.keyword }}%'",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.postgres",
+      "typeVersion": 2.6,
+      "position": [
+        -160,
+        -32
+      ],
+      "id": "115f4ef3-ab62-4cb3-8bc9-7530f78f26ab",
+      "name": "Execute a SQL query",
+      "credentials": {
+        "postgres": {
+          "id": "DERl7pj5RzIxVGI6",
+          "name": "N8N Postgres"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0329eb23-3dfe-431d-9af2-21e324289346",
+              "name": "status",
+              "value": "运行中",
+              "type": "string"
+            },
+            {
+              "id": "c0dd4ffb-9e05-4761-8300-6b966dda3d5c",
+              "name": "ip",
+              "value": "={{ $json.name.split('@')[1] }}",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        48,
+        -32
+      ],
+      "id": "79bf14aa-fc31-451e-8811-f85bfa878c1a",
+      "name": "Add IP Fields"
+    },
+    {
+      "parameters": {
+        "jsCode": "// 从输入数据获取所有 items\nconst items = $input.all();\n\n// 创建新的输出 item\nconst newItem = {\n  json: {\n    servers: items.map(item => item.json)\n  }\n};\n\n// 返回单个包含所有服务器信息的 item\nreturn [newItem];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        256,
+        -32
+      ],
+      "id": "5b5613c1-53ea-4b4d-b675-f0a2862332eb",
+      "name": "Code"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-08-31T03:39:04.326Z",
+      "createdAt": "2025-08-31T03:39:04.326Z",
+      "role": "workflow:owner",
+      "workflowId": "5X6GN7LGPZnAJ7U8",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-08-31T14:35:12.242Z",
+  "versionId": "64023237-0a1a-4c78-af98-8263a425aa5c"
+}
