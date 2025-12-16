@@ -1,0 +1,220 @@
+{
+  "active": true,
+  "connections": {
+    "PresignedPutObject bucket": {
+      "main": [
+        [
+          {
+            "node": "上传至Minio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "上传至Minio": {
+      "main": [
+        [
+          {
+            "node": "PresignedGetObject object",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "PresignedGetObject object": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "PresignedPutObject bucket",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-08-26T09:09:35.473Z",
+  "id": "XcpTsX5iKY4tslS2",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "FE-BE",
+  "nodes": [
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "http://192.168.209.111:3000/v1/chat/completions",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer sk-vincentzou_token"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"model\": \"qwen2.5vl:3b\",\n  \"messages\": [\n    {\n      \"role\": \"user\",\n      \"content\": [\n        {\n          \"type\": \"text\",\n          \"text\": \"图片中的内容是什么？\"\n        },\n        {\n          \"type\": \"image_url\",\n          \"image_url\": {\n            \"url\": \"{{ $json.url }}\"\n          }\n        }\n      ]\n    }\n  ],\n  \"max_tokens\": 200\n} ",
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        1168,
+        -144
+      ],
+      "id": "cd6fea3b-3b05-40a4-90c6-e86bccc7b5fd",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "resource": "bucket",
+        "operation": "presignedPutObject",
+        "bucket": {
+          "__rl": true,
+          "value": "n8n",
+          "mode": "list",
+          "cachedResultName": "n8n"
+        },
+        "key": "={{ $json.body.filename }}"
+      },
+      "type": "n8n-nodes-minio.minioNode",
+      "typeVersion": 1,
+      "position": [
+        496,
+        -144
+      ],
+      "id": "ac002367-3ffb-4a86-bd15-568e97647cbb",
+      "name": "PresignedPutObject bucket",
+      "credentials": {
+        "minioCredentialsApi": {
+          "id": "N7yZvnbe8MVAVAws",
+          "name": "MinIO 8.130.93.151"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "PUT",
+        "url": "={{ $json.url }}",
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "image",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        720,
+        -144
+      ],
+      "id": "51c8ea8f-f6df-407a-8526-96649ebcec99",
+      "name": "上传至Minio"
+    },
+    {
+      "parameters": {
+        "bucket": {
+          "__rl": true,
+          "value": "n8n",
+          "mode": "list",
+          "cachedResultName": "n8n"
+        },
+        "key": "={{ $('Webhook').item.json.body.filename }}"
+      },
+      "type": "n8n-nodes-minio.minioNode",
+      "typeVersion": 1,
+      "position": [
+        944,
+        -144
+      ],
+      "id": "2da6a4f0-ff0c-44ba-8369-f6bf2e30c1ef",
+      "name": "PresignedGetObject object",
+      "credentials": {
+        "minioCredentialsApi": {
+          "id": "N7yZvnbe8MVAVAws",
+          "name": "MinIO 8.130.93.151"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "2d702057-bbeb-476c-85ca-021b17efb9df",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        272,
+        -144
+      ],
+      "id": "ea0bf963-3c93-4b63-9f0a-2dc23cf3dbb3",
+      "name": "Webhook",
+      "webhookId": "2d702057-bbeb-476c-85ca-021b17efb9df"
+    },
+    {
+      "parameters": {
+        "respondWith": "text",
+        "responseBody": "={{ $json.choices[0].message.content }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1376,
+        -144
+      ],
+      "id": "cf5bf7d5-9268-433f-a136-cc0399efcc67",
+      "name": "Respond to Webhook"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-08-26T09:09:35.473Z",
+      "createdAt": "2025-08-26T09:09:35.473Z",
+      "role": "workflow:owner",
+      "workflowId": "XcpTsX5iKY4tslS2",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-09-24T13:34:44.897Z",
+  "versionId": "9f4fb999-5050-40dd-8729-bedbf58f4e96"
+}
