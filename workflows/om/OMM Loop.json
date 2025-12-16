@@ -196,7 +196,7 @@
       "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
       "typeVersion": 2.2,
       "position": [
-        32,
+        48,
         160
       ],
       "id": "e7720328-2380-40f0-b191-a710b894e8c7",
@@ -385,7 +385,7 @@
       "credentials": {
         "postgres": {
           "id": "DERl7pj5RzIxVGI6",
-          "name": "Postgres account"
+          "name": "N8N Postgres"
         }
       }
     },
@@ -406,7 +406,7 @@
       "credentials": {
         "postgres": {
           "id": "DERl7pj5RzIxVGI6",
-          "name": "Postgres account"
+          "name": "N8N Postgres"
         }
       }
     },
@@ -454,16 +454,25 @@
   "settings": {
     "executionOrder": "v1"
   },
+  "shared": [
+    {
+      "updatedAt": "2025-07-15T08:04:29.711Z",
+      "createdAt": "2025-07-15T08:04:29.711Z",
+      "role": "workflow:owner",
+      "workflowId": "0MAYWVcetiaf6zuI",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
   "staticData": null,
   "tags": [
     {
-      "createdAt": "2025-07-16T09:45:18.412Z",
       "updatedAt": "2025-07-16T09:45:18.412Z",
+      "createdAt": "2025-07-16T09:45:18.412Z",
       "id": "1ypqHTS1b78KLvPw",
       "name": "om"
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2025-07-16T09:45:19.036Z",
-  "versionId": "934d5812-7a92-426a-9a8b-c30dcb542cdb"
+  "updatedAt": "2025-09-02T09:20:57.273Z",
+  "versionId": "9043a53d-b992-42fd-b4da-3f703b3242fd"
 }
