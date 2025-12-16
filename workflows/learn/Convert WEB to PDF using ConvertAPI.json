@@ -121,11 +121,20 @@
   "settings": {
     "executionOrder": "v1"
   },
+  "shared": [
+    {
+      "updatedAt": "2025-07-16T01:45:30.675Z",
+      "createdAt": "2025-07-16T01:45:30.675Z",
+      "role": "workflow:owner",
+      "workflowId": "zW6Sjb1qJFvMFD67",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
   "staticData": null,
   "tags": [
     {
-      "createdAt": "2025-07-16T09:45:37.808Z",
       "updatedAt": "2025-07-16T09:45:37.808Z",
+      "createdAt": "2025-07-16T09:45:37.808Z",
       "id": "5AJ5VaZ76VSOnSsW",
       "name": "learn"
     }
