@@ -1,0 +1,406 @@
+{
+  "active": true,
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "绘画内容检测器",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "ComfyUI Wf to Media",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "绘画内容检测器": {
+      "main": [
+        [
+          {
+            "node": "处理think标签",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "是否画图": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "回复指引",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "处理think标签": {
+      "main": [
+        [
+          {
+            "node": "是否画图",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "ComfyUI Wf to Media": {
+      "main": [
+        [
+          {
+            "node": "上传supabase",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "上传supabase": {
+      "main": [
+        [
+          {
+            "node": "图片回复",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "绘画内容检测器",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-12-02T08:41:21.079Z",
+  "id": "AoEKvf7cH46O4imj",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "文生图-flux1.0",
+  "nodes": [
+    {
+      "parameters": {
+        "public": true,
+        "initialMessages": "你好! 👋\n我是AI小画家. 请告诉我你要画的内容?",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.4,
+      "position": [
+        -976,
+        16
+      ],
+      "id": "08a65326-2bbb-4063-8fbf-ab01d245d7b3",
+      "name": "When chat message received",
+      "webhookId": "a9fb1f0a-6bfd-4c34-9d28-2b1c2f788079"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=You are an AI agent specialized in generating optimized prompts for Flux in ComfyUI based on user input. Your task is to analyze the user's description (which may be in any language, such as Chinese or English) and generate two types of CLIP prompts in English:\n\n- natural_prompt: This should be a coherent, natural-language English description that captures the essence of the user's input in a narrative or descriptive paragraph style. Make it vivid and flowing, like a story or scene setup.\n\n- words_prompt: This should be a comma-separated list of individual English words, short phrases, and descriptive keywords that expand on the user's input. Focus on visual elements, styles, atmospheres, and details to enhance image generation, without forming full sentences.\n\n## Key guidelines\n\n- Accurately understand and reflect the core meaning of the user's input. Do not add elements that contradict or twist the original intent.\n- Enrich the prompts by adding complementary details that logically enhance the scene (e.g., lighting, mood, style) while staying true to the user's description. For example, if the user describes a \"girl in a forest,\" you can add \"ethereal lighting\" or \"ancient trees\" if it fits, but not change it to a city.\n- Ensure both prompts are in pure English, highly detailed, and suitable for AI image generation (e.g., reference resolutions like 8K, styles like cinematic or magical realism if relevant).\n- Keep the prompts creative and immersive, but grounded in the user's input.\n- Always output ONLY in strict JSON format, with no additional text before or after. Use the exact keys: \"natural_prompt\" and \"words_prompt\".\n\n## output ressult\nExample user input: 一个银色卷发的年轻女孩穿着精致的白色连衣裙，站在水晶蝴蝶和发光的玻璃玫瑰中间。场景充满柔和的魔幻光芒，像来自幻想世界的梦境。\nExample output:\n{\"natural_prompt\":\"A fairy tale scene of a young girl with silver curly hair wearing a delicate white dress, standing among crystal butterflies and glowing glass roses. The scene is filled with soft magical light, like a dream from a fantasy world.\", \"words_prompt\":\"A beautiful fantasy girl with long curly silver hair and big blue eyes, wearing a white transparent fairy dress with lace and puffed sleeves. Surrounded by iridescent butterflies and giant glass roses, dreamy lighting, ethereal atmosphere, soft glow, magical realism, highly detailed, cinematic, 8K render.\"}\n\nNow, process the following user input and generate the JSON output:\n[{{ $('When chat message received').item.json.chatInput }}]",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "2c1df58f-498d-434b-9929-8c7a7624b220",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "workflow": "={\n  \"8\": {\n    \"inputs\": {\n      \"samples\": [\n        \"31\",\n        0\n      ],\n      \"vae\": [\n        \"39\",\n        0\n      ]\n    },\n    \"class_type\": \"VAEDecode\",\n    \"_meta\": {\n      \"title\": \"VAE解码\"\n    }\n  },\n  \"9\": {\n    \"inputs\": {\n      \"filename_prefix\": \"ComfyUI\",\n      \"images\": [\n        \"8\",\n        0\n      ]\n    },\n    \"class_type\": \"SaveImage\",\n    \"_meta\": {\n      \"title\": \"保存图像\"\n    }\n  },\n  \"27\": {\n    \"inputs\": {\n      \"width\": 512,\n      \"height\": 512,\n      \"batch_size\": 1\n    },\n    \"class_type\": \"EmptySD3LatentImage\",\n    \"_meta\": {\n      \"title\": \"空Latent图像（SD3）\"\n    }\n  },\n  \"31\": {\n    \"inputs\": {\n      \"seed\": 434549169094929,\n      \"steps\": 20,\n      \"cfg\": 1,\n      \"sampler_name\": \"euler\",\n      \"scheduler\": \"simple\",\n      \"denoise\": 1,\n      \"model\": [\n        \"38\",\n        0\n      ],\n      \"positive\": [\n        \"41\",\n        0\n      ],\n      \"negative\": [\n        \"42\",\n        0\n      ],\n      \"latent_image\": [\n        \"27\",\n        0\n      ]\n    },\n    \"class_type\": \"KSampler\",\n    \"_meta\": {\n      \"title\": \"K采样器\"\n    }\n  },\n  \"38\": {\n    \"inputs\": {\n      \"unet_name\": \"flux1-dev.safetensors\",\n      \"weight_dtype\": \"default\"\n    },\n    \"class_type\": \"UNETLoader\",\n    \"_meta\": {\n      \"title\": \"UNet加载器\"\n    }\n  },\n  \"39\": {\n    \"inputs\": {\n      \"vae_name\": \"ae.safetensors\"\n    },\n    \"class_type\": \"VAELoader\",\n    \"_meta\": {\n      \"title\": \"加载VAE\"\n    }\n  },\n  \"40\": {\n    \"inputs\": {\n      \"clip_name1\": \"clip_l.safetensors\",\n      \"clip_name2\": \"t5xxl_fp16.safetensors\",\n      \"type\": \"flux\",\n      \"device\": \"default\"\n    },\n    \"class_type\": \"DualCLIPLoader\",\n    \"_meta\": {\n      \"title\": \"双CLIP加载器\"\n    }\n  },\n  \"41\": {\n    \"inputs\": {\n      \"clip_l\": \"{{ $json.output.words_prompt }}\\n\",\n      \"t5xxl\": \"{{ $json.output.natural_prompt }}\",\n      \"guidance\": 3.5,\n      \"clip\": [\n        \"40\",\n        0\n      ]\n    },\n    \"class_type\": \"CLIPTextEncodeFlux\",\n    \"_meta\": {\n      \"title\": \"CLIP文本编码Flux\"\n    }\n  },\n  \"42\": {\n    \"inputs\": {\n      \"conditioning\": [\n        \"41\",\n        0\n      ]\n    },\n    \"class_type\": \"ConditioningZeroOut\",\n    \"_meta\": {\n      \"title\": \"条件零化\"\n    }\n  }\n}"
+      },
+      "type": "n8n-nodes-comfyui-media.comfyuiWfToMedia",
+      "typeVersion": 1,
+      "position": [
+        304,
+        0
+      ],
+      "id": "2a24a5b0-ce7a-4cb1-be30-238f10d3c4c2",
+      "name": "ComfyUI Wf to Media",
+      "credentials": {
+        "comfyUIApi": {
+          "id": "OTWqg7I3wfY8zwu7",
+          "name": "ComfyUI account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-chat",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        192
+      ],
+      "id": "a4e05959-cf21-4a89-89fc-6549d57476ca",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "mOE7vbZHlbc3A2y8",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=你是一个严格的绘画内容检测器，只做一件事：判断用户本次输入是否包含明确的绘画需求。\n\n判断标准（所有条件需同时满足才算通过）：\n- 用户消息中必须明确出现想要画的具体内容（可以是物体、人物、场景、动作、风格、组合等，例如“一只猫”“赛博朋克城市夜景”“穿汉服的少女”等）\n- 单纯的“画一张图”“来一张”“随机画一个”“出图”“生成图片”等没有任何具体描述的指令，一律视为未提供内容\n\n输出格式必须严格为以下JSON之一，且不能有任何多余文字、换行、解释、markdown代码块：\n\n如果用户明确提供了要画的内容（通过）：\n{\"isPass\":true}\n\n如果用户没有提供任何具体要画的东西（不通过）：\n{\"isPass\":false}\n\n现在开始严格按以上规则判断用户输入，只输出JSON。\n\n用户的输入:[ {{ $json.chatInput }} ]",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -768,
+        16
+      ],
+      "id": "35df4d08-573f-44e8-a13f-eea244014d75",
+      "name": "绘画内容检测器"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "2da5d96e-1319-44b3-a158-f0cdd511eed8",
+              "leftValue": "={{ $json.output.parseJson().isPass }}",
+              "rightValue": "",
+              "operator": {
+                "type": "boolean",
+                "operation": "true",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -256,
+        16
+      ],
+      "id": "d72baaa2-ebdd-445d-96d7-21088ccdb452",
+      "name": "是否画图"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "57f0867b-d89e-4b6e-b8a0-edd3b3a16777",
+              "name": "output",
+              "value": "={{ $json.output.replace(/<think>[\\s\\S]*?<\\/think>/gi, \"\").trim() }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -464,
+        16
+      ],
+      "id": "8d1e85a5-4aa7-4c65-8099-a2584f146eea",
+      "name": "处理think标签"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "305d3bbb-485f-4bfb-9576-0f3f8b3f8fec",
+              "name": "text",
+              "value": "请告诉我要画的内容",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -240,
+        224
+      ],
+      "id": "65465a80-7896-4d06-859d-c3118101d298",
+      "name": "回复指引"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "=https://ooygrmzmclsbudipjsmm.storage.supabase.co/storage/v1/object/n8n/{{ $now.setZone('Asia/Shanghai').toFormat('yyyy-MM-dd')}}/{{ $json.fileName }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9veWdybXptY2xzYnVkaXBqc21tIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NDU2OTUwMiwiZXhwIjoyMDgwMTQ1NTAyfQ.xtfA-IVAgIcCY8PCIteT5KYetM4T6XERb_w_lAGPslQ"
+            },
+            {
+              "name": "apikey",
+              "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9veWdybXptY2xzYnVkaXBqc21tIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc2NDU2OTUwMiwiZXhwIjoyMDgwMTQ1NTAyfQ.xtfA-IVAgIcCY8PCIteT5KYetM4T6XERb_w_lAGPslQ"
+            }
+          ]
+        },
+        "sendBody": true,
+        "contentType": "binaryData",
+        "inputDataFieldName": "data",
+        "options": {
+          "redirect": {
+            "redirect": {}
+          }
+        }
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.3,
+      "position": [
+        464,
+        0
+      ],
+      "id": "96c19298-e4aa-41d1-964c-344827587022",
+      "name": "上传supabase"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "78ddcadc-96b1-415b-b72e-0258c8420ba7",
+              "name": "text",
+              "value": "=![alt文本](https://ooygrmzmclsbudipjsmm.supabase.co/storage/v1/object/public/n8n/{{ $now.setZone('Asia/Shanghai').toFormat('yyyy-MM-dd')}}/{{ $('ComfyUI Wf to Media').item.json.fileName }} \"{{ $('When chat message received').item.json.chatInput }}\")",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        640,
+        0
+      ],
+      "id": "d1a805c2-e343-4790-9fc4-670669dc3ee6",
+      "name": "图片回复"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\"natural_prompt\":\"A fairy tale scene of a young girl.\",\n  \"words_prompt\":\"A beautiful fantasy girl with long curly silver hair and big blue eyes.\"}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        160,
+        192
+      ],
+      "id": "26701339-526f-4386-ae03-a8c8a7338ec1",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "model": "qwen/qwen3-14b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -912,
+        224
+      ],
+      "id": "922f15f0-9167-400f-8e64-998b372cf73b",
+      "name": "OpenRouter Chat Model1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "mOE7vbZHlbc3A2y8",
+          "name": "OpenRouter account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-12-02T08:41:21.079Z",
+      "createdAt": "2025-12-02T08:41:21.079Z",
+      "role": "workflow:owner",
+      "workflowId": "AoEKvf7cH46O4imj",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-12-06T01:58:52.824Z",
+  "versionId": "6ec7d3d8-890c-48c4-8012-08498a038555"
+}
