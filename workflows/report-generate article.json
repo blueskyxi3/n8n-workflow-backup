@@ -1,0 +1,350 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)1": {
+      "main": [
+        [
+          {
+            "node": "combile article",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "文章优化",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "combile article": {
+      "main": [
+        [
+          {
+            "node": "文章优化",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "DeepSeek Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "序号修正",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "序号修正": {
+      "main": [
+        []
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "Send email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "文章优化": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-20T08:40:15.934Z",
+  "id": "ACwKwHMKuGVCiEDD",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "report-generate article",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -672,
+        800
+      ],
+      "id": "f01148a8-b219-455a-9858-87d92c829af0",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "ymPwtOA3zVcR6xXd",
+          "mode": "list",
+          "cachedResultName": "article",
+          "cachedResultUrl": "/projects/AjKOXkiVfZaaIF4c/datatables/ymPwtOA3zVcR6xXd"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "createdAt",
+              "condition": "gte",
+              "keyValue": "={{ $today }}"
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -400,
+        800
+      ],
+      "id": "0d21734a-338a-452d-9238-8170c18fa2c4",
+      "name": "Get row(s)1",
+      "alwaysOutputData": true
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-chat-v3-0324",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        80,
+        1008
+      ],
+      "id": "e1ffdcc8-19b1-470d-947a-a6944e18f3d9",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "mOE7vbZHlbc3A2y8",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "// 获取所有输入项\nlet items = $input.all();\n\nif (items.length === 0) {\n  return [{ json: { error: \"没有输入数据\" } }];\n}\n\n// 定义章节的显示顺序\nconst chapterOrder = [\n  \"市场资讯\",\n  \"宏观资讯\", \n  \"通信ICT行业资讯\",\n  \"商业观察\"\n];\n\nconst sectionOrder = [\n  \"国外\",\n  \"国内\", \n  \"港澳地区\",\n  \"商业动态\",\n  \"投融资\",\n  \"生态合作\"\n];\n\n// 按chapter和section分组数据\nconst groupedData = {};\n\nitems.forEach(item => {\n  const chapter = item.json.chapter;\n  const section = item.json.section;\n  const content = item.json.content || \"\";\n  \n  if (!groupedData[chapter]) {\n    groupedData[chapter] = {};\n  }\n  \n  if (!groupedData[chapter][section]) {\n    groupedData[chapter][section] = [];\n  }\n  \n  // 直接存储完整的content内容\n  if (content.trim()) {\n    groupedData[chapter][section].push(content.trim());\n  }\n});\n\n// 生成文章内容\nlet article = \"\";\n\nchapterOrder.forEach((chapter, chapterIndex) => {\n  if (!groupedData[chapter]) return;\n  \n  // 检查该章节下是否有任何内容\n  let hasContent = false;\n  sectionOrder.forEach(section => {\n    if (groupedData[chapter][section] && groupedData[chapter][section].length > 0) {\n      hasContent = true;\n    }\n  });\n  \n  // 如果章节没有任何内容，跳过该章节\n  if (!hasContent) return;\n  \n  // 添加一级标题\n  const chapterNumber = chapterIndex + 1;\n  article += `# ${chapterNumber} ${chapter}\\n`;\n  \n  // 添加章节描述（根据章节类型）\n  const descriptions = {\n    \"市场资讯\": \"重大资讯\",\n    \"宏观资讯\": \"仅限重大政策，政治新闻，国家层面、政府部门、管理机构如：工信部等发布的政策、条例等\", \n    \"通信ICT行业资讯\": \"仅限运营商及ICT行业\",\n    \"商业观察\": \"侧重相关商业动态，投融资、生态合作等相关资讯\"\n  };\n  \n  if (descriptions[chapter]) {\n    article += `${descriptions[chapter]}\\n\\n`;\n  }\n  \n  // 添加二级标题和内容\n  let sectionCount = 0;\n  sectionOrder.forEach(section => {\n    if (!groupedData[chapter][section] || groupedData[chapter][section].length === 0) return;\n    \n    const sectionNumber = `${chapterNumber}.${sectionCount + 1}`;\n    article += `## ${sectionNumber} ${section}\\n\\n`;\n    \n    // 添加该section下的所有完整内容\n    groupedData[chapter][section].forEach(content => {\n      article += `${content}\\n\\n`;\n    });\n    \n    sectionCount++;\n  });\n  \n  article += \"\\n\";\n});\n\n// 返回结果\nreturn [{\n  json: {\n    formattedArticle: article\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -128,
+        800
+      ],
+      "id": "8c9be6e0-c576-413c-97bd-f19fde794166",
+      "name": "combile article"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
+      "typeVersion": 1,
+      "position": [
+        768,
+        1248
+      ],
+      "id": "92b52cb8-c164-4948-b1cb-f1f0fab41486",
+      "name": "DeepSeek Chat Model",
+      "credentials": {
+        "deepSeekApi": {
+          "id": "2SXDvVt9uFwfTnQm",
+          "name": "DeepSeek n8n Account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "请开始改写",
+        "options": {
+          "systemMessage": "=角色： 你是一名专业的文本编辑助理，擅长处理文档的结构和格式。\n\n任务： 请按照以下规则，对我提供的文章章节标题进行重新编号，以确保序号的连续性和逻辑正确性。\n\n处理规则：\n\n核心目标： 修正因章节缺失导致的序号中断问题，使所有章节序号从1开始连续递增。\n\n层级处理： 你需要分别处理不同层级的标题。\n\n第一级标题（章）： 例如“第1章”、“第2章”或“1”、“2”。从找到的第一个“第X章”开始，将其重命名为“第1章”，后续的“第Y章”依次改为“第2章”、“第3章”...以此类推。\n\n第二级标题（节）： 例如“1.1”、“1.2”或“第一节”、“第二节”。它们隶属于其上一级“章”。修正时，节的序号必须在其所属的“章”内重新从1开始计算。\n\n示例： 如果“第1章”下缺失了“1.1”，原来的“1.2”应改为“1.1”；“第2章”下的“2.1”则保持不变。\n\n缺失判断： 系统会默认第一个被发现的章节号为起点。如果原文以“第2章”开头，则说明缺失了“第1章”，此时应将“第2章”改为“第1章”。\n\n格式保留： 请严格保留标题原有的格式。例如，原文是“第X章”，改写后也应是“第N章”；原文是“X.Y”，改写后也应是“N.M”。不要改变数字之外的文字、标点或空格。\n\n举例说明：\n\n输入：\n2 市场营销\n2.2 市场分析\n2.3 营销策略\n3 人力资源\n3.1 招聘流程\n\n期望输出：\n1 市场营销\n1.1 市场分析\n1.2 营销策略\n2 人力资源\n2.1 招聘流程\n\n我的请求：\n请对以下文章内容中的章节标题进行重新编号：\n\n {{ $json.output }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        768,
+        1088
+      ],
+      "id": "770acda0-8f06-465e-8420-cd848b64cd99",
+      "name": "序号修正"
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "output",
+        "options": {
+          "fileName": "=article-{{ $now.format('yyyyMMdd') }}.md"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        752,
+        800
+      ],
+      "id": "f2c5ba99-d384-4f06-ae2e-87ec76f781f4",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {
+        "fromEmail": "n8n@citictel.com",
+        "toEmail": "vincentzou@citictel.com",
+        "subject": "=ai report {{ $now.format('yyyy-MM-dd') }}",
+        "html": "Dear Sir,\n\nplease find ai report as attached.\n\nthanks.",
+        "options": {
+          "attachments": "=data"
+        }
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        992,
+        800
+      ],
+      "id": "0053d2f5-b38a-45c7-83b2-7417f9707cc7",
+      "name": "Send email",
+      "webhookId": "58deff9d-74dc-4c59-a5c0-1f02fe2af785",
+      "credentials": {
+        "smtp": {
+          "id": "MRieOEP8aSj6h8gG",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "请开始改写，注意上下文的连贯性，同时直接输入文章，不要额外的说明。",
+        "options": {
+          "systemMessage": "=你是一位专业的编辑和撰稿人。请根据以下提供的文章，请按照以下要求对文章进行结构化整理与改写。\n\n【来源文章开始】\n{{ $json.formattedArticle }}\n【来源文章结束】\n\n【改写作要求】\n\n\n一、 结构调整\n新增“资讯来源”章节： 在文章末尾，新增一个独立的章节，标题为 “# 资讯来源”。\n\n移除章节内引用： 将原文中所有章节（如：市场资讯、宏观资讯等）内部中的参考文献或引用部分移动到文章末尾 “# 资讯来源”章节，其中文本内容中的引用，如[1],[2]等，要注意合理的调整实际的序号。\n\n集中列出来源： 将所有被删除的引用链接，以清晰的列表形式集中放置于“资讯来源”章节内。列表项格式为：- <序号 来源描述>(<对应链接>)，例如：- [1. 国外AI进展](https://www.xxx1.com)。\n\n二、 格式规范\n请确保最终输出的文章严格遵循以下层级结构与标题命名：\n\ntext\n# 1 市场资讯\n重大资讯\n\n## 1.1 国外\n<资讯标题1>\n<资讯标题2>\n…\n\n## 1.2 国内\n<资讯标题1>\n<资讯标题2>\n…\n\n## 1.3 港澳地区\n<资讯标题1>\n<资讯标题2>\n…\n\n# 2 宏观资讯\n仅限重大政策，政治新闻，国家层面、政府部门、管理机构如：工信部等发布的政策、条例等\n\n## 2.1 国外\n<资讯标题1>\n<资讯标题2>\n…\n\n## 2.2 国内\n<资讯标题1>\n<资讯标题2>\n…\n\n## 2.3 港澳地区\n<资讯标题1>\n<资讯标题2>\n…\n\n# 3 通信与ICT行业动态\n仅限运营商及ICT行业\n\n## 3.1 国外\n<资讯标题1>\n<资讯标题2>\n…\n\n## 3.2 国内\n<资讯标题1>\n<资讯标题2>\n…\n\n## 3.3 港澳地区\n<资讯标题1>\n<资讯标题2>\n…\n\n# 4 商业观察\n侧重相关商业动态，投融资、生态合作等相关资讯\n\n## 4.1 商业动态\n<资讯标题1>\n<资讯标题2>\n…\n\n## 4.2 投融资\n<资讯标题1>\n<资讯标题2>\n…\n\n## 4.3 生态合作\n<资讯标题1>\n<资讯标题2>\n…\n\n# 资讯来源\n- [来源描述1](对应链接1)\n- [来源描述2](对应链接2)\n- ...\n请注意： 在调整过程中，请确保章节序号（如 3.1, 3.2, 3.3）的正确性与连贯性。 修正因章节缺失导致的序号中断问题，使所有章节序号从1开始连续递增。"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        80,
+        800
+      ],
+      "id": "b67ae39d-0351-4a51-9ebf-34e7e4ac6f51",
+      "name": "文章优化"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=Suggest an engaging title based on the following article.  Please use plain text, no formating of any kind. Less than 10 words in the title.\n {{ $json.output }}\ntranslate to chinese",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        432,
+        800
+      ],
+      "id": "bf0da0db-3df8-408b-a171-aedee5c2327d",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": "qwen/qwen3-vl-235b-a22b-instruct",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        432,
+        1008
+      ],
+      "id": "23d91dfe-baa7-4686-ac4c-5826abb18841",
+      "name": "OpenRouter Chat Model1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "mOE7vbZHlbc3A2y8",
+          "name": "OpenRouter account"
+        }
+      }
+    }
+  ],
+  "pinData": {
+    "序号修正": [
+      {
+        "json": {
+          "output": "# 第1章 市场资讯  \n重大资讯  \n\n## 1.1 国外  \n\n### AGI的量化标准与最新AI发展动态  \n图灵奖得主Yoshua Bengio联合多个研究机构发布《A Definition of AGI》论文，首次为通用人工智能（AGI）制定了可量化的评估标准。研究将AGI定义为\"能匹配或超越受过良好教育成年人的认知广度和熟练度的人工智能\"，并基于心理学CHC理论拆解出10个认知领域的评估体系。  \n\n当前最先进的AI模型与AGI标准仍有显著差距：GPT-4（2023年）总分仅为27分，GPT-5（2025年）提升至58分。AI在知识储备、读写能力和数学方面表现优异（均达8分以上），但在长时记忆存储、视觉和听觉处理等领域存在明显短板。  \n\n行业动态方面，谷歌Gemini 3.0预计10月22日发布，重点改进延迟、编程能力和SVG图像生成；Veo 3.1视频模型新增音频支持和对象添加功能，上线5个月已助力用户创作2.75亿个视频。  \n\n## 1.2 国内  \n\n### 交互式网页生成技术的新挑战  \n上海人工智能实验室与浙江大学联合推出IWR-Bench评测基准，首次通过视频输入评估AI重建交互式网页的能力。测试显示，GPT-5在功能正确性（IFS）仅得24.39%，视觉保真度（VFS）为64.25%，反映出现有模型在动态交互逻辑生成上的不足。  \n\n国内首个标准大模型\"同道\"互联网版正式上线，提供标准全生命周期智能化服务；李飞飞团队发布单GPU可运行的世界模型RTFM，能根据输入图像生成一致的3D世界视图，展示了AI在虚拟世界建模中的潜力。  \n\n# 第2章 通信与ICT行业动态  \n仅限运营商及ICT行业  \n\n## 2.1 国内  \n\n### AI发展新趋势：从基础设施到应用落地  \n阿里云栖大会提出超级人工智能（ASI）需满足连接物理世界全场景与具备自我学习能力两大条件，与英伟达等企业共同推进物理AI技术发展。全球科技企业加速算力投资，亚马逊AWS年度资本开支将达1000亿美元，阿里追加3800亿元基建投资。  \n\n应用层面呈现\"硬件+应用\"协同特点：Meta、小米密集发布AI眼镜，云栖大会展出200+行业智能体；AI操作系统（OS）被视为下一代产业规则重构者，相关产业规模或达十万亿级，国内外企业处于同一起跑线。  \n\n# 第3章 商业观察  \n侧重相关商业动态，投融资、生态合作等相关资讯  \n\n## 3.1 商业动态  \n\n### AI管家：7×24小时的智能健康助手  \n百度健康推出\"AI+真人\"双认证的健康管家，构建从科普到就医指导的全链路服务。系统具备三重保障机制：36万医生参与数据校验、AI预诊+真人确诊双检查、可咨询\"医生AI分身\"。多模态交互技术可解读医疗影像（准确率98%），智能就医辅助整合30万+医生资源，健康管理实现95%+的医疗文档自动分类。  \n\n## 3.2 生态合作  \n\n### AI竞赛与生态：从人机大战到中国Agent崛起  \n马斯克邀请AI专家卡帕西与Grok 5进行编程对决遭婉拒，反映人机协作已成主流趋势。中国AI产品向垂直行业深化，如科研领域SciMaster实现全流程自动化研究。基础设施层面，OpenAI与博通合作开发AI芯片，华为发布灵衢UnifiedBus协议推动自主创新。分析显示生成式AI年收入有望超600亿美元，资本支出与收入比约为六倍，需警惕资金质量风险。  \n\n# 资讯来源  \n- [AGI量化标准与评估体系](https://www.qbitai.com/2025/10/342761.html)  \n- [谷歌Veo 3.1视频模型升级](https://www.c114.com.cn/ai/5339/a1298749.html)  \n- [谷歌Gemini 3.0即将发布](https://www.c114.com.cn/ai/5339/a1298670.html)  \n- [交互式网页生成基准IWR-Bench](https://www.qbitai.com/2025/10/343400.html)  \n- [李飞飞团队世界模型RTFM](https://www.qbitai.com/2025/10/342735.html)  \n- [标准大模型\"同道\"上线](https://www.c114.com.cn/ai/5339/a1298689.html)  \n- [阿里云栖大会AI趋势分析](https://www.c114.com.cn/ai/5339/a1298678.html)  \n- [百度健康AI管家](https://www.qbitai.com/2025/10/343152.html)  \n- [马斯克编程人机大战](https://www.qbitai.com/2025/10/343346.html)  \n- [中国Agent产品趋势](https://www.qbitai.com/2025/10/343370.html)  \n- [AI投资泡沫分析](https://36kr.com/p/3501262935137408)  \n- [OpenAI自研AI芯片](https://www.c114.com.cn/ai/5339/a1298585.html)"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-10-20T08:40:15.934Z",
+      "createdAt": "2025-10-20T08:40:15.934Z",
+      "role": "workflow:owner",
+      "workflowId": "ACwKwHMKuGVCiEDD",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-10-27T02:47:52.030Z",
+  "versionId": "7095062e-8fc6-4b25-850b-d0cd362cc889"
+}
