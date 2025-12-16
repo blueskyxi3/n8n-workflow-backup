@@ -1,0 +1,548 @@
+{
+  "active": false,
+  "connections": {
+    "Loop Over Items2": {
+      "main": [
+        [],
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        []
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row(s)": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent1": {
+      "main": [
+        [
+          {
+            "node": "Update row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent1",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-20T04:05:58.031Z",
+  "id": "hZTWonUshQTEWTJn",
+  "isArchived": true,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "rating content",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -512,
+        896
+      ],
+      "id": "0b4072c3-49f8-483a-ae15-4a54bef9f26c",
+      "name": "Loop Over Items2"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "77b32db2-0726-4db8-b290-1da7da4da9cf",
+              "leftValue": "={{ $json.category }}",
+              "rightValue": "其它",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -256,
+        912
+      ],
+      "id": "c74d40ee-94f7-406f-a879-0dec0470de66",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "yAtPEE5aVP9J8pNl",
+          "mode": "list",
+          "cachedResultName": "news",
+          "cachedResultUrl": "/projects/AjKOXkiVfZaaIF4c/datatables/yAtPEE5aVP9J8pNl"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "createdAt",
+              "condition": "gte",
+              "keyValue": "={{ $today }}"
+            }
+          ]
+        },
+        "limit": 200
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -768,
+        896
+      ],
+      "id": "42c4523c-c786-4011-a595-77c62c618607",
+      "name": "Get row(s)2"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=請幫忙煉後文章",
+        "options": {
+          "systemMessage": "=請對以下文章進行摘要和清理，要求如下：\n\n1.  **清理雜質**：刪除所有引用他人言論的句子、作者的個人感想、廣告推廣、不相關的舉例和文末聲明。\n2.  **提煉核心**：提取文章的核心論點、支持性事實和最終結論。\n3.  **保持結構**：將提煉後的內容組織成連貫的段落，清晰地呈現「問題-分析-結論」或「主要觀點-次要觀點」的邏輯。\n\n請輸出一篇純淨、連貫、只包含核心信息的短文。\n\n【待處理文章】\n {{ $json.content }}"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        736,
+        1920
+      ],
+      "id": "4689cbca-bd09-4b72-8857-08eeb830984f",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-chat-v3-0324",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        464,
+        1984
+      ],
+      "id": "73839e22-0e5b-4895-87af-5c118ec71095",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "mOE7vbZHlbc3A2y8",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "yAtPEE5aVP9J8pNl",
+          "mode": "list",
+          "cachedResultName": "news",
+          "cachedResultUrl": "/projects/AjKOXkiVfZaaIF4c/datatables/yAtPEE5aVP9J8pNl"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "createdAt",
+              "condition": "gte",
+              "keyValue": "={{ $today }}"
+            },
+            {
+              "keyName": "link",
+              "keyValue": "={{ $('If1').item.json.link }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "rating": "={{ $json.output.rating }}",
+            "reasoning": "={{ $json.output.reasoning }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "link",
+              "displayName": "link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "sub_category",
+              "displayName": "sub_category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "reasoning",
+              "displayName": "reasoning",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "content",
+              "displayName": "content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "rating",
+              "displayName": "rating",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        720,
+        912
+      ],
+      "id": "2b315000-a86a-49c9-a831-a394f22fca25",
+      "name": "Update row(s)"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=角色：你是一位资深科技行业分析师，擅长从海量信息中精准识别事件的重要性和影响力范围。\n\n任务：请根据以下定义的5星评级体系，对提供的【科技资讯标题】进行重要级别评估。\n\n评级体系定义：\n\n1星：有广告嫌疑或夸大性言论，或信息模糊无法区分其重要性。通常为营销软文、未经证实的传闻或无关紧要的公告。\n\n2星：对企业或机构内产生重大影响。例如：某科技公司CEO换人、某公司发布一款新产品、某机构获得一笔重要融资。\n\n3星：对行业或城市内产生重大影响。例如：新的行业技术标准发布、某行业龙头公司发生重大并购、某个城市出台针对特定科技产业的扶持政策。\n\n4星：对某一主要区域内产生重大影响（如欧盟、美国、中国、东南亚等）。例如：欧盟通过《人工智能法案》、美国对中国半导体实施新的出口管制、中国发布全国性的数据安全法。\n\n5星：对全球范围内产生重大影响，标志着技术、商业或监管的根本性变革。例如：OpenAI发布ChatGPT引发全球AI浪潮、新冠病毒疫情期间全球供应链中断、第一台通用量子计算机实现“量子霸权”。\n\n评估流程与要求：\n\n分析标题：仔细阅读并理解标题的核心事件。\n\n判断影响范围：根据定义，判断该事件影响的广度——是局限于单个主体、一个行业、一个区域，还是全球？\n\n排除干扰：警惕广告、夸大或模糊的标题，这类应直接归为1星。\n\n输出格式：请严格按照以下JSON格式输出评估结果，不添加任何其他解释。\n{\n  \"title\": \"【这里填写被评估的标题】\",\n  \"rating\": X, // (填写1-5的整数)\n  \"reasoning\": \"【简要说明评级理由，特别是判断其影响范围的依据。】\"\n}\n\n请分析以下内容：\n---\n 标题: {{ $json.title }}\n 内容：{{ $json.content }}\n---",
+        "hasOutputParser": true,
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        400,
+        912
+      ],
+      "id": "595856aa-2441-40dc-85ef-20fa71afd7d7",
+      "name": "AI Agent1",
+      "retryOnFail": true,
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"title\": \"苹果公司发布新一代iPhone，搭载最新A系列芯片\",\n  \"rating\": 2,\n  \"reasoning\": \"此事件是苹果公司的年度产品更新，对其自身业务和消费者有重大影响，但属于常规商业行为，对整个智能手机行业的技术格局和市场格局不会产生颠覆性影响，因此评级为2星。\"\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        624,
+        1184
+      ],
+      "id": "6602a7a5-c02f-4ba1-9688-3cc41b748eac",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "4e211622-6aea-402d-ab5a-f16e65ea602d",
+              "leftValue": "={{ $json.rating }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "empty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -16,
+        928
+      ],
+      "id": "a6880b13-198f-45b1-b274-f2012adbf1c7",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "model": "qwen/qwen3-32b",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        384,
+        1184
+      ],
+      "id": "1fd885df-f75e-43af-b7ac-e22d33483dec",
+      "name": "OpenRouter Chat Model1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "mOE7vbZHlbc3A2y8",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -976,
+        896
+      ],
+      "id": "12b04d25-7f67-451c-8f6c-44f283381e1b",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -992,
+        1152
+      ],
+      "id": "a85ed274-6d06-4b1b-bc03-1b6275769cdb",
+      "name": "When Executed by Another Workflow"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-10-20T04:05:58.031Z",
+      "createdAt": "2025-10-20T04:05:58.031Z",
+      "role": "workflow:owner",
+      "workflowId": "hZTWonUshQTEWTJn",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-10-30T06:38:17.616Z",
+  "versionId": "e3d96527-a590-4645-bd3e-7a6eb4501c84"
+}
