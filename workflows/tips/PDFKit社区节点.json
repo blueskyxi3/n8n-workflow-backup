@@ -64,11 +64,20 @@
   "settings": {
     "executionOrder": "v1"
   },
+  "shared": [
+    {
+      "updatedAt": "2025-07-16T08:48:25.836Z",
+      "createdAt": "2025-07-16T08:48:25.836Z",
+      "role": "workflow:owner",
+      "workflowId": "OAp00rMLqJX2XrdN",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
   "staticData": null,
   "tags": [
     {
-      "createdAt": "2025-07-16T08:49:08.063Z",
       "updatedAt": "2025-07-16T08:49:08.063Z",
+      "createdAt": "2025-07-16T08:49:08.063Z",
       "id": "fFsQo0HXVOOz1dKe",
       "name": "tips"
     }
