@@ -1,0 +1,647 @@
+{
+  "active": false,
+  "connections": {
+    "knowledge base from internet": {
+      "main": [
+        [
+          {
+            "node": "章节循环",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Schedule Trigger2": {
+      "main": [
+        [
+          {
+            "node": "主题",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "章节列表": {
+      "main": [
+        [
+          {
+            "node": "章节循环",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "主题": {
+      "main": [
+        [
+          {
+            "node": "章节列表",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "查询章节News": {
+      "main": [
+        [
+          {
+            "node": "knowledge base from internet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Convert to File": {
+      "main": [
+        [
+          {
+            "node": "FTP",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "合并文章": {
+      "main": [
+        [
+          {
+            "node": "Convert to File",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "主题1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "主题1": {
+      "main": [
+        [
+          {
+            "node": "Execute a SQL query",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "News行内容处理": {
+      "main": [
+        [],
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Update rows in a table",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update rows in a table": {
+      "main": [
+        [
+          {
+            "node": "News行内容处理",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a SQL query": {
+      "main": [
+        [
+          {
+            "node": "News行内容处理",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "章节循环": {
+      "main": [
+        [
+          {
+            "node": "合并文章",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "查询章节News",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "FTP": {
+      "main": [
+        [
+          {
+            "node": "Execute a command",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Execute a command": {
+      "main": [
+        [
+          {
+            "node": "download pdf",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "download pdf": {
+      "main": [
+        [
+          {
+            "node": "Send email",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-30T06:53:18.561Z",
+  "id": "jonC2aDmUnsI4msS",
+  "isArchived": false,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "weekly-generate article",
+  "nodes": [
+    {
+      "parameters": {
+        "jsCode": "const keyword = $('章节循环').first().json.keyword;\n\nif (items.length === 1 && Object.keys(items[0].json).length === 0) {\n  return [{json: {\n    code: 400,\n    keyword:keyword  }\n}];\n}\n\nfunction arrayToMarkdownLinks(data) {\n  const seq = $('章节循环').first().json.seq  \n  return data.map((item,index) => {\n    let domain = item.json.origin_url;\n    return `- [${item.json.title}](#${seq}.${index}) [${domain}]`}\n                 ).join('\\n');\n}\n\nconst markdown = arrayToMarkdownLinks(items);\n// console.log(markdown);\nconst seq = $('章节循环').first().json.seq\n// 假設輸入的 items 是那 5 篇文章\nconst sources = items.map((item,index) => {\n  return `<h3 id=\"${seq}.${index}\">${item.json.title}</h3>  \n    ${item.json.date}  \n    ${item.json.summary}  \n    \n  ---\n  `\n});\n\nconst chapter = items[0].json.category;\nconst section = items[0].json.sub_category;\n\n// 構建一個給 AI 看的清晰格式的上下文字符串\nconst contextString = sources.map(source => {\n  return source;\n}).join('\\n');\n\nreturn [{\n  json: {\n    code: 200 ,\n    chapter: chapter,\n    section: section,\n    reference: markdown,\n    keyword:keyword,\n    contextString: contextString\n  }\n}];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -352,
+        656
+      ],
+      "id": "e9238e48-07b4-423e-868e-c5a9c14d9443",
+      "name": "knowledge base from internet"
+    },
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "triggerAtHour": 5
+            }
+          ]
+        }
+      },
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [
+        -1312,
+        544
+      ],
+      "id": "b0dcffeb-4437-4689-8c10-7c3332d60b26",
+      "name": "Schedule Trigger2"
+    },
+    {
+      "parameters": {
+        "content": "## 周报",
+        "height": 384,
+        "width": 1760,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1376,
+        464
+      ],
+      "typeVersion": 1,
+      "id": "dae8cf41-4799-4cc0-94af-738089d7d48e",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "jsCode": "const data = [\n  {\n    \"chapter\": \"市场资讯\",\n    \"section\": \"国内\",\n    \"seq\":\"1.1\"\n  },\n  {\n    \"chapter\": \"市场资讯\",\n    \"section\": \"国外\",\n    \"seq\":\"1.2\"\n  },\n  {\n    \"chapter\": \"市场资讯\",\n    \"section\": \"港澳\",\n    \"seq\":\"1.3\"\n  },\n  {\n    \"chapter\": \"宏观资讯\",\n    \"section\": \"国内\",\n    \"seq\":\"2.1\"\n  },\n  {\n    \"chapter\": \"宏观资讯\",\n    \"section\": \"国外\",\n    \"seq\":\"2.2\"\n  },\n  {\n    \"chapter\": \"宏观资讯\",\n    \"section\": \"港澳\",\n    \"seq\":\"2.3\"\n  },\n  {\n    \"chapter\": \"商业观察\",\n    \"section\": \"商业动态\",\n    \"seq\":\"3.1\"\n  },\n  {\n    \"chapter\": \"商业观察\",\n    \"section\": \"投融资\",\n    \"seq\":\"3.2\"\n  },\n  {\n    \"chapter\": \"商业观察\",\n    \"section\": \"生态合作\",\n    \"seq\":\"3.3\"\n  }\n];\nconst items = [];\ndata.forEach(item => {\n  item.keyword = $input.first().json.keyword;\n  items.push({json: item});\n});\n\nreturn items;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -976,
+        544
+      ],
+      "id": "359bcf12-1553-4537-8522-d8d87fbc6a55",
+      "name": "章节列表"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "66039a57-b3d1-492e-8cc5-a7aa55d9bc69",
+              "name": "keyword",
+              "value": "AI",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1136,
+        544
+      ],
+      "id": "1d4007bb-aa60-41b4-a573-f6801ac3d9b6",
+      "name": "主题"
+    },
+    {
+      "parameters": {
+        "jsCode": "const items = $input.all();\nconst keyword = $input.first().json.keyword\n// 统一使用 item.json 来访问数据\nconst market1 = items.find(item => \n  item.json.chapter === \"市场资讯\" && item.json.section === \"国外\"\n);\nconst market2 = items.find(item => \n  item.json.chapter === \"市场资讯\" && item.json.section === \"国内\"\n);\nconst market3 = items.find(item => \n  item.json.chapter === \"市场资讯\" && item.json.section === \"港澳\"\n);\n\nconst gene1 = items.find(item => \n  item.json.chapter === \"宏观资讯\" && item.json.section === \"国外\"\n);\nconst gene2 = items.find(item => \n  item.json.chapter === \"宏观资讯\" && item.json.section === \"国内\"\n);\nconst gene3 = items.find(item => \n  item.json.chapter === \"宏观资讯\" && item.json.section === \"港澳\"\n);\n\nconst itc1 = items.find(item => \n  item.json.chapter === \"通信ICT行业资讯\" && item.json.section === \"国外\"\n);\nconst itc2 = items.find(item => \n  item.json.chapter === \"通信ICT行业资讯\" && item.json.section === \"国内\"\n);\nconst itc3 = items.find(item => \n  item.json.chapter === \"通信ICT行业资讯\" && item.json.section === \"港澳\"\n);\n\nconst busi1 = items.find(item => \n  item.json.chapter === \"商业观察\" && item.json.section === \"商业动态\"\n);\nconst busi2 = items.find(item => \n  item.json.chapter === \"商业观察\" && item.json.section === \"投融资\"\n);\nconst busi3 = items.find(item => \n  item.json.chapter === \"商业观察\" && item.json.section === \"生态合作\"\n);\n\n\nfunction formatSection(data, title) {\n  if (!data || data.length === 0) {\n    return `## ${title}\\n暂无内容\\n\\n`;\n  }\n  return `## ${title}\\n${Array.isArray(data) ? data.join('\\n') : data}\\n\\n`;\n}\n// 获取当前时间并调整为东8区\nconst now = new Date();\nconst beijingTime = new Date(now.getTime() + (8 * 60 - now.getTimezoneOffset()) * 60 * 1000);\nconst today = beijingTime.toISOString().split('T')[0];\nconsole.log(today); // 输出：2025-10-23\nconst article = `\n---\ntitle: \"${keyword} 周报\"\nversion: V0.1\nauthor: \"\"\ndate: \"${today}\"\ncompany: citictel.com\nfile-code: CITICTEL-IVT-000001\nlogo: true\nlogo-url: ./img/Markdown-mark.png\nlot: false\nlof: false\nhistory:\n  - version: V0.1\n    author: jennygong,vincentzou\n    date: ${today}\n    desc: 创建周报\n---\n<span style=\"font-size:32px\">AI周报</span>  \n\n<span style=\"font-size:24px\">${today}</span>  \n\n# 市场资讯\n\n${formatSection(!market1?[]:market1.json.reference, \"国外\")}\n${formatSection(!market2?[]:market2.json.reference, \"国内\")}\n${formatSection(!market3?[]:market3.json.reference, \"港澳\")}\n\n# 宏观资讯\n\n${formatSection(!gene1?[]:gene1.json.reference, \"国外\")}\n${formatSection(!gene2?[]:gene2.json.reference, \"国内\")}\n${formatSection(!gene3?[]:gene3.json.reference, \"港澳\")}\n\n# 通信ICT行业资讯\n\n${formatSection(!itc1?[]:itc1.json.reference, \"国外\")}\n${formatSection(!itc2?[]:itc2.json.reference, \"国内\")}\n${formatSection(!itc3?[]:itc3.json.reference, \"港澳\")}\n\n# 商业观察\n\n${formatSection(!busi1?[]:busi1.json.reference, \"商业动态\")}\n${formatSection(!busi2?[]:busi2.json.reference, \"投融资\")}\n${formatSection(!busi3?[]:busi3.json.reference, \"生态合作\")}\n\n\n\n\n# 原文\n${!market1?'':market1.json.contextString}\n${!market2?'':market2.json.contextString}\n${!market3?'':market3.json.contextString}\n${!gene1?'':gene1.json.contextString}\n${!gene2?'':gene2.json.contextString}\n${!gene3?'':gene3.json.contextString}\n${!itc1?'':itc1.json.contextString}\n${!itc2?'':itc2.json.contextString}\n${!itc3?'':itc3.json.contextString}\n${!busi1?'':busi1.json.contextString}\n${!busi2?'':busi2.json.contextString}\n${!busi3?'':busi3.json.contextString}\n`.trim();\n\nreturn [{ json: { formattedArticle: article } }];"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -560,
+        512
+      ],
+      "id": "86731755-d155-483d-a394-c0589e31da77",
+      "name": "合并文章"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "select * from news where keyword = '{{ $json.keyword }}' and category='{{ $json.chapter }}' and sub_category = '{{ $json.section }}' and rating > 2 and createdAt >  DATE_SUB(CURDATE(), INTERVAL 2 DAY) and id > 600 ;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        -560,
+        656
+      ],
+      "id": "cfe30334-0c2a-44aa-9952-e1bbd4533356",
+      "name": "查询章节News",
+      "alwaysOutputData": true,
+      "credentials": {
+        "mySql": {
+          "id": "DZwqqWcjkr5nbJU0",
+          "name": "192.168.206.101-n8n_busi"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "fromEmail": "n8n@citictel.com",
+        "toEmail": "vincentzou@citictel.com",
+        "subject": "=ai inform collection {{ $now.format('yyyy-MM-dd') }}",
+        "emailFormat": "text",
+        "text": "=please refer to attachment.",
+        "options": {
+          "attachments": "data"
+        }
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        176,
+        512
+      ],
+      "id": "86062610-fefb-4fb8-96cd-faab21499054",
+      "name": "Send email",
+      "webhookId": "8a942f77-d815-4227-bdf0-c81a8facddc3",
+      "credentials": {
+        "smtp": {
+          "id": "MRieOEP8aSj6h8gG",
+          "name": "SMTP account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "toText",
+        "sourceProperty": "formattedArticle",
+        "options": {
+          "fileName": "=weekly-{{ $now.format('yyyyMMdd')}}.md"
+        }
+      },
+      "type": "n8n-nodes-base.convertToFile",
+      "typeVersion": 1.1,
+      "position": [
+        -416,
+        512
+      ],
+      "id": "5a2a1ddd-e165-4e1c-b592-8897dbb13368",
+      "name": "Convert to File"
+    },
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -1312,
+        176
+      ],
+      "id": "17143c66-1f93-4df0-b9d4-182c9aba4130",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "66039a57-b3d1-492e-8cc5-a7aa55d9bc69",
+              "name": "keyword",
+              "value": "AI",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -1120,
+        176
+      ],
+      "id": "6470035f-f97b-4018-9005-48c71a6845cf",
+      "name": "主题1"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -736,
+        176
+      ],
+      "id": "9298c1b5-8e7c-4f12-866b-e938cccf6099",
+      "name": "News行内容处理"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=请处理以下从网页抓取的内容。请严格遵循以下要求：\n\n1.  **核心任务：** 识别并保留内容的**主题部分**，与主题“{{ $json.title }}”相关的内容需保留,删除所有无关信息。\n2.  **保留原则（主题内容）：**\n    *   文章或段落的**核心正文**。\n    *   关键的事实、数据和观点。\n3.  **删除内容（无关信息）：**\n    *   导航栏、页眉、页脚。\n    *   广告、推广链接、无关的图片说明。\n    *   作者信息、发布日期、版权声明（除非它们是主题的关键部分）。\n    *   侧边栏内容、相关文章推荐、评论区。\n    *   无关的网页脚本代码、样式代码等。\n    *   相关推荐或引用等。\n4.  **最重要原则：** 对保留的主题内容**不做任何修改**，包括其措辞、格式、标点符号和段落结构。请原样输出。\n\n【待处理的内容开始】\n{{ $json.content }}\n【待处理的内容结束】 ",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        -432,
+        192
+      ],
+      "id": "dfd80f4d-2b28-4f81-870f-65cff0da71f3",
+      "name": "AI Agent",
+      "onError": "continueRegularOutput"
+    },
+    {
+      "parameters": {
+        "content": "## 网页内容处理",
+        "height": 400,
+        "width": 1760
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "position": [
+        -1376,
+        64
+      ],
+      "typeVersion": 1,
+      "id": "25e791f7-8c2a-42bc-bdce-51f41b25e485",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "operation": "executeQuery",
+        "query": "select id,createdAt,title,category,content from news where keyword = '{{ $json.keyword }}' and category != '其它' and rating > 2 and createdAt >  DATE_SUB(CURDATE(), INTERVAL 5 DAY) and id > 645 and summary is null  ;",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        -928,
+        176
+      ],
+      "id": "70f4fcc0-f342-46c4-866c-7a2178cf2866",
+      "name": "Execute a SQL query",
+      "credentials": {
+        "mySql": {
+          "id": "DZwqqWcjkr5nbJU0",
+          "name": "192.168.206.101-n8n_busi"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "table": {
+          "__rl": true,
+          "value": "news",
+          "mode": "list",
+          "cachedResultName": "news"
+        },
+        "dataMode": "defineBelow",
+        "columnToMatchOn": "id",
+        "valueToMatchOn": "={{ $('News行内容处理').item.json.id }}",
+        "valuesToSend": {
+          "values": [
+            {
+              "column": "summary",
+              "value": "={{ $json.output }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.mySql",
+      "typeVersion": 2.5,
+      "position": [
+        -96,
+        192
+      ],
+      "id": "7ce92fda-4a66-4572-90dc-d5877b7bb131",
+      "name": "Update rows in a table",
+      "credentials": {
+        "mySql": {
+          "id": "DZwqqWcjkr5nbJU0",
+          "name": "192.168.206.101-n8n_busi"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -784,
+        640
+      ],
+      "id": "0b42e7e0-e6e3-4cda-9876-1e478cff0d2f",
+      "name": "章节循环"
+    },
+    {
+      "parameters": {
+        "protocol": "sftp",
+        "operation": "upload",
+        "path": "=/data/pdf/weekly-{{ $now.format('yyyyMMdd')}}.md"
+      },
+      "type": "n8n-nodes-base.ftp",
+      "typeVersion": 1,
+      "position": [
+        -272,
+        512
+      ],
+      "id": "139495bf-ff25-4757-8ac2-d54e936e8f52",
+      "name": "FTP",
+      "credentials": {
+        "sftp": {
+          "id": "xG3tXAbNGwgoaU9B",
+          "name": "192.168.206.101"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "command": "=docker run --rm -v $(pwd)/:/mppl mppl -o weekly-{{ $now.format('yyyyMMdd')}}.pdf weekly-{{ $now.format('yyyyMMdd')}}.md",
+        "cwd": "/data/pdf"
+      },
+      "type": "n8n-nodes-base.ssh",
+      "typeVersion": 1,
+      "position": [
+        -128,
+        512
+      ],
+      "id": "2c6a7ba9-f043-4927-9825-350f6f5b7594",
+      "name": "Execute a command",
+      "credentials": {
+        "sshPassword": {
+          "id": "m9ec4bA26yDoHGBf",
+          "name": "root@192.168.206.101"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "protocol": "sftp",
+        "path": "=/data/pdf/weekly-{{ $now.format('yyyyMMdd')}}.pdf",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.ftp",
+      "typeVersion": 1,
+      "position": [
+        32,
+        512
+      ],
+      "id": "59f1b33d-dec0-4a87-b798-b5d35f637cc8",
+      "name": "download pdf",
+      "credentials": {
+        "sftp": {
+          "id": "xG3tXAbNGwgoaU9B",
+          "name": "192.168.206.101"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "Qwen3-235B-A22B",
+          "mode": "list",
+          "cachedResultName": "Qwen3-235B-A22B"
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        -432,
+        400
+      ],
+      "id": "1f9e6b75-f393-4791-9c1b-78c8c70db3ee",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "mCK9PJVLTNywQwqT",
+          "name": "OpenAi account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1",
+    "callerPolicy": "workflowsFromSameOwner",
+    "availableInMCP": false,
+    "errorWorkflow": "Q632AbzYePckD0iv"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-10-30T06:53:18.561Z",
+      "createdAt": "2025-10-30T06:53:18.561Z",
+      "role": "workflow:owner",
+      "workflowId": "jonC2aDmUnsI4msS",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
+  "staticData": {
+    "node:Schedule Trigger": {
+      "recurrenceRules": []
+    },
+    "node:Schedule Trigger2": {
+      "recurrenceRules": []
+    }
+  },
+  "tags": [],
+  "triggerCount": 1,
+  "updatedAt": "2025-11-17T06:05:23.718Z",
+  "versionId": "e2db2f49-6935-4af5-9a14-d847b957ae0a"
+}
