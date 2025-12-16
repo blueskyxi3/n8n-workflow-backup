@@ -258,11 +258,20 @@
   "settings": {
     "executionOrder": "v1"
   },
+  "shared": [
+    {
+      "updatedAt": "2025-07-15T06:37:19.802Z",
+      "createdAt": "2025-07-15T06:37:19.802Z",
+      "role": "workflow:owner",
+      "workflowId": "SDuValBGgMmBLr9t",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
   "staticData": null,
   "tags": [
     {
-      "createdAt": "2025-07-16T09:44:50.994Z",
       "updatedAt": "2025-07-16T09:44:50.994Z",
+      "createdAt": "2025-07-16T09:44:50.994Z",
       "id": "7427ztjDOxNEUThd",
       "name": "business"
     }
