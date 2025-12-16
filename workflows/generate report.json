@@ -1,0 +1,2427 @@
+{
+  "active": false,
+  "connections": {
+    "When clicking ‘Execute workflow’": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract": {
+      "main": [
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Wait": {
+      "main": [
+        [
+          {
+            "node": "HTTP Request",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HTTP Request": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items3",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Wait",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Split Out2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items": {
+      "main": [
+        [
+          {
+            "node": "Call 'scrap latest news'",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "资讯分类器",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "宏观资讯": {
+      "main": [
+        [
+          {
+            "node": "Upsert row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Upsert row(s)": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items2": {
+      "main": [
+        [],
+        [
+          {
+            "node": "If1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Scrape": {
+      "main": [
+        [
+          {
+            "node": "Switch",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "国外": {
+      "main": [
+        [
+          {
+            "node": "Update row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "国内": {
+      "main": [
+        [
+          {
+            "node": "Update row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "资讯分类器": {
+      "main": [
+        [
+          {
+            "node": "市场资讯",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "宏观资讯",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "通信ICT行业资讯",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "商业观察",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "其它",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Switch": {
+      "main": [
+        [
+          {
+            "node": "市场资讯分类器",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "宏观资讯分类器",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "通信与ICT行业动态分類器",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "商业观察分类器",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Loop Over Items3": {
+      "main": [
+        [
+          {
+            "node": "获取消息组",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Extract",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Split Out2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "市场资讯": {
+      "main": [
+        [
+          {
+            "node": "Upsert row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "商业观察": {
+      "main": [
+        [
+          {
+            "node": "Upsert row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "市场资讯分类器": {
+      "main": [
+        [
+          {
+            "node": "国内",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "国外",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "港澳",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "港澳": {
+      "main": [
+        [
+          {
+            "node": "Update row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "商业动态": {
+      "main": [
+        [
+          {
+            "node": "Update row(s)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "投融资": {
+      "main": [
+        [
+          {
+            "node": "Update row(s)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "生态合作": {
+      "main": [
+        [
+          {
+            "node": "Update row(s)1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row(s)1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row(s)": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If1": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "If2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "商业观察分类器": {
+      "main": [
+        [
+          {
+            "node": "商业动态",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "投融资",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "生态合作",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "商业观察分类器",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model1": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "市场资讯分类器",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "获取消息组": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "通信ICT行业资讯": {
+      "main": [
+        [
+          {
+            "node": "Upsert row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "其它": {
+      "main": [
+        [
+          {
+            "node": "Upsert row(s)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model2": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "资讯分类器",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "国内1": {
+      "main": [
+        [
+          {
+            "node": "Update row(s)2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "国外1": {
+      "main": [
+        [
+          {
+            "node": "Update row(s)2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "港澳1": {
+      "main": [
+        [
+          {
+            "node": "Update row(s)2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model3": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "宏观资讯分类器",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "宏观资讯分类器": {
+      "main": [
+        [
+          {
+            "node": "国内1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "国外1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "港澳1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row(s)2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "国内2": {
+      "main": [
+        [
+          {
+            "node": "Update row(s)3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "国外2": {
+      "main": [
+        [
+          {
+            "node": "Update row(s)3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "港澳2": {
+      "main": [
+        [
+          {
+            "node": "Update row(s)3",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model4": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "通信与ICT行业动态分類器",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update row(s)3": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "通信与ICT行业动态分類器": {
+      "main": [
+        [
+          {
+            "node": "国内2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "国外2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "港澳2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Scrape",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s)2": {
+      "main": [
+        [
+          {
+            "node": "Loop Over Items2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "When Executed by Another Workflow": {
+      "main": [
+        [
+          {
+            "node": "Get row(s)2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-10-20T02:54:53.312Z",
+  "id": "yFDEmc6VHDYHokt7",
+  "isArchived": true,
+  "meta": {
+    "templateCredsSetupCompleted": true
+  },
+  "name": "generate report",
+  "nodes": [
+    {
+      "parameters": {},
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        -928,
+        -48
+      ],
+      "id": "0d01b81f-0abc-42dc-b808-4802a59306f5",
+      "name": "When clicking ‘Execute workflow’"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v1/extract",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer fc-3e7c4258ddd64250843123ec4a1951ea"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"urls\": [\"{{ $json.url }}\"],\n  \"prompt\": \"Extract the latest news related to AI, including the title, date, link, and source of each news item.\",\n  \"schema\": {\n    \"type\": \"object\",\n    \"properties\": {\n      \"news\": {\n        \"type\": \"array\",\n        \"items\": {\n          \"type\": \"object\",\n          \"properties\": {\n            \"title\": {\n              \"type\": \"string\"\n            },\n             \"link\": {\n              \"type\": \"string\"\n            },\n            \"date\": {\n              \"type\": \"string\"\n            },\n            \"source\": {\n              \"type\": \"string\"\n            }\n          },\n          \"required\": [\n            \"title\",\n            \"link\",\n            \"date\"\n          ]\n        }\n      }\n    },\n    \"required\": [\n      \"news\"\n    ]\n  },\n  \"enableWebSearch\": false\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        -64,
+        -32
+      ],
+      "id": "95915bb7-c34b-415b-96f0-650b080182ef",
+      "name": "Extract"
+    },
+    {
+      "parameters": {
+        "path": "656ddc83-2b6a-45c6-aad0-a2bd58c96f15"
+      },
+      "type": "n8n-nodes-base.wait",
+      "typeVersion": 1.1,
+      "position": [
+        128,
+        -32
+      ],
+      "id": "4e8b797f-19e3-434b-94ca-af35982dc7f8",
+      "name": "Wait",
+      "webhookId": "656ddc83-2b6a-45c6-aad0-a2bd58c96f15"
+    },
+    {
+      "parameters": {
+        "url": "=https://api.firecrawl.dev/v1/extract/{{ $('Extract').item.json.id }}",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer fc-3e7c4258ddd64250843123ec4a1951ea"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        352,
+        -32
+      ],
+      "id": "2ec46650-2c8a-4fde-a100-c2680f1656d4",
+      "name": "HTTP Request"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "80e5b0db-9d0c-4439-976d-921722c20fd9",
+              "leftValue": "={{ $json.status }}",
+              "rightValue": "completed",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        512,
+        -32
+      ],
+      "id": "1058b536-9135-40cd-af76-350b935ec1a4",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c0a25875-fd8b-401e-96db-182f3084464b",
+              "name": "url",
+              "value": "[\"https://www.qbitai.com/\",\"https://www.36kr.com/\",\"https://www.c114.com.cn/ai/\"]",
+              "type": "array"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        -736,
+        -48
+      ],
+      "id": "e6ee565b-3b20-445d-85fb-e43332a00ea6",
+      "name": "Edit Fields"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        768,
+        -272
+      ],
+      "id": "f14993a5-72c1-4f02-b2f1-1554f33e9bd2",
+      "name": "Loop Over Items"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ed74b0b3-7f4f-426a-bde5-58be16cce12e",
+              "name": "category",
+              "value": "宏观资讯",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1616,
+        -544
+      ],
+      "id": "eebb59a2-373a-473e-ba22-0c701fa9c993",
+      "name": "宏观资讯"
+    },
+    {
+      "parameters": {
+        "operation": "upsert",
+        "dataTableId": {
+          "__rl": true,
+          "value": "yAtPEE5aVP9J8pNl",
+          "mode": "list",
+          "cachedResultName": "news",
+          "cachedResultUrl": "/projects/AjKOXkiVfZaaIF4c/datatables/yAtPEE5aVP9J8pNl"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "link",
+              "keyValue": "={{ $json.link }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "date": "={{ $json.date }}",
+            "link": "={{ $json.link }}",
+            "category": "={{ $json.category }}",
+            "source": "={{ $json.source }}",
+            "title": "={{ $json.title }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "link",
+              "displayName": "link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "sub_category",
+              "displayName": "sub_category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "content",
+              "displayName": "content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        1952,
+        -224
+      ],
+      "id": "a4880795-354e-412f-8c5d-27af5493d826",
+      "name": "Upsert row(s)"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -512,
+        896
+      ],
+      "id": "0b37eea5-edfa-4643-a6fd-31d573861f1f",
+      "name": "Loop Over Items2"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.firecrawl.dev/v2/scrape",
+        "sendHeaders": true,
+        "headerParameters": {
+          "parameters": [
+            {
+              "name": "Authorization",
+              "value": "Bearer fc-3e7c4258ddd64250843123ec4a1951ea"
+            }
+          ]
+        },
+        "sendBody": true,
+        "specifyBody": "json",
+        "jsonBody": "={\n  \"url\": \"{{ $json.link }}\",\n  \"formats\": [\n    \"markdown\"\n  ]\n} ",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [
+        432,
+        944
+      ],
+      "id": "47286fe2-8e10-46f7-bff3-d4b4f2fb0569",
+      "name": "Scrape"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0b206a2c-8bfb-46e4-bf00-0f26038f91f4",
+              "name": "sub_category",
+              "value": "国内",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1440,
+        704
+      ],
+      "id": "3e8c905b-8acd-42ae-87f5-f5d8bdd644cd",
+      "name": "国内"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0b206a2c-8bfb-46e4-bf00-0f26038f91f4",
+              "name": "sub_category",
+              "value": "国外",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1440,
+        832
+      ],
+      "id": "989afcec-2272-4795-8309-d0b4f300d47d",
+      "name": "国外"
+    },
+    {
+      "parameters": {
+        "inputText": "=请把内容\"{{ $json.title }}\"分类，如无法分类，请归类其它。\n",
+        "categories": {
+          "categories": [
+            {
+              "category": "市场资讯",
+              "description": "全球重大AI资讯"
+            },
+            {
+              "category": "宏观资讯",
+              "description": "非公司，非个人级别的重大AI资讯，特别指国家层面、政府部门、管理机构如：工信部等发布的关于AI政策、条例等资讯"
+            },
+            {
+              "category": "通信ICT行业资讯",
+              "description": "指运营商，ICT通信技术行业中相关AI资讯"
+            },
+            {
+              "category": "商业观察",
+              "description": "商业动态，投融资、生态合作等相关AI资讯"
+            },
+            {
+              "category": "其它",
+              "description": "其它"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1.1,
+      "position": [
+        1072,
+        -304
+      ],
+      "id": "91020f9c-fc18-46f3-a3c2-d6afbceef29c",
+      "name": "资讯分类器"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "yAtPEE5aVP9J8pNl",
+          "mode": "list",
+          "cachedResultName": "news",
+          "cachedResultUrl": "/projects/AjKOXkiVfZaaIF4c/datatables/yAtPEE5aVP9J8pNl"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "link",
+              "keyValue": "={{ $('Loop Over Items2').item.json.link }}"
+            },
+            {
+              "keyName": "createdAt",
+              "condition": "gte",
+              "keyValue": "={{ $today }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "content": "={{ $json.data.markdown }}",
+            "sub_category": "={{ $json.sub_category }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "link",
+              "displayName": "link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "sub_category",
+              "displayName": "sub_category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "content",
+              "displayName": "content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        1728,
+        960
+      ],
+      "id": "6d389102-d9db-487e-9735-334d1c401b9e",
+      "name": "Update row(s)"
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "leftValue": "市场资讯",
+                    "rightValue": "={{ $('Loop Over Items2').item.json.category }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "fece475b-cc45-4ebf-9116-11b9d041b982"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "b76e611a-848c-4c1c-b1bd-0a3d1e8b5a0a",
+                    "leftValue": "宏观资讯",
+                    "rightValue": "={{ $('Loop Over Items2').item.json.category }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "6cb671a8-c7ff-4100-9d76-17ca59a9a4f3",
+                    "leftValue": "通信ICT行业资讯",
+                    "rightValue": "={{ $('Loop Over Items2').item.json.category }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 2
+                },
+                "conditions": [
+                  {
+                    "id": "c1636c3a-6c42-4632-8cdc-b2d4b3b094c0",
+                    "leftValue": "商业观察",
+                    "rightValue": "={{ $('Loop Over Items2').item.json.category }}",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals",
+                      "name": "filter.operator.equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.3,
+      "position": [
+        704,
+        912
+      ],
+      "id": "e6d9a747-a9ce-4df6-945b-16f2c2fc2519",
+      "name": "Switch"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitInBatches",
+      "typeVersion": 3,
+      "position": [
+        -320,
+        -48
+      ],
+      "id": "a4856a0b-a61b-40f6-a6e7-c9ab5c278b41",
+      "name": "Loop Over Items3"
+    },
+    {
+      "parameters": {
+        "fieldToSplitOut": "url",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.splitOut",
+      "typeVersion": 1,
+      "position": [
+        -560,
+        -48
+      ],
+      "id": "4e74abc7-aa1c-4ccf-bce1-76b8cd9ec26e",
+      "name": "Split Out2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ed74b0b3-7f4f-426a-bde5-58be16cce12e",
+              "name": "category",
+              "value": "市场资讯",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1616,
+        -720
+      ],
+      "id": "7be636b5-f2b0-42f1-b930-bf0825534d11",
+      "name": "市场资讯"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ed74b0b3-7f4f-426a-bde5-58be16cce12e",
+              "name": "category",
+              "value": "商业观察",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1616,
+        -224
+      ],
+      "id": "6323e024-0051-4b79-a35b-e2d3a2795147",
+      "name": "商业观察"
+    },
+    {
+      "parameters": {
+        "inputText": "=請把以下內容分類到以下三類中：国内、国外、港澳。\"{{ $json.data.metadata.title }},{{ $json.data.metadata.description }}\"\n\n",
+        "categories": {
+          "categories": [
+            {
+              "category": "国内",
+              "description": "国内"
+            },
+            {
+              "category": "国外",
+              "description": "国外"
+            },
+            {
+              "category": "港澳",
+              "description": "港澳"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1.1,
+      "position": [
+        1040,
+        720
+      ],
+      "id": "036e7b08-44fd-4266-b40c-f762892640cf",
+      "name": "市场资讯分类器"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0b206a2c-8bfb-46e4-bf00-0f26038f91f4",
+              "name": "sub_category",
+              "value": "港澳",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1440,
+        960
+      ],
+      "id": "5c2be3de-1714-4ebd-acea-fcc6e88d781e",
+      "name": "港澳"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c4940d4b-aeea-4843-9691-1d30185a68f3",
+              "name": "sub_category",
+              "value": "商业动态",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1488,
+        2208
+      ],
+      "id": "0fa4182c-24d5-4535-9e40-7603577fd4fb",
+      "name": "商业动态"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0d9febfa-a57e-4056-a5f2-14009a90ef7a",
+              "name": "sub_category",
+              "value": "投融资",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1488,
+        2368
+      ],
+      "id": "63e6a487-d9ba-4a83-bbdf-42e736ea43bc",
+      "name": "投融资"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c90b5ddb-e28e-46d8-a8f8-bd77401f5393",
+              "name": "sub_category",
+              "value": "生态合作",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1488,
+        2528
+      ],
+      "id": "ef7a490d-1cb5-4232-bd0e-2624c9223f74",
+      "name": "生态合作"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "yAtPEE5aVP9J8pNl",
+          "mode": "list",
+          "cachedResultName": "news",
+          "cachedResultUrl": "/projects/AjKOXkiVfZaaIF4c/datatables/yAtPEE5aVP9J8pNl"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "link",
+              "keyValue": "={{ $('Loop Over Items2').item.json.link }}"
+            },
+            {
+              "keyName": "createdAt",
+              "condition": "gte",
+              "keyValue": "={{ $today }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "content": "={{ $('Scrape').item.json.data.markdown }}",
+            "sub_category": "={{ $json.sub_category }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "link",
+              "displayName": "link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "sub_category",
+              "displayName": "sub_category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "content",
+              "displayName": "content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        1776,
+        2528
+      ],
+      "id": "5860926f-343b-48d6-aaa1-d808f114a300",
+      "name": "Update row(s)1"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "77b32db2-0726-4db8-b290-1da7da4da9cf",
+              "leftValue": "={{ $json.category }}",
+              "rightValue": "其它",
+              "operator": {
+                "type": "string",
+                "operation": "equals",
+                "name": "filter.operator.equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        -256,
+        912
+      ],
+      "id": "4a4c091c-04d4-4983-804f-9cb55c9399e6",
+      "name": "If1"
+    },
+    {
+      "parameters": {
+        "inputText": "={\n  \"instruction\": \"基于以下分类标准分析文本：商业动态、投融资、生态合作。如不匹配则归为生态合作。\",\n  \"text\": \"{{ $json.data.markdown }}\"\n} ",
+        "categories": {
+          "categories": [
+            {
+              "category": "商业动态",
+              "description": "商业动态"
+            },
+            {
+              "category": "投融资",
+              "description": "投融资"
+            },
+            {
+              "category": "生态合作",
+              "description": "生态合作"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1.1,
+      "position": [
+        1072,
+        2224
+      ],
+      "id": "f7392753-289b-4773-88dc-e3539917d2ed",
+      "name": "商业观察分类器"
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-chat",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1072,
+        2432
+      ],
+      "id": "6cb69ed3-0c46-49dd-ad73-0aae6436786d",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "mOE7vbZHlbc3A2y8",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-chat",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1040,
+        928
+      ],
+      "id": "667aa9d7-f613-4dcb-836c-65da9d46853d",
+      "name": "OpenRouter Chat Model1",
+      "credentials": {
+        "openRouterApi": {
+          "id": "mOE7vbZHlbc3A2y8",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const result = [];\nfor (const item of $input.all()) {\n  result.push(...item.json.data.news);\n}\nreturn result;"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -64,
+        -272
+      ],
+      "id": "76228909-6ce6-425a-bca3-a21b8b728900",
+      "name": "获取消息组"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "ed74b0b3-7f4f-426a-bde5-58be16cce12e",
+              "name": "category",
+              "value": "通信ICT行业资讯",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1616,
+        -400
+      ],
+      "id": "9c7b30f4-4944-44ca-b9d4-4d6c2cf874ec",
+      "name": "通信ICT行业资讯"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "cfbd20b4-ec3a-4109-b509-18424c3f059c",
+              "name": "category",
+              "value": "其它",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1616,
+        -80
+      ],
+      "id": "d1fb8f2f-ca00-4f48-9893-13d2df6b73c0",
+      "name": "其它"
+    },
+    {
+      "parameters": {
+        "model": "qwen/qwen3-30b-a3b-thinking-2507",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1008,
+        -96
+      ],
+      "id": "584f88ec-328d-448b-8051-aa999485bdd4",
+      "name": "OpenRouter Chat Model2",
+      "credentials": {
+        "openRouterApi": {
+          "id": "mOE7vbZHlbc3A2y8",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0b206a2c-8bfb-46e4-bf00-0f26038f91f4",
+              "name": "sub_category",
+              "value": "国内",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1456,
+        1232
+      ],
+      "id": "c0a94cf7-be75-4758-ae82-0a1843cb6cf0",
+      "name": "国内1"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0b206a2c-8bfb-46e4-bf00-0f26038f91f4",
+              "name": "sub_category",
+              "value": "国外",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1456,
+        1360
+      ],
+      "id": "f0d2882e-69b3-48e2-85dc-54b9b58043b5",
+      "name": "国外1"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "yAtPEE5aVP9J8pNl",
+          "mode": "list",
+          "cachedResultName": "news",
+          "cachedResultUrl": "/projects/AjKOXkiVfZaaIF4c/datatables/yAtPEE5aVP9J8pNl"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "link",
+              "keyValue": "={{ $('Loop Over Items2').item.json.link }}"
+            },
+            {
+              "keyName": "createdAt",
+              "condition": "gte",
+              "keyValue": "={{ $today }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "content": "={{ $json.data.markdown }}",
+            "sub_category": "={{ $json.sub_category }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "link",
+              "displayName": "link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "sub_category",
+              "displayName": "sub_category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "content",
+              "displayName": "content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        1744,
+        1488
+      ],
+      "id": "9613a777-a009-495b-bc6c-e4faa5d4fc1e",
+      "name": "Update row(s)2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0b206a2c-8bfb-46e4-bf00-0f26038f91f4",
+              "name": "sub_category",
+              "value": "港澳",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1456,
+        1488
+      ],
+      "id": "d574988e-8049-4098-ab84-03d333fa0075",
+      "name": "港澳1"
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-chat",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1056,
+        1456
+      ],
+      "id": "1a5257e5-5293-48d0-839f-3c3cd6660a95",
+      "name": "OpenRouter Chat Model3",
+      "credentials": {
+        "openRouterApi": {
+          "id": "mOE7vbZHlbc3A2y8",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputText": "=請把以下內容分類到以下三類中：国内、国外、港澳。\"{{ $json.data.metadata.title }},{{ $json.data.metadata.description }}\"",
+        "categories": {
+          "categories": [
+            {
+              "category": "国内",
+              "description": "国内"
+            },
+            {
+              "category": "国外",
+              "description": "国外"
+            },
+            {
+              "category": "港澳",
+              "description": "港澳"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1.1,
+      "position": [
+        1056,
+        1248
+      ],
+      "id": "cfe143f1-09bc-465d-81ac-d5fa0c735379",
+      "name": "宏观资讯分类器"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0b206a2c-8bfb-46e4-bf00-0f26038f91f4",
+              "name": "sub_category",
+              "value": "国内",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1472,
+        1776
+      ],
+      "id": "8926738a-b177-4340-9789-71a1d0e35341",
+      "name": "国内2"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0b206a2c-8bfb-46e4-bf00-0f26038f91f4",
+              "name": "sub_category",
+              "value": "国外",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1472,
+        1904
+      ],
+      "id": "8db09a24-8196-4a04-b66e-0a1f58c7ee47",
+      "name": "国外2"
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "dataTableId": {
+          "__rl": true,
+          "value": "yAtPEE5aVP9J8pNl",
+          "mode": "list",
+          "cachedResultName": "news",
+          "cachedResultUrl": "/projects/AjKOXkiVfZaaIF4c/datatables/yAtPEE5aVP9J8pNl"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "link",
+              "keyValue": "={{ $('Loop Over Items2').item.json.link }}"
+            },
+            {
+              "keyName": "createdAt",
+              "condition": "gte",
+              "keyValue": "={{ $today }}"
+            }
+          ]
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "content": "={{ $json.data.markdown }}",
+            "sub_category": "={{ $json.sub_category }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "date",
+              "displayName": "date",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "category",
+              "displayName": "category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "link",
+              "displayName": "link",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "sub_category",
+              "displayName": "sub_category",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "source",
+              "displayName": "source",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": true
+            },
+            {
+              "id": "content",
+              "displayName": "content",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        1760,
+        2032
+      ],
+      "id": "5cd8f3bb-0b9b-4407-9ce2-2383d9ae51a9",
+      "name": "Update row(s)3"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "0b206a2c-8bfb-46e4-bf00-0f26038f91f4",
+              "name": "sub_category",
+              "value": "港澳",
+              "type": "string"
+            }
+          ]
+        },
+        "includeOtherFields": true,
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1472,
+        2032
+      ],
+      "id": "967eb291-8729-4e29-a43d-b523cc4d7d33",
+      "name": "港澳2"
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-chat",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        1072,
+        2000
+      ],
+      "id": "ab9543aa-3021-4a66-a03f-75ae1d87aeec",
+      "name": "OpenRouter Chat Model4",
+      "credentials": {
+        "openRouterApi": {
+          "id": "mOE7vbZHlbc3A2y8",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "inputText": "=請把以下內容分類到以下三類中：国内、国外、港澳。\"{{ $json.data.metadata.title }},{{ $json.data.metadata.description }}\"",
+        "categories": {
+          "categories": [
+            {
+              "category": "国内",
+              "description": "国内"
+            },
+            {
+              "category": "国外",
+              "description": "国外"
+            },
+            {
+              "category": "港澳",
+              "description": "港澳"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.textClassifier",
+      "typeVersion": 1.1,
+      "position": [
+        1072,
+        1792
+      ],
+      "id": "2723ca4d-a132-4b8b-9579-c0bebeda0565",
+      "name": "通信与ICT行业动态分類器"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 2
+          },
+          "conditions": [
+            {
+              "id": "cc4ee9cc-b5b4-41ae-9915-1ddffba5c486",
+              "leftValue": "={{ $json.content }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "exists",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.2,
+      "position": [
+        144,
+        928
+      ],
+      "id": "8395f91f-6c0d-439d-bbfe-094996777da8",
+      "name": "If2"
+    },
+    {
+      "parameters": {
+        "operation": "get",
+        "dataTableId": {
+          "__rl": true,
+          "value": "yAtPEE5aVP9J8pNl",
+          "mode": "list",
+          "cachedResultName": "news",
+          "cachedResultUrl": "/projects/AjKOXkiVfZaaIF4c/datatables/yAtPEE5aVP9J8pNl"
+        },
+        "matchType": "allConditions",
+        "filters": {
+          "conditions": [
+            {
+              "keyName": "createdAt",
+              "condition": "gte",
+              "keyValue": "={{ $today }}"
+            }
+          ]
+        },
+        "limit": 200
+      },
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1,
+      "position": [
+        -768,
+        896
+      ],
+      "id": "64ee84d1-ffec-438c-961f-aab2d4636823",
+      "name": "Get row(s)2"
+    },
+    {
+      "parameters": {
+        "inputSource": "passthrough"
+      },
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [
+        -992,
+        896
+      ],
+      "id": "981edb12-6476-46aa-a0cb-aed9ddab6d81",
+      "name": "When Executed by Another Workflow"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "qPBlnLSufka1RHLm",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/qPBlnLSufka1RHLm",
+          "cachedResultName": "scrap latest news"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {}
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.executeWorkflow",
+      "typeVersion": 1.3,
+      "position": [
+        992,
+        -480
+      ],
+      "id": "7d589c21-96e3-4acb-9463-53b2ed10a578",
+      "name": "Call 'scrap latest news'"
+    }
+  ],
+  "pinData": {},
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-10-20T02:54:53.312Z",
+      "createdAt": "2025-10-20T02:54:53.312Z",
+      "role": "workflow:owner",
+      "workflowId": "yFDEmc6VHDYHokt7",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-10-20T02:56:01.277Z",
+  "versionId": "64ee63b6-23d0-44a0-98bb-d5ea5265e0c4"
+}
