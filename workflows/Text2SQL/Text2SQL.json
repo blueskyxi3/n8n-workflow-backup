@@ -78,11 +78,6 @@
         ]
       ]
     },
-    "DeepSeek Chat Model": {
-      "ai_languageModel": [
-        []
-      ]
-    },
     "AI Agent": {
       "main": [
         [
@@ -101,11 +96,6 @@
             "node": "Read/Write Files from Disk2",
             "type": "main",
             "index": 0
-          },
-          {
-            "node": "Basic LLM Chain",
-            "type": "main",
-            "index": 0
           }
         ]
       ]
@@ -116,17 +106,6 @@
           {
             "node": "Convert to File1",
             "type": "main",
-            "index": 0
-          }
-        ]
-      ]
-    },
-    "OpenAI Chat Model": {
-      "ai_languageModel": [
-        [
-          {
-            "node": "Basic LLM Chain",
-            "type": "ai_languageModel",
             "index": 0
           }
         ]
@@ -143,6 +122,17 @@
           {
             "node": "AI Agent",
             "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
             "index": 0
           }
         ]
@@ -295,7 +285,7 @@
         "promptType": "define",
         "text": "={{ $('When chat message received').item.json.chatInput }}",
         "options": {
-          "systemMessage": "=你是一个经验丰富的DBA，精通MySQL数据库。你会根据用户的需求和数据结构，生成一个查询语句。只需要返回一个可执行的SQL语句，不需要任何解释。\n数据结构：{{ $json.data }}\n其中created_by是user表中的id\n\n## 对话示例\n用户：查询职工总人数\n回答：select count(*) as totalworkers from zm_workers where history is null and state=1;"
+          "systemMessage": "=你是一个经验丰富的DBA，精通MySQL数据库。你会根据用户的需求和数据结构，生成一个查询语句。只需要返回一个可执行的SQL语句，不需要任何解释。请直接回答问题，不需要生成思考过程或<think>标签。\n数据结构：{{ $json.data }}\n其中created_by是user表中的id\n\n## 对话示例\n用户：查询职工总人数\n回答：select count(*) as totalworkers from zm_workers where history is null and state=1;"
         }
       },
       "type": "@n8n/n8n-nodes-langchain.agent",
@@ -306,25 +296,6 @@
       ],
       "id": "210d7845-6650-43b6-8834-be121bc8c0f2",
       "name": "AI Agent"
-    },
-    {
-      "parameters": {
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatDeepSeek",
-      "typeVersion": 1,
-      "position": [
-        400,
-        688
-      ],
-      "id": "bc7c38b7-d19a-43e3-a00c-bf60427ed52d",
-      "name": "DeepSeek Chat Model",
-      "credentials": {
-        "deepSeekApi": {
-          "id": "2SXDvVt9uFwfTnQm",
-          "name": "DeepSeek n8n Account"
-        }
-      }
     },
     {
       "parameters": {
@@ -356,13 +327,13 @@
     {
       "parameters": {
         "operation": "executeQuery",
-        "query": "{{ $('AI Agent').item.json.output }}",
+        "query": "{{ $('AI Agent').item.json.output.replace('<think>', '').replace('</think>', '').trim() }}\n",
         "options": {}
       },
       "type": "n8n-nodes-base.mySql",
       "typeVersion": 2.4,
       "position": [
-        1072,
+        1008,
         400
       ],
       "id": "2fc058ab-d31f-4f3f-820b-822ed27fbbc9",
@@ -393,64 +364,17 @@
       "parameters": {
         "model": {
           "__rl": true,
-          "value": "deepseek-r1:70b",
+          "value": "Qwen3-235B-A22B",
           "mode": "list",
-          "cachedResultName": "deepseek-r1:70b"
+          "cachedResultName": "Qwen3-235B-A22B"
         },
         "options": {}
       },
       "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
       "typeVersion": 1.2,
       "position": [
-        1456,
-        768
-      ],
-      "id": "27f912be-1b67-438b-a7e3-23202603059a",
-      "name": "OpenAI Chat Model",
-      "credentials": {
-        "openAiApi": {
-          "id": "mCK9PJVLTNywQwqT",
-          "name": "OpenAi account"
-        }
-      }
-    },
-    {
-      "parameters": {
-        "promptType": "define",
-        "text": "=查询sql: {{ $('AI Agent').item.json.output }} \n查询结果: {{ JSON.stringify($('查询SQL执行').all().map(item => item.json)) }}",
-        "messages": {
-          "messageValues": [
-            {
-              "message": "# 角色\n你是一位专业的Markdown转换助手，专门帮助用户将SQL查询结果（以JSON格式提供）转换为Markdown表格格式。\n\n## 技能\n### 技能 1: SQL查询结果解析\n- 解析用户提供的SQL查询语句和查询结果。\n- 确保正确理解SQL查询的结构和内容，并提取出必要的信息。\n\n### 技能 2: 转换为Markdown表格\n- 将SQL查询结果转换为Markdown表格格式。\n- 确保表格格式正确，包括表头、列对齐等。\n- 在转换过程中保持数据的完整性和准确性。\n\n### 技能 3: 结果展示\n- 在输出中显示用户的SQL查询语句。\n- 在SQL查询语句下方显示转换后的Markdown表格。\n- 确保输出的Markdown表格易于阅读和使用。\n\n## 限制\n- 只处理与SQL查询结果转换为Markdown表格相关的任务。\n- 确保转换后的Markdown表格格式正确且易于阅读。\n- 不对SQL查询本身进行修改或优化，仅负责转换查询结果。\n- 保证转换过程中的数据完整性和准确性。"
-            }
-          ]
-        },
-        "batching": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.chainLlm",
-      "typeVersion": 1.7,
-      "position": [
-        1456,
-        592
-      ],
-      "id": "0497b71f-d6d3-4007-98bf-afee7dea999a",
-      "name": "Basic LLM Chain"
-    },
-    {
-      "parameters": {
-        "model": {
-          "__rl": true,
-          "value": "deepseek-r1:70b",
-          "mode": "list",
-          "cachedResultName": "deepseek-r1:70b"
-        },
-        "options": {}
-      },
-      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
-      "typeVersion": 1.2,
-      "position": [
-        592,
-        736
+        576,
+        608
       ],
       "id": "368a54c9-9c00-47d0-9710-4dc2c4ca7202",
       "name": "OpenAI Chat Model1",
@@ -460,22 +384,45 @@
           "name": "OpenAi account"
         }
       }
+    },
+    {
+      "parameters": {
+        "sessionIdType": "customKey",
+        "sessionKey": "={{ $('When chat message received').item.json.sessionId }}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        752,
+        672
+      ],
+      "id": "d46ede70-c451-4056-a817-54d76a2b18fa",
+      "name": "Simple Memory"
     }
   ],
   "pinData": {},
   "settings": {
     "executionOrder": "v1"
   },
+  "shared": [
+    {
+      "updatedAt": "2025-07-15T06:27:59.752Z",
+      "createdAt": "2025-07-15T06:27:59.752Z",
+      "role": "workflow:owner",
+      "workflowId": "7IjUrN2RgAYbKQ5X",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
   "staticData": null,
   "tags": [
     {
-      "createdAt": "2025-07-15T06:27:42.965Z",
       "updatedAt": "2025-07-15T06:27:42.965Z",
+      "createdAt": "2025-07-15T06:27:42.965Z",
       "id": "z9qJ9W7JRnxZstj7",
       "name": "Text2SQL"
     }
   ],
   "triggerCount": 0,
-  "updatedAt": "2025-07-17T10:07:51.215Z",
-  "versionId": "ec7e59c3-db03-4478-a940-228992b41a29"
+  "updatedAt": "2025-11-21T01:23:52.315Z",
+  "versionId": "22c408fc-1f69-4a1a-aa59-db47119f4cd7"
 }
