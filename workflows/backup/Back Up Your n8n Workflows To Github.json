@@ -820,11 +820,20 @@
   ],
   "pinData": {},
   "settings": {},
+  "shared": [
+    {
+      "updatedAt": "2025-07-16T03:38:13.779Z",
+      "createdAt": "2025-07-16T03:38:13.779Z",
+      "role": "workflow:owner",
+      "workflowId": "6m7OnL3mRbiNns37",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
   "staticData": null,
   "tags": [
     {
-      "createdAt": "2025-07-16T09:38:40.625Z",
       "updatedAt": "2025-07-16T09:38:40.625Z",
+      "createdAt": "2025-07-16T09:38:40.625Z",
       "id": "ikBNUJURAZVW6saq",
       "name": "backup"
     }
