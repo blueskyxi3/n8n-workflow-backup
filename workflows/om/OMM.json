@@ -307,11 +307,20 @@
   "settings": {
     "executionOrder": "v1"
   },
+  "shared": [
+    {
+      "updatedAt": "2025-07-15T06:11:54.912Z",
+      "createdAt": "2025-07-15T06:11:54.912Z",
+      "role": "workflow:owner",
+      "workflowId": "o0950qNYcXdXSnxX",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
   "staticData": null,
   "tags": [
     {
-      "createdAt": "2025-07-16T09:45:18.412Z",
       "updatedAt": "2025-07-16T09:45:18.412Z",
+      "createdAt": "2025-07-16T09:45:18.412Z",
       "id": "1ypqHTS1b78KLvPw",
       "name": "om"
     }
