@@ -1,0 +1,142 @@
+{
+  "active": false,
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenRouter Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Date & Time": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "createdAt": "2025-11-19T08:43:05.806Z",
+  "id": "qSepf7IRN3JGGTy5",
+  "isArchived": false,
+  "meta": {
+    "templateId": "8912",
+    "templateCredsSetupCompleted": true
+  },
+  "name": "【政务专用】一键生成上会请示（超稳版）",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "upper-request",
+        "options": {}
+      },
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -960,
+        80
+      ],
+      "webhookId": "auto-generated",
+      "id": "2a180a23-ac8a-4f11-a09f-dfeaaf0d29f3"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=你是一名资深的政务文书专家，精通政府机关公文写作规范，特别擅长撰写各类上会请示文件。请严格按照《党政机关公文处理工作条例》和政务文书写作规范来撰写上会请示。\n\n## 必须严格使用以下模板：\n\n\n\n## 语言规范\n1. 使用正式、庄重的书面语言\n2. 措辞准确、严谨，避免歧义\n3. 使用谦辞：\"拟\"、\"建议\"、\"提请\"等\n4. 体现层级关系，尊重上级机关\n5. 一事一请示，主题集中\n\n## 禁忌事项\n- 不得使用口语化表达\n- 避免使用感叹号等感情色彩强烈的标点\n- 不得越级请示\n- 不得在请示中夹杂报告内容\n\n## 内容要求\n1. 依据充分：引用相关政策文件、会议精神或实际情况\n2. 理由正当：说明请示事项的必要性和合理性\n3. 事项明确：具体请求清晰，不含糊其辞\n4. 方案可行：提出的建议具有可操作性\n5. 权限适当：在上级机关职权范围内请求事项\n\n## 逻辑结构\n背景→问题→请求→依据→方案→请示\n\n\n以下是在会议  {{ $json.meeting }} 中讨论的 {{ $json.type }}，请给 {{ $json.unit }} 的 {{ $json.to }} 写上会请示。",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3,
+      "position": [
+        -704,
+        96
+      ],
+      "id": "a3a5a699-8382-4a0e-9898-5adc987a8434",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "model": "deepseek/deepseek-chat-v3.1",
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenRouter",
+      "typeVersion": 1,
+      "position": [
+        -768,
+        288
+      ],
+      "id": "2f5cd65a-6ac5-46d4-ad86-22b8bb8b0444",
+      "name": "OpenRouter Chat Model",
+      "credentials": {
+        "openRouterApi": {
+          "id": "mOE7vbZHlbc3A2y8",
+          "name": "OpenRouter account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.dateTimeTool",
+      "typeVersion": 2,
+      "position": [
+        -560,
+        304
+      ],
+      "id": "fff1f828-dd51-46ab-8f00-5d08a0eaa013",
+      "name": "Date & Time"
+    }
+  ],
+  "pinData": {
+    "Webhook": [
+      {
+        "json": {
+          "text": "2025年全市政务服务便民化提升工作方案\n\n一、指导思想\n以习近平新时代中国特色社会主义思想为指导，深入贯彻党的二十大精神，认真落实省、市关于‘放管服’改革和优化营商环境决策部署，坚持以人民为中心的发展思想，聚焦企业和群众反映突出的办事难、办事慢、办事繁问题，推动政务服务从‘能办’向‘好办易办’转变。\n\n二、工作目标\n2025年底，全市网上可办率达到98%以上，‘一网通办’前提下‘最多跑一次’事项占比95%以上，企业和群众满意度95%以上。\n\n三、主要任务\n（一）深化‘一网通办’。全面推行政务服务事项标准化梳理，实现市县乡三级事项统一名称、统一编码、统一标准。\n（二）推进‘跨省通办’‘全省通办’。2025年6月底前实现200个高频事项‘跨省通办’，500个事项‘全省通办’。\n（三）推行‘一件事一次办’。打包推出‘新生儿出生’‘我开餐饮店’等50个主题集成服务。\n（四）加强数据共享。建成人口、法人、信用等基础数据库，实现部门间数据实时共享。\n\n四、保障措施\n（一）加强组织领导。成立由市长任组长的领导小组。\n（二）强化考核督办。将便民化提升纳入年度绩效考核。\n（三）加大宣传培训力度。",
+          "type": "工作方案",
+          "meeting": "局长办公会",
+          "unit": "市政务服务和大数据管理局",
+          "to": "局长"
+        }
+      }
+    ]
+  },
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "shared": [
+    {
+      "updatedAt": "2025-11-19T08:43:05.806Z",
+      "createdAt": "2025-11-19T08:43:05.806Z",
+      "role": "workflow:owner",
+      "workflowId": "qSepf7IRN3JGGTy5",
+      "projectId": "AjKOXkiVfZaaIF4c"
+    }
+  ],
+  "staticData": null,
+  "tags": [],
+  "triggerCount": 0,
+  "updatedAt": "2025-11-21T06:01:31.750Z",
+  "versionId": "f8216bb8-ced8-4cd9-8873-a8a0ecb9cf21"
+}
